@@ -4583,72 +4583,51 @@ void s_random_opt_group::apply( struct item& item ){
 		item.option[i].value = 0;
 		item.option[i].param = 0;
 	};
+	// If you want, the 3 random Options to be applied, u can change the SECOND_RAND_OPT_CHANCE and THIRD_RAND_OPT_CHANCE to the value 100.
+	// Always apply the first option
+	std::shared_ptr<s_random_opt_group_entry> first_option;
+   for (size_t j = 0, max = this->slots[0].size() * 3; j < max; j++) {
+       first_option = util::vector_random(this->slots[0]);
+       if (rnd_chance<uint16>(first_option->chance, 10000)) {
+           apply_sub(item.option[0], first_option);
+           break;
+       }
+   }
+   if (item.option[0].id == 0) {
+       first_option = util::vector_random(this->slots[0]);
+       apply_sub(item.option[0], first_option);
+   }
 
-	// Apply Must options
-	for( size_t i = 0; i < this->slots.size(); i++ ){
-		// Try to apply an entry
-		for( size_t j = 0, max = this->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
-			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
-
-			if ( rnd_chance<uint16>(option->chance, 10000) ) {
-				apply_sub( item.option[i], option );
-				break;
-			}
-		}
-
-		// If no entry was applied, assign one
-		if( item.option[i].id == 0 ){
-			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
-
-			// Apply an entry without checking the chance
-			apply_sub( item.option[i], option );
-		}
+	// Chance to apply second option
+   if (item.option[0].id != 0 && rnd() % 100 < SECOND_RAND_OPT_CHANCE && this->slots.size() > 1) {
+       std::shared_ptr<s_random_opt_group_entry> second_option;
+       for (size_t j = 0, max = this->slots[1].size() * 3; j < max; j++) {
+           second_option = util::vector_random(this->slots[1]);
+           if (rnd_chance<uint16>(second_option->chance, 10000)) {
+               apply_sub(item.option[1], second_option);
+               break;
+           }
+       }
+       if (item.option[1].id == 0) {
+           second_option = util::vector_random(this->slots[1]);
+           apply_sub(item.option[1], second_option);
+       }
 	}
 
-	// Apply Random options (if available)
-	if( this->max_random > 0 ){
-		for( size_t i = 0; i < min( this->max_random, MAX_ITEM_RDM_OPT ); i++ ){
-			// If item already has an option in this slot, skip it
-			if( item.option[i].id > 0 ){
-				continue;
-			}
-
-			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
-
-			if ( rnd_chance<uint16>(option->chance, 10000) ){
-				apply_sub( item.option[i], option );
-			}
-		}
-	}
-
-	// Fix any gaps, the client cannot handle this
-	for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
-		// If an option is empty
-		if( item.option[i].id == 0 ){
-			// Check if any other options, after the empty option exist
-			size_t j;
-			for( j = i + 1; j < MAX_ITEM_RDM_OPT; j++ ){
-				if( item.option[j].id != 0 ){
-					break;
-				}
-			}
-
-			// Another option was found, after the empty option
-			if( j < MAX_ITEM_RDM_OPT ){
-				// Move the later option forward
-				item.option[i].id = item.option[j].id;
-				item.option[i].value = item.option[j].value;
-				item.option[i].param = item.option[j].param;
-
-				// Reset the option that was moved
-				item.option[j].id = 0;
-				item.option[j].value = 0;
-				item.option[j].param = 0;
-			}else{
-				// Cancel early
-				break;
-			}
-		}
+	// Chance to apply third option, only if second was applied
+   if (item.option[1].id != 0 && rnd() % 100 < THIRD_RAND_OPT_CHANCE && this->slots.size() > 2) {
+       std::shared_ptr<s_random_opt_group_entry> third_option;
+       for (size_t j = 0, max = this->slots[2].size() * 3; j < max; j++) {
+           third_option = util::vector_random(this->slots[2]);
+           if (rnd_chance<uint16>(third_option->chance, 10000)) {
+               apply_sub(item.option[2], third_option);
+               break;
+           }
+       }
+       if (item.option[2].id == 0) {
+           third_option = util::vector_random(this->slots[2]);
+           apply_sub(item.option[2], third_option);
+       }
 	}
 }
 
