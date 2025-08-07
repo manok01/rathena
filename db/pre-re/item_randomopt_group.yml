@@ -1152,9 +1152,9 @@ Body:
             MinValue: 1
             MaxValue: 20
             Chance: 700
-          - Option: VAR_ATKPERCENT
-            MinValue: 1
-            MaxValue: 5
+#          - Option: VAR_ATKPERCENT
+#            MinValue: 1
+#            MaxValue: 5
             Chance: 400
           - Option: WEAPON_ATTR_WATER
             Chance: 500
@@ -1168,10 +1168,10 @@ Body:
             Chance: 300
           - Option: WEAPON_ATTR_SAINT
             Chance: 100
-          - Option: VAR_ATKPERCENT
-            MinValue: 6
-            MaxValue: 10
-            Chance: 100
+#          - Option: VAR_ATKPERCENT
+#            MinValue: 6
+#            MaxValue: 10
+#            Chance: 100
           - Option: DAMAGE_SIZE_PERFECT
             Chance: 100
       - Slot: 2

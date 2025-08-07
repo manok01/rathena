@@ -6,7 +6,7 @@
 // Fixed issues on select race/size/element 
 // Fixed bug when do search monster by ID and set mob parameters
 
-prontera,224,79,0	script	Set Parameters#0	844,{
+askald,159,247,0	script	Set Parameters#0	844,{
 function get_size_name;
 function get_race_name;
 function get_ele_name;
@@ -143,7 +143,7 @@ function get_ele_name;
 OnInit:
 	// Max level players can input
 	.maxlv = 99; 
-	.mob_default = 1905;
+	.mob_default = 1906;
 	.mob_mvp = 1906;
 	// Max stats players can input 
 	.max_stat = 999;
@@ -251,7 +251,7 @@ OnTimer5000:
 	}
 }
 
-prontera,216,79,0	duplicate(Set Parameters#0)	Set Parameters#1	844
-prontera,224,70,0	duplicate(Set Parameters#0)	Set Parameters#2	844
-prontera,216,58,0	duplicate(Set Parameters#0)	Set Parameters#3	844
-prontera,224,58,0	duplicate(Set Parameters#0)	Set Parameters#4	844
+askald,159,232,0	duplicate(Set Parameters#0)	Set Parameters#1	844
+askald,167,248,0	duplicate(Set Parameters#0)	Set Parameters#2	844
+askald,168,240,0	duplicate(Set Parameters#0)	Set Parameters#3	844
+askald,167,232,0	duplicate(Set Parameters#0)	Set Parameters#4	844

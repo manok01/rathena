@@ -21160,3 +21160,296 @@ Body:
     Locations:
       Ammo: true
     EquipLevelMin: 99
+  - Id: 60000
+    AegisName: mvp_coin
+    Name: MVP Coin
+    Type: Etc
+    Weight: 10
+  - Id: 60014
+    AegisName: MVP_Tier_Badge1
+    Name: MVP Tier Badge 1
+    Type: Etc
+  - Id: 60015
+    AegisName: MVP_Tier_Badge2
+    Name: MVP Tier Badge 2
+    Type: Etc
+  - Id: 60016
+    AegisName: MVP_Tier_Badge3
+    Name: MVP Tier Badge 3
+    Type: Etc
+  - Id: 60017
+    AegisName: MVP_Tier_Badge4
+    Name: MVP Tier Badge 4
+    Type: Etc
+  - Id: 40000
+    AegisName: Floor_Str
+    Name: Strength Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bStr,1;
+  - Id: 40001
+    AegisName: Floor_Agi
+    Name: Agility Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bAgi,1;
+  - Id: 40002
+    AegisName: Floor_Int
+    Name: Intelligence Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bInt,1;
+  - Id: 40003
+    AegisName: Floor_Vit
+    Name: Health Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bVit,1;
+  - Id: 40004
+    AegisName: Floor_Dex
+    Name: Dexterity Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bDex,1;
+  - Id: 40005
+    AegisName: Floor_Luk
+    Name: Lucky Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bLuk,1;
+  - Id: 40006
+    AegisName: Floor_Crt
+    Name: Crit Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bCritical,1;
+  - Id: 40007
+    AegisName: ATKStone_Middle
+    Name: ATK Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus2 bAddClass,Class_All,1;
+  - Id: 40008
+    AegisName: Floor_Matk
+    Name: Magical Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bMatkRate,1;
+  - Id: 40009
+    AegisName: Floor_Large
+    Name: Large Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus2 bAddDamageClass,Size_Large,1;
+  - Id: 40010
+    AegisName: Floor_Medium
+    Name: Medium Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus2 bAddDamageClass,Size_Medium,1;
+  - Id: 40011
+    AegisName: Floor_Small
+    Name: Small Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus2 bAddDamageClass,Size_Small,1;
+  - Id: 40012
+    AegisName: Floor_Recovery1
+    Name: Recovery Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bHPrecovRate,2; bonus bAddItemHealRate,2;
+  - Id: 40013
+    AegisName: Floor_Recovery2
+    Name: Recovery Skill Stone(Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bHPrecovRate,3;
+  - Id: 40014
+    AegisName: Floor_Str2
+    Name: Strength Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bStr,1;
+  - Id: 40015
+    AegisName: Floor_Agi2
+    Name: Agility Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bAgi,1;
+  - Id: 40016
+    AegisName: Floor_Int2
+    Name: Intelligence Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bInt,1;
+  - Id: 40017
+    AegisName: Floor_Vit2
+    Name: Health Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bVit,1;
+  - Id: 40018
+    AegisName: Floor_Dex2
+    Name: Dexterity Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bDex,1;
+  - Id: 40019
+    AegisName: Floor_Luk2
+    Name: Lucky Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bLuk,1;
+  - Id: 40020
+    AegisName: HPStone_Bottom1
+    Name: HP Stone(Middle)
+    Type: Card
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bMaxHPrate,1;
+  - Id: 40021
+    AegisName: Floor_Stamina
+    Name: Stamina Stone(Middle)
+    Type: Card
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bMaxHP,50;
+  - Id: 40022
+    AegisName: Floor_SP
+    Name: SP Stone(Middle)
+    Type: Card
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bMaxSPrate,1;
+  - Id: 40023
+    AegisName: ATKStone_Middle2
+    Name: ATK Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus2 bAddClass,Class_All,1;
+  - Id: 40024
+    AegisName: Floor_Matk2
+    Name: Magical Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bMatkRate,1;
+  - Id: 40025
+    AegisName: Floor_Recovery3
+    Name: Recovery Stone(Middle)
+    Type: Card
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus2 bRegenPercentHP,10,10000;
+  - Id: 40026
+    AegisName: HITStone_Bottom
+    Name: Hit Stone(Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bHit,1;
+  - Id: 40027
+    AegisName: FLEEStone_Bottom
+    Name: Evasion Stone(Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bFlee,1;
+  - Id: 40028
+    AegisName: Floor_Int3
+    Name: Magic Stone Stone(Lower)
+    Type: Card
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bMaxSP,1;
+  - Id: 40029
+    AegisName: Floor_Recovery4
+    Name: Recovery Stone(Lower)
+    Type: Card
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bSPGainValue,1;
+  - Id: 40030
+    AegisName: HPStone_Bottom2
+    Name: HP Stone(Lower)
+    Type: Card
+    Buy: 10
+    Weight: 100
+    Script: |
+      bonus bMaxHPrate,1;
+  - Id: 40031
+    AegisName: ASPDStone_Robe
+    Name: ASPD Stone(Garment)
+    Type: Card
+    Buy: 20
+    Weight: 100
+    Script: |
+      bonus bAspd,1;
+  - Id: 40032
+    AegisName: HPAbsorptionStone_Robe
+    Name: HP Absorption Stone ASPD(Garment)
+    Type: Card
+    Buy: 20
+    Weight: 100
+    Script: |
+      bonus bHPGainValue,1; bonus bLongHPGainValue,1; bonus bMagicHPGainValue,1;
+  - Id: 40033
+    AegisName: SPAbsorptionStone_Robe
+    Name: SP Absorption ASPD(Garment)
+    Type: Card
+    Buy: 20
+    Weight: 100
+    Script: |
+      bonus bHPGainValue,1; bonus bLongHPGainValue,1; bonus bMagicHPGainValue,1;
