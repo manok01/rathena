@@ -1,0 +1,566 @@
+/////////////////////////////////////////////////////
+// Advance PVP Ranking + Reward System + Announcer //
+/////////////////////////////////////////////////////
+// by: pajodex (also Mabuhay)
+/////////////////////////////////////////
+// Requirements :
+// -* Basic Variable Knowledge!! Read about it at 'doc/script_commands.txt'
+// ----------------------------------------------------------------
+// A very flexible PVP Ranking + Reward system
+// - You can enable/disable rewards for daily, weekly, or monthly
+// - Reward will be automatically distributed to winners accessible via NPC
+// - Supports dota 2 announcer (from annieruru's dota pvp script)
+// - IP and Gepard checking supported
+// - PVP Statue (included)
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Side note: If this script looks familiar, yes this is the ultimate pvp ranker from Mabuhay which is also me.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+askald,109,233,6	script	PvP Ladder	4_BOARD3,{
+function View_Rankings;
+function F_Reward_Item;
+function F_Reward_Var;
+function Send_Reward;
+	goto L_Talk;
+	end;
+
+OnInit:
+	///////////////////////////////
+	//      General Settings
+	///////////////////////////////
+	// [1] Enable Reward when Player is killed
+	// [2] Item Reward when Player is killed
+	// [4] Variable/Points Reward when Player is killed
+	// [8] Enable Item Reward drop rate chance [will override option 2]
+	// [16] Enable IP Check
+	//		- Rewards and points will not be credited
+	//		  if a member has the same IP
+	// [32] Enable Gepard Check
+	//		- Rewards and points will not be credited
+	//		  if a member has the same Unique ID
+	// [64] Enable Announce Kill [If you have existing pvp announcer,
+	//      No need to enable this.
+	// [128] Enable Dota Kill announce?
+	///////////////////////////////////////////////////////////////////////
+	// NOTE: If you enable Option 2 or 4, always Enable Option 1 as well..
+	// 		 Or else rewarding wont work properly.
+	///////////////////////////////////////////////////////////////////////
+	// !!!!!!!!!!!!!!!!!!!!!! PLEASE READ NOTE !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	.Options = 1|4|64|128;
+	
+	if ( .Options&1 && (!.Options&2) && (!.Options&4) ) 
+		debugmes "[Error]: Please choose either item or variable reward for MvP Reward function. Else, disable Option 1";
+	
+	//////////////////////////////////////////
+	// Ladder Ranking and Shop
+	//////////////////////////////////////////
+	// [1] - Enable Daily Ranking
+	// [2] - Enable Weekly Ranking 
+	// [4] - Enable Monthly Ranking 
+	// [8] - Enable All Time Ranking
+	// [16] - Enable My Enemy Ranking
+	// [32] - Enable PvP Item Shop
+	// [64] - Enable PvP Point Shop
+	// [128] - Auto-clear ultimate_pvp_ranker table every month
+	//		  This is recommended to clear up some space
+	//		  in your sql database.
+	// [256] - Auto-clear ultimate_mvp_rank table every "year"
+	//		  This is recommended to clear up some space
+	//		  in your sql database.
+	.Opt = 1|2|4|8|16|64|256;
+	
+	//////////////////////////////////////////
+	// Ladder Auto-reward Settings
+	//////////////////////////////////////////
+	// [1] - Enable Daily Reward
+	// [2] - Enable Weekly Reward
+	// [4] - Enable Monthly Reward
+	.RewardOpt = 1|2|4;
+
+	// Item Reward
+	// Can add 1 or more..
+	// "<item id>:<amount>:<rate>{,<item id>:<amount>:<rate>{,etc..}}"
+	// <rate> 	= (n*100) Reward Chance (%)
+	// 10000 	= 100%
+	// 5000 	= 50%
+	// 1000 	= 10%
+	// 100 		= 1%
+	// i.e "501:1:5000" = 1 x Red Potion drops at 50% rate
+	//     "501:1:7000,502:1:1000" = 1 x Red Potion drops at 70% rate, 1 x Orange Potion @ 1% rate.
+	.item$ = "501:1:10000";
+
+	// Item Shop data
+	// item id to use to purchase in Item Shop.
+	.item_shop_id = 501;
+
+	// Variable/Points Reward
+	// This points will also be used for point shop
+	.var$[0] = "#PVPPOINTS"; 	// Variable (Account bound)
+	.var$[1] = "PvP Points";	// Variable Name 
+	.var$[2] = "1";				// Amount Gained
+
+	// Overrides the items sold on MVP Item Shop.. <id>,<am>{,<id>,<am>{,...}};
+	npcshopitem "PvPItemShop", 501,1,502,10;
+
+	// Overrides the items sold on MVP Point Shop.. <id>,<am>{,<id>,<am>{,...}};
+	npcshopitem "PvPPointShop", 501,100,502,100;
+
+	// Dota Announcer Settings.
+	// (Disclaimer: Taken from AnnieRuru's PvP DOTA Aannouncer)
+	.killingspree = 3;
+	.dominating = 4;
+	.megakill = 5;
+	.unstoppable = 6;
+	.wickedsick = 7;
+	.monsterkill = 8;
+	.godlike = 9;
+	.holyshit = 10;
+	.continue = 1; // after beyond-godlike, every <this number> kills will make announcement again
+	
+
+	// GM Level to not trigger the OnNPCKillEvent (when boss monster is killed)
+	// Set to 100 to let GM trigger the OnNPCKillEvent for testing purposes
+	// default = 60;
+	// NOTE: Don't go below 60 if you don't know what you're doing.
+	.gmlevel = 100;
+
+	// Top x Count
+	.top_count[0] = 10; // Daily
+	.top_count[1] = 10; // Weekly
+	.top_count[2] = 10; // Monthly
+	.top_count[3] = 10; // All Time
+	.top_count[4] = 10; // My enemies
+
+	// Top X Hunters reward limit will depend on how much you put in the arrays below:
+	
+	// For daily reward
+	setarray .reward_daily$, // "<id,amount>{,<id,amount>{,etc..}}|<zeny>"
+		"501,10,502,5|500000", // Top 1 Reward
+		"501,5,502,3|300000", // Top 2 Reward
+		"501,3,502,1|100000"; // Top 3 Reward... you can add more from here.. just follow the pattern
+	
+	// For weekly reward
+	setarray .reward_weekly$, // "<id,amount>{,<id,amount>{,etc..}}|<zeny>"
+		"501,50,502,10|5000000", // Top 1 Reward
+		"501,30,502,5|3000000", // Top 2 Reward
+		"501,10,502,3|1000000", // Top 3 Reward
+		"501,5,502,1|500000", // Top 4 Reward
+		"501,3,502,1|300000"; // Top 5 Reward... you can add more from here.. just follow the pattern
+	
+	// For monthly reward
+	setarray .reward_monthly$, // "<id,amount>{,<id,amount>{,etc..}}|<zeny>"
+		"501,100,502,100,503,100|50000000", // Top 1 Reward
+		"501,100,502,50,503,50|30000000", // Top 2 Reward
+		"501,100,502,50,503,30|10000000", // Top 3 Reward
+		"501,100,502,30|5000000", // Top 4 Reward
+		"501,50,502,10|3000000", // Top 5 Reward
+		"501,30,502,5|1000000", // Top 6 Reward
+		"501,10,502,3|500000", // Top 7 Reward
+		"501,10,502,3|500000", // Top 8 Reward
+		"501,10,502,3|500000", // Top 9 Reward
+		"501,10,502,3|500000"; // Top 10 Reward... you can add more from here.. just follow the pattern
+	
+	// Disabled Maps enabled
+	// 06guild_% maps
+	// castle maps
+	// instanced maps
+	.disablemaps = true;
+
+	if ( .disablemaps )
+		setarray .disabled_map$, "06guild_%", "%g_cas%", "%@%";
+	else 
+		.disabled_map$ = "%@%";
+	
+	for (.@i = 0; .@i < getarraysize(.disabled_map$); .@i++)
+		.disabled_map_query$ += "AND `map` NOT LIKE '"+escape_sql(.disabled_map$[.@i])+"' ";
+
+	set getvariableofnpc(.disable_map_sql_query$,"PvPCharacterStatues"), .disabled_map_query$;
+
+	.@sql$ += "CREATE TABLE IF NOT EXISTS `ultimate_pvp_ranker` (";
+	.@sql$ += "`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,";
+	.@sql$ += "`char_id` INT(11) UNSIGNED NOT NULL DEFAULT '0',";
+	.@sql$ += "`killed_char_id` INT(11) UNSIGNED NOT NULL DEFAULT '0',";
+	.@sql$ += "`map` VARCHAR(30) NOT NULL DEFAULT '',";
+	.@sql$ += "`time` TIMESTAMP NOT NULL DEFAULT NOW(),";
+	.@sql$ += "PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=1";
+	query_sql(.@sql$);
+	query_sql("CREATE TABLE IF NOT EXISTS `pvp_rank_reward_log` (`id` BIGINT unsigned NOT NULL auto_increment, `char_id` int(11) unsigned NOT NULL, `rank` int(11) unsigned NOT NULL, `reward_title` VARCHAR(255) NOT NULL default 'Unknown', `reward_list` VARCHAR(255) NULL, `status` int(11) NOT NULL default '0', `claim_time` TIMESTAMP NULL DEFAULT NULL, PRIMARY KEY ( `id` )) ENGINE=MyISAM AUTO_INCREMENT=1");
+
+
+	waitingroom "PvP Ladder", 0;
+	
+	OnHour00:
+	query_sql("SELECT YEAR(CURDATE()), MONTH(CURDATE()), WEEKOFYEAR(CURDATE()), DAY(CURDATE())", .year, .month, .week, .day);
+	if ( !$UPR_YEAR ) $UPR_YEAR = .year;
+	if ( $UPR_DAY != .day && .RewardOpt&1 ) {
+	L_DailyR:
+		Send_Reward("Daily","WHERE DAY(`time`) = '"+ $UPR_DAY +"' AND YEAR(`time`) = '"+ $UPR_YEAR +"'",getarraysize(.reward_daily$),.reward_daily$);
+		$UPR_DAY = .day;
+	}
+	if ( $UPR_WEEK != .week && .RewardOpt&2 ) {
+	L_WeeklyR:
+		Send_Reward("Weekly","WHERE WEEKOFYEAR(`time`) = '"+ $UPR_WEEK +"' AND YEAR(`time`) = '"+ $UPR_YEAR +"'",getarraysize(.reward_weekly$),.reward_weekly$);
+		$UPR_WEEK = .week;
+	}
+	if ( $UPR_MONTH != .month && .RewardOpt&4 ) {
+	L_MonthlyR:
+		Send_Reward("Monthly","WHERE MONTH(`time`) = '"+ $UPR_MONTH +"' AND YEAR(`time`) = '"+ $UPR_YEAR +"'",getarraysize(.reward_monthly$),.reward_monthly$);
+		$UPR_MONTH = .month;
+		if ( .Opt&128 ) query_sql("TRUNCATE TABLE `ultimate_pvp_ranker`");
+	}
+	if ( $UPR_YEAR != .year ) {
+		$UPR_YEAR = .year;
+		if ( .Opt&256 ) query_sql("TRUNCATE TABLE `ultimate_mvp_rank`");
+	}
+	end;
+
+L_Talk:
+	.@cid = getcharid(0);
+	switch(select(
+		"~ ^009900My Statistics^000000", 
+		( .Opt&1 ) ? "~ Top "+.top_count[0]+" Daily":"", 
+		( .Opt&2 ) ? "~ Top "+.top_count[1]+" Weekly":"", 
+		( .Opt&4 ) ? "~ Top "+.top_count[2]+" Monthly":"", 
+		( .Opt&8 ) ? "~ Top "+.top_count[3]+" All Time":"", 
+		( .Opt&16 ) ? "~ My Enemies (Top "+.top_count[4]+")":"", 
+		( .Opt&32 ) ? "~ Open "+getitemname(.item_shop_id)+" Shop":"", 
+		( .Opt&64 ) ? "~ Open "+getd(".var$[1]")+" Shop":"",
+		"~ Claim reward",
+		(getgmlevel() > 60) ? "^ff0000[GM MENU] Clear Data^000000":"",
+		(getgmlevel() > 60) ? "^ff0000[GM MENU] Send Reward^000000":""
+	)) {
+	 case 1:
+		query_sql("SELECT COUNT(`id`) FROM `ultimate_pvp_ranker` WHERE `char_id`='"+.@cid+"' "+.disabled_map_query$ +" GROUP BY `char_id`", .@total_kills);
+		query_sql("SELECT COUNT(`id`) FROM `ultimate_pvp_ranker` WHERE `killed_char_id`='"+.@cid+"' "+.disabled_map_query$ +" GROUP BY `killed_char_id`", .@total_deaths);
+		mes "^777777-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-^000000";
+		mes "Total Kills : "+ .@total_kills;
+		mes "Total Deaths : "+ .@total_deaths;
+		mes "^777777-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-^000000";
+		query_sql("SELECT `killed_char_id` FROM `ultimate_pvp_ranker` WHERE `char_id` = "+.@cid+" "+.disabled_map_query$+" ORDER BY `id` DESC LIMIT 1", .@killed_cid);
+		query_sql("SELECT `name` FROM `char` WHERE `char_id` = "+.@killed_cid, .@killed_name$);
+		query_sql("SELECT `char_id` FROM `ultimate_pvp_ranker` WHERE `killed_char_id` = "+.@cid+" "+.disabled_map_query$+" ORDER BY `id` DESC LIMIT 1", .@killer_cid);
+		query_sql("SELECT `name` FROM `char` WHERE `char_id` = "+.@killer_cid, .@killer_name$);
+		if ( .@killed_name$ == "" ) .@killed_name$ = "no data";
+		if ( .@killer_name$ == "" ) .@killer_name$ = "no data";
+		mes "Last Kill: "+ "^0055FF" + .@killed_name$ + "^000000";
+		mes "Last Death: "+ "^FF8C00" + .@killer_name$ + "^000000";
+		mes "^777777-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-^000000";
+		close;
+	 case 2: View_Rankings("Daily","DATE(`time`) = CURDATE() AND YEAR(`time`) = YEAR(CURDATE())",.top_count[0]); break;
+	 case 3: View_Rankings("Weekly","WEEKOFYEAR(`time`) = WEEKOFYEAR(CURDATE()) AND YEAR(`time`) = YEAR(CURDATE())",.top_count[1]); break;
+	 case 4: View_Rankings("Monthly","MONTH(`time`) = MONTH(CURDATE()) AND YEAR(`time`) = YEAR(CURDATE())",.top_count[2]); break;
+	 case 5: View_Rankings("All Time","YEAR(`time`) = YEAR(CURDATE())",.top_count[3]); break;
+	 case 6: View_Rankings("Enemy","`killed_char_id` = "+.@cid,.top_count[4]); break;
+	 case 7: // Item shop
+		callshop "PvPItemShop", 4;
+		mes "You currenlty have ^ff0000"+(countitem(.item_shop_id) ? countitem(.item_shop_id):"no" )+" "+ getitemname(.item_shop_id) +"^000000 to purchase from this shop.";
+		end;
+	 case 8: // Point shop
+		callshop "PvPPointShop", 4;
+		mes "You currenlty have ^ff0000"+((getd(.var$[0])) ? getd(.var$[0]):"no" )+" "+ getd(".var$[1]") +"^000000 to purchase from this shop.";
+		end;
+	 case 9: // Claim reward
+		if(!(.@c = query_sql("SELECT `id`, `rank`, `reward_title`, `reward_list` FROM `pvp_rank_reward_log` WHERE `char_id` = '"+getcharid(0)+"' AND `status` = '0' ORDER BY `id`", .@id, .@rank, .@reward_title$, .@list$))) {
+			mes "No rewards to claim.";
+			close;
+		}
+		for ( .@i = 0; .@i < .@c; .@i++ )
+			.@menu_list$ += "> "+ .@reward_title$[.@i] +" (Rank #"+.@rank[.@i]+") :";
+		.@s = select(.@menu_list$)-1;
+		explode(.@T$,.@list$[.@s],"|");
+		explode(.@TT$,.@T$[0],",");
+		.@reward_zeny = atoi(.@T$[1]);
+		mes "You will get the ff:";
+		for (.@j = 0; .@j < getarraysize(.@TT$); .@j +=2) {
+			.@reward_item[getarraysize(.@reward_item)] = atoi(.@TT$[.@j]);
+			.@reward_amount[getarraysize(.@reward_amount)] = atoi(.@TT$[.@j+1]);
+			mes "~ "+ getitemname(atoi(.@TT$[.@j])) +" x "+ atoi(.@TT$[.@j+1]);
+		}
+		if ( .@reward_zeny ) mes "~ "+F_InsertComma(.@reward_zeny)+"z";
+		mes "Are you sure you want to claim your reward?";
+		next;
+		select("Yes");
+		if ( MAX_ZENY < (Zeny+.@reward_zeny) ) {
+			mes "You cannot hold this much zeny in your inventory..";
+			close;
+		}
+		if ( !checkweight2(.@reward_item,.@reward_amount) ) {
+			mes "You cannot hold the reward in your inventory..";
+			close;
+		}
+		for (.@j = 0; .@j < getarraysize(.@TT$); .@j +=2)
+			getitem atoi(.@TT$[.@j]), atoi(.@TT$[.@j+1]);
+		if ( .@reward_zeny ) Zeny += .@reward_zeny;
+		query_sql("UPDATE `pvp_rank_reward_log` SET `status` = '1', `claim_time` = NOW() WHERE `id` = '"+.@id[.@s]+"'");
+		mes "Congratulations!";
+		close;
+	 case 10:
+		mes "Clearing data will delete";
+		mes "Ranking data logs to clear some SQL space";
+		mes " ";
+		mes "Only 'ultimate_pvp_ranker' sql table will be deleted.";
+		mes "All time, Global and Personal Record Statistics will remain.";
+		next;
+		select("Sure No problem");
+		message strcharinfo(0), "Deleting...";
+		progressbar "", 5;
+		mes "All ranking data logs has been cleared..";
+		close2;
+		query_sql("TRUNCATE TABLE `ultimate_pvp_ranker`");
+		end;
+	 case 11:
+		mes "Test sending rewards";
+		next;
+		switch(select("Daily:Weekly:Monthly")){
+			case 1: goto L_DailyR; break;
+			case 2: goto L_WeeklyR; break;
+			case 3: goto L_MonthlyR; break;
+		}
+		end;
+	}
+	end;
+
+OnPCKillEvent:
+	.@killedrid = killedrid;
+	if ( .@killedrid != getcharid(3) && getgmlevel() < .gmlevel ) {
+		if (.Options&16) { 
+			.@ip_src$ = replacestr(getcharip(),".","_");
+			.@ip_tgt$ = replacestr(getcharip(.@killedrid),".","_");
+			if ( .@ip_src$ == .@ip_tgt$ ) {
+				dispbottom "Same IP Detected. Not recorded.";
+				end;
+			}
+		}
+		if (.Options&32) { 
+			query_sql("SELECT `last_unique_id` FROM `login` WHERE `account_id`="+ .@killedrid, .@unique_id_tgt$);
+			query_sql("SELECT `last_unique_id` FROM `login` WHERE `account_id`="+ getcharid(3), .@unique_id_src$);
+			if ( .@unique_id_tgt$ == .@unique_id_src$ ) {
+				dispbottom "Dual Client Detected. Not recorded.";
+				end;
+			}
+		}
+		if ( .Options&1 ) {
+			if ( .Options&2 )
+				F_Reward_Item(.item$);
+			if ( .Options&4 )
+				F_Reward_Var(.var$[0],.var$[1],atoi(.var$[2]));	
+		}
+		.@killed$ = rid2name(.@killedrid);
+		.@cid = getcharid(0, .@killed$);
+		.@map$ = strcharinfo(3);
+		query_sql("INSERT INTO `ultimate_pvp_ranker` (`char_id`,`killed_char_id`,`map`) VALUES ("+getcharid(0)+","+.@cid+",'"+escape_sql(.@map$)+"')");
+		if ( .Options&64 )
+			announce strcharinfo(0) +" has killed "+ .@killed$ +" in "+ .@map$, bc_all;
+		if ( .Options&128 ) {
+			.@killeraid = getcharid(3);
+			@PlayersKilledStreak++;
+			if ( @PlayersKilledStreak == .killingspree )
+				setarray .@streakname$,"killingspree.wav","is on a KILLING SPREE","!";
+			else if ( @PlayersKilledStreak == .dominating )
+				setarray .@streakname$,"dominating.wav","is DOMINATING","!";
+			else if ( @PlayersKilledStreak == .megakill )
+				setarray .@streakname$,"megakill.wav","has a MEGA KILL","!";
+			else if ( @PlayersKilledStreak == .unstoppable )
+				setarray .@streakname$,"unstoppable.wav","is UNSTOPPABLE","!!";
+			else if ( @PlayersKilledStreak == .wickedsick )
+				setarray .@streakname$,"wickedsick.wav","is WICKED SICK","!!";
+			else if ( @PlayersKilledStreak == .monsterkill )
+				setarray .@streakname$,"monsterkill.wav","has a MONSTER KILL","!!";
+			else if ( @PlayersKilledStreak == .godlike )
+				setarray .@streakname$,"godlike.wav","is GODLIKE","!!!";
+			else if ( @PlayersKilledStreak >= .holyshit && ( (@PlayersKilledStreak - .holyshit) % .continue == 0 ) )
+				setarray .@streakname$,"holyshit.wav","is BEYOND GODLIKE",". Someone KILL "+( (sex)?"HIM":"HER" ) +"!!!!!!";
+			if ( .@streakname$[1] != "" ) {
+				announce strcharinfo(0) +" "+ .@streakname$[1] +"["+ @PlayersKilledStreak +"] "+( (.announcemap)?("at "+ .@map$):"") + .@streakname$[2],bc_all;
+				soundeffectall .@streakname$[0], 0;
+			}
+			@dota_multikills++;
+			deltimer strnpcinfo(0)+"::OnStreakReset";
+			addtimer 18000,strnpcinfo(0)+"::OnStreakReset";
+			.@dota_multikills = @dota_multikills;
+			if ( .@dota_multikills == 2 ) {
+				announce strcharinfo(0) +" just got a Double Kill !",16;
+				soundeffectall "doublekill.wav",0;
+			}
+			else if ( .@dota_multikills == 3 ) {
+				announce strcharinfo(0) +" just got a Triple Kill !!!",16;
+				soundeffectall "triplekill.wav",0;
+			}
+			else if ( .@dota_multikills == 4 ) {
+				announce strcharinfo(0) +" just got a Ultra Kill !!!",16;
+				soundeffectall "ultrakill.wav",0;
+			}
+			else if ( .@dota_multikills >= 5 ) {
+				announce strcharinfo(0) +" is on a Rampage !!!",16;
+				soundeffectall "rampage.wav",0;
+			}
+			attachrid(.@killedrid);
+			if ( bc_all >= .holyshit )
+				.@streakname$ = "Beyond Godlike";
+			else if ( @PlayersKilledStreak >= .godlike )
+				.@streakname$ = "Godlike";
+			else if ( @PlayersKilledStreak >= .monsterkill )
+				.@streakname$ = "Monster Kill";
+			else if ( @PlayersKilledStreak >= .wickedsick )
+				.@streakname$ = "Wicked Sick";
+			else if ( @PlayersKilledStreak >= .unstoppable )
+				.@streakname$ = "Unstoppable";
+			else if ( @PlayersKilledStreak >= .megakill )
+				.@streakname$ = "Mega-kill";
+			else if ( @PlayersKilledStreak >= .dominating )
+				.@streakname$ = "Dominating";
+			else if ( @PlayersKilledStreak >= .killingspree )
+				.@streakname$ = "Killing Spree";
+			if ( @PlayersKilledStreak >= .killingspree && .@killeraid == getcharid(3) )
+				announce strcharinfo(0) +" has ended "+( (sex)?"him":"her" )+" own "+ .@streakname$ +"["+ @PlayersKilledStreak +"] streak at "+ .@map$,bc_all;
+			else if ( @PlayersKilledStreak >= .killingspree )
+				announce rid2name(.@killeraid) +" has ended "+ strcharinfo(0) +"'s "+ .@streakname$ +"["+ @PlayersKilledStreak +"] streak at "+ .@map$,bc_all;
+			else if ( .announcekill && .@killeraid != getcharid(3) )
+				announce rid2name(.@killeraid) +" has pawned "+ strcharinfo(0) +"'s head at "+ .@map$,bc_all;
+			@PlayersKilledStreak = 0;
+			detachrid;
+		}
+	}
+	end;
+
+OnStreakReset:
+	set @dota_multikills, 0;
+	end;
+
+	function	View_Rankings	{
+		.@title$ = getarg(0,"");
+		.@sql$ = getarg(1,"");
+		.@limit = getarg(2,10);
+		if ( .@title$ == "Enemy" ) .@enemy = true;
+		mes "^777777-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-^000000";
+		mes "^777777Top "+.@limit+" "+.@title$+" PvP "+(.@enemy ? "Enemy":"Hunters")+"^000000";
+		mes "^777777-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-^000000";
+		if(!(.@nb = query_sql("SELECT `char_id`, COUNT(`id`) AS `total` FROM `ultimate_pvp_ranker` WHERE "+.@sql$+" "+.disabled_map_query$ +" GROUP BY `char_id` ORDER BY `total` DESC LIMIT "+.@limit, .@cid, .@total))) {
+			mes "^ff0000No data found...^000000";
+			close;
+		}
+		for ( .@i = 0; .@i < .@nb; .@i++ ) {
+			query_sql("SELECT `name` FROM `char` WHERE `char_id` = '"+.@cid[.@i]+"'",.@name$);
+			mes "^777777Top "+(.@i+1)+" -^000000 ^0000ff"+ .@name$ +"^000000 ^777777~^000000 ^ff0000"+ .@total[.@i] +"^000000 ^777777"+ (.@enemy ? "death":"kill") + ((.@total[.@i]>1)?"s":"")+"^000000";
+		}
+		close;
+	}
+
+	function	Send_Reward	{
+		.@title$ = getarg(0,"");
+		.@sql$ = getarg(1,"");
+		.@limit = getarg(2,0);
+
+		if(!(.@nb = query_sql("SELECT `char_id`, COUNT(`id`) FROM `ultimate_pvp_ranker` "+.@sql$+" GROUP BY `char_id` ORDER BY COUNT(`id`) DESC LIMIT "+ .@limit, .@char_id, .@count)))
+			return;
+		freeloop(1);
+		for (.@i = 0; .@i < .@nb; .@i++) {
+			.@list$ = getelementofarray(getarg(3),.@i);
+			query_sql("INSERT INTO `pvp_rank_reward_log` (`char_id`,`rank`,`reward_title`,`reward_list`) VALUES ('"+.@char_id[.@i]+"','"+(.@i+1)+"','"+escape_sql("Top "+.@limit+" "+.@title$+" Player Hunter")+"','"+escape_sql(.@list$)+"')");
+		}
+		freeloop(0);
+		return;
+	}
+
+	function	F_Reward_Item	{
+		explode(.@var$,getarg(0),",");
+		.@size = getarraysize(.@var$);
+		if ( getarg(0) == "null" || getargcount() > 1 ) {
+			debugmes "Please input data properly. F_Reward_Item(\"<item id1>:<amount1>:<rate1>{<item id2>,<amount 2>:<rate2>{,ect..}\")";
+			return;
+		}
+		for (.@i = 0; .@i<.@size; .@i++) {
+			explode(.@item$,.@var$[.@i],":");
+			if ( getitemname(atoi(.@item$[0])) == "null" ) {
+				debugmes "F_Reward_Item(NPC: "+strnpcinfo(0)+") item ID #"+.@item$[0]+" is invalid (skipped).";
+				return;
+			}
+			if ( !atoi(.@item$[1]) ) {
+				debugmes "F_Reward_Item(NPC: "+strnpcinfo(0)+") item ID #"+.@item$[0]+" has invalid amount (skipped).";
+				return;
+			}
+			if ( !atoi(.@item$[2]) && .Options&8 ) {
+				debugmes "F_Reward_Item(NPC: "+strnpcinfo(0)+") item ID #"+.@item$[0]+" has invalid drop rate (skipped).";
+				return;
+			}
+			if ( !.Options&8 || .Options&8 && rand(10000) <= atoi(.@item$[2]) )
+				getitem atoi(.@item$[0]), atoi(.@item$[1]);
+		}
+		return;
+	}
+
+	function	F_Reward_Var	{
+		.@var$ = getarg(0); // varable
+		.@var_name$ = getarg(1); // variable name
+		.@amount = getarg(2,1); // default amount is 1
+		if ( .@var$ == "null" || .@var_name$ == "null" ) {
+			debugmes "F_Reward_Var(NPC: "+strnpcinfo(0)+") invalid format.";
+			return;
+		}
+		setd .@var$, getd(.@var$) + .@amount;
+		dispbottom "You gained "+ .@amount +" "+ .@var_name$ +". You now have "+ getd(.@var$) +" "+ .@var_name$ +".";
+		return;
+	}
+}
+
+// PVP Item Shop Data
+// Edit the items here.. ".item_shop_id" currently set to '501' (Red Potion)
+// Must match the data you input above
+-	itemshop	PvPItemShop	FAKE_NPC,501,607:10
+
+// PVP Point Shop Data
+// Edit the points here.. "#PVPPOINTS" currently set to '#PVPPOINTS'
+// Must match the data you input above
+-	pointshop	PvPPointShop	FAKE_NPC,#PVPPOINTS,901:2,903:1,904:5
+
+// Don't touch this part
+prontera,0,0,0	script	pvp_player_statue#0	-1,{
+	end;
+OnInit:
+	.@id = strnpcinfo(2);
+	set getvariableofnpc(.statue[.@id], "PvPCharacterStatues"), getnpcid(0);
+	end;
+}
+// Statue locations change here
+askald,104,205,4	duplicate(pvp_player_statue#0)	pvp_player_statue#1	HIDDEN_WARP_NPC // Top 1
+askald,104,201,4	duplicate(pvp_player_statue#0)	pvp_player_statue#2	HIDDEN_WARP_NPC // Top 2
+askald,104,208,4	duplicate(pvp_player_statue#0)	pvp_player_statue#3	HIDDEN_WARP_NPC
+askald,104,197,4	duplicate(pvp_player_statue#0)	pvp_player_statue#4	HIDDEN_WARP_NPC
+askald,107,197,4	duplicate(pvp_player_statue#0)	pvp_player_statue#5	HIDDEN_WARP_NPC
+askald,109,197,4	duplicate(pvp_player_statue#0)	pvp_player_statue#6	HIDDEN_WARP_NPC
+askald,111,197,4	duplicate(pvp_player_statue#0)	pvp_player_statue#7	HIDDEN_WARP_NPC
+askald,113,197,4	duplicate(pvp_player_statue#0)	pvp_player_statue#8	HIDDEN_WARP_NPC
+askald,115,197,4	duplicate(pvp_player_statue#0)	pvp_player_statue#9	HIDDEN_WARP_NPC
+askald,117,197,4	duplicate(pvp_player_statue#0)	pvp_player_statue#10	HIDDEN_WARP_NPC // Top 10
+
+-	script	PvPCharacterStatues	-1,{
+OnReset:
+OnInit:
+	// How many statues to spawn?
+	.limit = 3;
+
+	sleep 2000;
+	OnTimer30000:
+	.@size = query_sql("SELECT `char_id`, COUNT(`id`) AS `total` FROM `ultimate_pvp_ranker` WHERE MONTH(`time`) = MONTH(CURDATE()) AND YEAR(`time`) = YEAR(CURDATE()) GROUP BY `char_id` ORDER BY `total` DESC LIMIT "+.limit, .@cid, .@total);
+	for (.@i = 0; .@i < .@size; ++.@i) {
+		setunitdata .statue[.@i+1], UNPC_HEADTOP, 0;
+		setunitdata .statue[.@i+1], UNPC_HEADMIDDLE, 0;
+		setunitdata .statue[.@i+1], UNPC_HEADBOTTOM, 0;
+	}
+	for( .@i = 0; .@i < .@size; .@i++ ) {
+		query_sql( " SELECT `char_id`, `name`, `class`, `option`, `hair`, `hair_color`, `clothes_color`, `weapon`, `shield`, `head_top`, `head_mid`, `head_bottom`, `sex`, `body` FROM `char` WHERE `char_id` = "+.@cid[.@i], .@char_id, .@name$, .@class, .@option, .@hair, .@hair_color, .@clothes_color, .@weapon, .@shield, .@head_top, .@head_mid, .@head_bottom, .@sex$, .@body );
+		setunitdata .statue[.@i+1], UNPC_LOOKDIR, DIR_SOUTH;
+		setunitdata .statue[.@i+1], UNPC_CLASS, .@class;
+		setunitdata .statue[.@i+1], UNPC_SEX, (.@sex$ == "M")? SEX_MALE:SEX_FEMALE;
+		setunitdata .statue[.@i+1], UNPC_HAIRSTYLE, .@hair;
+		setunitdata .statue[.@i+1], UNPC_HAIRCOLOR, .@hair_color;
+		setunitdata .statue[.@i+1], UNPC_CLOTHCOLOR, .@clothes_color;
+		setunitdata .statue[.@i+1], UNPC_BODY2, .@body;
+		setunitdata .statue[.@i+1], UNPC_HEADTOP, .@head_top;
+		setunitdata .statue[.@i+1], UNPC_HEADMIDDLE, .@head_mid;
+		setunitdata .statue[.@i+1], UNPC_HEADBOTTOM, .@head_bottom;
+		setnpcdisplay "pvp_player_statue#"+(.@i+1), "[Top "+(.@i+1)+"] "+.@name$+"#"+.@i;
+	}
+	initnpctimer;
+	end;
+}

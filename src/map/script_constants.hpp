@@ -519,9 +519,11 @@
 	export_constant(MF_NOPETCAPTURE);
 	export_constant(MF_NOBUYINGSTORE);
 	export_constant(MF_NODYNAMICNPC);
+	export_constant(MF_PK);
 	export_constant(MF_NOBANK);
 	export_constant(MF_SPECIALPOPUP);
 	export_constant(MF_NOMACROCHECKER);
+	export_constant(MF_NOITEM);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);

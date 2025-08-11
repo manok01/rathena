@@ -49,6 +49,7 @@ Body:
       commands: true
       rates: true
       exp: true
+      load: true
       mobinfo: true
       iteminfo: true
       whodrops: true

@@ -6826,7 +6826,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata))<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata))<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((mapdata->getMapFlag(MF_FORCEMINEFFECT) || mapdata_flag_gvg2(mapdata))<<3)| // USE_SIMPLE_EFFECT - Forces simpler skill effects, like /mineffect command
-		((mapdata->getMapFlag(MF_NOLOCKON) || mapdata_flag_vs(mapdata) || (sd && sd->duel_group > 0))<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
+		((mapdata->getMapFlag(MF_NOLOCKON) || mapdata_flag_vs(mapdata) || mapdata->getMapFlag(MF_PK) || (sd && sd->duel_group > 0))<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
 		((mapdata->getMapFlag(MF_PVP))<<5)| // COUNT_PK - Show the PvP counter
 		((mapdata->getMapFlag(MF_PARTYLOCK))<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
 		((mapdata->getMapFlag(MF_BATTLEGROUND))<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
@@ -10496,8 +10496,8 @@ static bool clif_process_message(map_session_data* sd, bool whisperFormat, char*
  */
 inline void clif_pk_mode_message(map_session_data * sd)
 {
-	if (battle_config.pk_mode && battle_config.pk_mode_mes &&
-		sd && map_getmapflag(sd->m, MF_PVP)) {
+	if (battle_config.pk_mode_mes &&
+		sd && (battle_config.pk_mode || map_getmapflag(sd->m, MF_PK)) && !map_getmapflag(sd->m, MF_PVP)) {
 		if( (int32)sd->status.base_level < battle_config.pk_min_level ) {
 			char output[CHAT_SIZE_MAX];
 			// 1504: You've entered a PK Zone (safe until level %d).
@@ -11538,16 +11538,20 @@ void clif_parse_ChangeDir(int32 fd, map_session_data *sd)
 }
 
 
-/// Request to show an emotion (CZ_REQ_EMOTION).
-/// 00bf <type>.B
-/// type:
-///     @see enum emotion_type
+/// Request to show an emotion 
+/// 00bf <type>.B (CZ_REQ_EMOTION).
 void clif_parse_Emotion(int32 fd, map_session_data *sd){
 	if( sd == nullptr ){
 		return;
 	}
 
-	int32 emoticon = RFIFOB(fd,packet_db[RFIFOW(fd,0)].pos[0]);
+	const PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
+
+	if( p->emotion_type >= ET_MAX ){
+		return;
+	}
+	
+	emotion_type emoticon = static_cast<emotion_type>( p->emotion_type );
 
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2 || pc_checkskill(sd, SU_BASIC_SKILL) >= 1) {
 		if (emoticon == ET_CHAT_PROHIBIT) {// prevent use of the mute emote [Valaris]
@@ -11575,10 +11579,10 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 		}
 
 		if(battle_config.client_reshuffle_dice && emoticon>=ET_DICE1 && emoticon<=ET_DICE6) {// re-roll dice
-			emoticon = rnd()%6+ET_DICE1;
+			emoticon = static_cast<emotion_type>( rnd()%6+ET_DICE1 );
 		}
 
-		clif_emotion( *sd, static_cast<emotion_type>( emoticon ) );
+		clif_emotion( *sd, emoticon );
 	} else
 		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 1 );
 }
@@ -14866,7 +14870,6 @@ void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 		StringBuf_Init(&command);
 		StringBuf_Printf(&command, "%czeny %d", atcommand_symbol, INT_MAX);
 		is_atcommand(fd, sd, StringBuf_Value(&command), 1);
-		StringBuf_Destroy(&command);
 		return;
 	}
 
@@ -14884,7 +14887,6 @@ void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 				StringBuf_Printf(&command, "%citem %u 20", atcommand_symbol, id->nameid);
 		}
 		is_atcommand(fd, sd, StringBuf_Value(&command), 1);
-		StringBuf_Destroy(&command);
 		return;
 	}
 

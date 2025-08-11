@@ -1830,7 +1830,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 #ifdef RENEWAL
 			((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON) || skill_id == GN_FIRE_EXPANSION_ACID))
 #else
-			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
+			((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON) || skill_id == CR_ACIDDEMONSTRATION))
 #endif
 			damage -= damage * tsc->getSCE(SC_DEFENDER)->val2 / 100;
 
@@ -2013,7 +2013,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	} //End of caster SC_ check
 
 	//PK damage rates
-	if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
+ 	if ((battle_config.pk_mode && map_getmapflag(bl->m, MF_PVP) > 0) || map_getmapflag(bl->m, MF_PK) > 0)
 		damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
 
 	if(battle_config.skill_min_damage && damage > 0 && damage < div_) {
@@ -2206,10 +2206,11 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
  * @return Modified damage
  */
 int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint16 skill_id, int32 flag) {
+ 	map_data *mapdata = map_getmapdata(src.m);
 	if (damage == 0) // No reductions to make.
 		return 0;
 
-	if (battle_config.pk_mode == 0) // PK mode is disabled.
+ 	if (battle_config.pk_mode == 0 && !mapdata->getMapFlag(MF_PK)) // PK mode is disabled.
 		return damage;
 
 	if (src.type == BL_PC && bl.type == BL_PC) {
@@ -8627,7 +8628,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case LG_RAYOFGENESIS:
-						skillratio += -100 + 350 * skill_lv + sstatus->int_; // !TODO: What's the INT bonus?
+						skillratio += -100 + 350 * skill_lv;
+						skillratio += sstatus->int_ * 3;
 						RE_LVL_DMOD(100);
 						break;
 					case NPC_RAYOFGENESIS:
@@ -11489,7 +11491,7 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 		return (flag&state)?1:-1;
 	}
 
-	if( mapdata_flag_vs(mapdata) )
+	if( mapdata_flag_vs(mapdata) || mapdata->getMapFlag(MF_PK) )
 	{ //Check rivalry settings.
 		int32 sbg_id = 0, tbg_id = 0;
 		if(mapdata->getMapFlag(MF_BATTLEGROUND) )
@@ -11517,7 +11519,7 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 		if( state&BCT_ENEMY && mapdata->getMapFlag(MF_BATTLEGROUND) && sbg_id && sbg_id == tbg_id )
 			state &= ~BCT_ENEMY;
 
-		if( state&BCT_ENEMY && battle_config.pk_mode && !mapdata_flag_gvg(mapdata) && s_bl->type == BL_PC && t_bl->type == BL_PC )
+		if( state&BCT_ENEMY && (battle_config.pk_mode || mapdata->getMapFlag(MF_PK)) && !mapdata_flag_gvg(mapdata) && s_bl->type == BL_PC && t_bl->type == BL_PC )
 		{ // Prevent novice engagement on pk_mode (feature by Valaris)
 			TBL_PC *sd = (TBL_PC*)s_bl, *sd2 = (TBL_PC*)t_bl;
 			if (

@@ -37141,6 +37141,7 @@ Body:
     Type: Weapon
     SubType: Dagger
     Buy: 240000
+    Sell: 50000
     Weight: 600
     Attack: 150
     Range: 1
@@ -62939,7 +62940,7 @@ Body:
      NoCart: true
      NoMail: true
     EquipScript: |
-      changebase Job_Genetic;
+      changebase Job_Blacksmith;
     UnEquipScript: |
       changebase Class;
     View: 96

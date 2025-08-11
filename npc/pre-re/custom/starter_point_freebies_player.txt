@@ -5,7 +5,7 @@
 //==================================================
 // Author: Wankie
 //==================================================
-new_1-1,56,114,3	script	Freebies	642,{
+askald,140,251,3	script	Freebies	642,{
 	if(#giver_freebies == 0){
 	mes "[ ^000088Freebies^000000 ]";
 	mes "Welcome ^008000"+ strcharinfo ( 0 ) +",^000000 My Name Is Freebies.";
@@ -14,16 +14,16 @@ new_1-1,56,114,3	script	Freebies	642,{
 	mes "Are You Ready?";
 	mes "Ok...";
 	mes	"Rok On!";
-		getitem	20307,1;	//Costume Beginner Cap
-		rentitem 50001,604800;	//Costume Adventurer's Backpack
-		getitem	12324,25;	//Novice Butterfly Wing 
-		getitem	12323,100;	//Novice Fly Wing
-	    getitem 12263,10;	//Field Manual 50%
-		getitem 7059,25;	//Free Ticket for Kafra Storage
-		getitem	7060,25;	//Free Ticket for Kafra Transportation
-		getitem 12210,10;	//Bubble Gum 100%
-		getitem	14592,10;	//JOB Battle Manual
-		getitem	14002,20;	//Elite Siege Supply Box UT
+		getitem	20307,1,Bound_Account;	//Costume Beginner Cap
+		rentitem 50001,604800,Bound_Account;	//Costume Adventurer's Backpack
+		getitem	12324,25,Bound_Account;	//Novice Butterfly Wing 
+		getitem	12323,100,Bound_Account;	//Novice Fly Wing
+	    getitem 12263,10,Bound_Account;	//Field Manual 50%
+		getitem 7059,25,Bound_Account;	//Free Ticket for Kafra Storage
+		getitem	7060,25,Bound_Account;	//Free Ticket for Kafra Transportation
+		getitem 12210,10,Bound_Account;	//Bubble Gum 100%
+		getitem	14592,10,Bound_Account;	//JOB Battle Manual
+		getitem	14002,20,Bound_Account;	//Elite Siege Supply Box UT
         set #giver_freebies,1;
 		end;
 }
@@ -32,7 +32,7 @@ new_1-1,56,114,3	script	Freebies	642,{
 if(#giver_freebies == 1) {
 	mes "[ ^000088Freebies^000000 ]";
 	mes "You Already Claimed Your Rewards";
-	mes "Have Fun In ^E066FFYour Ragnarok Online^000000 Enjoy Your Adventure Here Thank You Mwuh!";
+	mes "Have Fun In ^E066FFAlea Ragnarok Online^000000 Enjoy Your Adventure Here Thank You Mwuh!";
 	emotion ET_HNG;
 	close;
 	

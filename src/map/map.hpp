@@ -684,9 +684,11 @@ enum e_mapflag : int16 {
 	MF_NOPETCAPTURE,
 	MF_NOBUYINGSTORE,
 	MF_NODYNAMICNPC,
+	MF_PK,
 	MF_NOBANK,
 	MF_SPECIALPOPUP,
 	MF_NOMACROCHECKER,
+	MF_NOITEM,
 	MF_MAX
 };
 
@@ -836,6 +838,8 @@ struct map_data {
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
 	int32 mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
 	t_tick last_macrocheck;
+
+	std::vector<int> noitemlist;
 
 	// Instance Variables
 	int32 instance_id;

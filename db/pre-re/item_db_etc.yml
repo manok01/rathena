@@ -1118,6 +1118,7 @@ Body:
     Name: Gold
     Type: Etc
     Buy: 200000
+    Sell: 25000
     Weight: 200
     Flags:
       BuyingStore: true

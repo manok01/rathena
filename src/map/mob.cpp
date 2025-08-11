@@ -33,6 +33,7 @@
 #include "itemdb.hpp"
 #include "log.hpp"
 #include "map.hpp"
+#include "mapreg.hpp"
 #include "mercenary.hpp"
 #include "npc.hpp"
 #include "party.hpp"
@@ -1055,6 +1056,12 @@ TIMER_FUNC(mob_delayspawn){
 		md->spawn_timer = INVALID_TIMER;
 		mob_spawn(md);
 	}
+	/* [cook1e]
+	Spawn MVP and enable MF_PK
+	MF_MAPMVP - Disable going to savepoint once you die 2 times in a PVP map.
+	*/
+	if(md->state.boss)
+		map_setmapflag(bl->m, MF_PK, true);
 	return 0;
 }
 
@@ -1135,6 +1142,13 @@ int32 mob_spawn (struct mob_data *md)
 		md->m = md->spawn->m;
 		md->x = md->centerX;
 		md->y = md->centerY;
+		
+		/* [cook1e]
+		Spawn MVP and enable MF_PK
+		MF_MAPMVP - Disable going to savepoint once you die 2 times in a PVP map.
+		*/
+		if(md->spawn->state.boss)
+			map_setmapflag(md->m, MF_PK, true);
 
 		// Search can be skipped for boss monster spawns if spawn location is fixed
 		// We can't skip normal monsters as they should pick a random location if the cell is blocked (e.g. Icewall)
@@ -1220,6 +1234,12 @@ int32 mob_spawn (struct mob_data *md)
 		clif_spawn(md);
 	skill_unit_move(md,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
+
+	if(md->spawn && md->spawn->state.boss){
+		std::string mapregname = "$" + std::to_string(md->mob_id) + "_" + std::to_string(md->m);
+		mapreg_setreg(reference_uid( add_str( mapregname.c_str() ), 0 ),2);
+	}
+
 	return 0;
 }
 
@@ -2838,7 +2858,7 @@ int32 mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int
 			int32 drop_rate_bonus = 100;
 
 			// In PK mode players get an additional drop chance bonus of 25% if there is a 20 level difference
-			if( battle_config.pk_mode && (int32)(mob->lv - sd->status.base_level) >= 20 ){
+			if( (battle_config.pk_mode || map_getmapflag(src->m, MF_PK)) && (int)(mob->lv - sd->status.base_level) >= 20 ){
 				drop_rate_bonus += 25;
 			}
 
@@ -3623,6 +3643,23 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	// MvP tomb [GreenBox]
 	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && map_getmapflag(md->m, MF_NOTOMB) != 1)
 		mvptomb_create(md, mvp_sd != nullptr ? mvp_sd->status.name : (first_sd != nullptr ? first_sd->status.name : nullptr), time(nullptr));
+	
+	/* [cook1e]
+	Dead MVP disable MF_PVP and MF_MAPMVP
+	MF_MAPMVP - Disable going to savepoint once you die 2 times in a PVP map.
+	*/
+	if(md->spawn->state.boss)
+		map_setmapflag(md->m, MF_PK, false);	
+	
+	if(md->spawn->state.boss){
+		std::string mapregname = "$" + std::to_string(md->db->id) + "_" + std::to_string(md->m);
+		std::string mapregnamestr = mapregname + "$";
+		mapreg_setreg(reference_uid( add_str( mapregname.c_str() ), 0 ),1);
+		mapreg_setreg(reference_uid( add_str( mapregname.c_str() ), 1 ),md->m);
+		mapreg_setreg(reference_uid( add_str( mapregname.c_str() ), 2 ),md->m);
+		mapreg_setreg(reference_uid( add_str( mapregname.c_str() ), 3 ),time(NULL));
+		mapreg_setregstr(reference_uid( add_str( mapregnamestr.c_str() ), 4),mvp_sd ? mvp_sd->status.name : NULL);
+	}
 
 	if( !rebirth )
 		mob_setdelayspawn(md); //Set respawning.
