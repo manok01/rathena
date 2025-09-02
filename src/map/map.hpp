@@ -26,21 +26,19 @@
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
-namespace rathena{
-	namespace server_map{
-		class MapServer : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
-				void finalize() override;
-				void handle_crash() override;
-				void handle_shutdown() override;
+namespace rathena::server_map {
+class MapServer : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
+		void finalize() override;
+		void handle_crash() override;
+		void handle_shutdown() override;
 
-			public:
-				MapServer() : Core( e_core_type::MAP ){
+	public:
+		MapServer() : Core( e_core_type::MAP ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 struct npc_data;
@@ -69,7 +67,7 @@ void map_msg_reload(void);
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
-#define MAX_LEVEL 275
+#define MAX_LEVEL 99
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12

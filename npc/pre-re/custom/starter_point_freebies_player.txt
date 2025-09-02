@@ -5,7 +5,7 @@
 //==================================================
 // Author: Wankie
 //==================================================
-askald,140,251,3	script	Freebies	642,{
+new_1-1,57,114,3	script	Freebies	642,{
 	if(#giver_freebies == 0){
 	mes "[ ^000088Freebies^000000 ]";
 	mes "Welcome ^008000"+ strcharinfo ( 0 ) +",^000000 My Name Is Freebies.";
@@ -18,12 +18,11 @@ askald,140,251,3	script	Freebies	642,{
 		rentitem 50001,604800,Bound_Account;	//Costume Adventurer's Backpack
 		getitem	12324,25,Bound_Account;	//Novice Butterfly Wing 
 		getitem	12323,100,Bound_Account;	//Novice Fly Wing
-	    getitem 12263,10,Bound_Account;	//Field Manual 50%
+	    getitem 12411,10,Bound_Account;	//HE Battle Manual 100% 15menit
+		getitem 12212,10,Bound_Account;	//HE Bubble Gum 100% 15menit
 		getitem 7059,25,Bound_Account;	//Free Ticket for Kafra Storage
 		getitem	7060,25,Bound_Account;	//Free Ticket for Kafra Transportation
-		getitem 12210,10,Bound_Account;	//Bubble Gum 100%
-		getitem	14592,10,Bound_Account;	//JOB Battle Manual
-		getitem	14002,20,Bound_Account;	//Elite Siege Supply Box UT
+		getitem	14002,10,Bound_Account;	//Elite Siege Supply Box UT
         set #giver_freebies,1;
 		end;
 }

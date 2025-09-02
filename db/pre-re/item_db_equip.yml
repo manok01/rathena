@@ -40621,7 +40621,7 @@ Body:
     Locations:
       Right_Hand: true
     WeaponLevel: 4
-    EquipLevelMin: 130
+    EquipLevelMin: 99
     Refineable: true
     Script: |
       bonus bAspdRate,getrefine()/2;
@@ -40639,7 +40639,7 @@ Body:
     Locations:
       Right_Hand: true
     WeaponLevel: 4
-    EquipLevelMin: 130
+    EquipLevelMin: 99
     Refineable: true
     Script: |
       bonus bBaseAtk,getrefine()*5;
@@ -40658,7 +40658,7 @@ Body:
     Locations:
       Right_Hand: true
     WeaponLevel: 4
-    EquipLevelMin: 130
+    EquipLevelMin: 99
     Refineable: true
     Script: |
       bonus bUseSPrate,getrefine()*-1;
@@ -41892,7 +41892,7 @@ Body:
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
-    EquipLevelMin: 100
+    EquipLevelMin: 99
     View: 73
     Script: |
       bonus bUnbreakableHelm;
@@ -41910,7 +41910,7 @@ Body:
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
-    EquipLevelMin: 100
+    EquipLevelMin: 99
     View: 56
     Script: |
       bonus bUnbreakableHelm;
@@ -41928,7 +41928,7 @@ Body:
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
-    EquipLevelMin: 100
+    EquipLevelMin: 99
     View: 180
     Script: |
       bonus bUnbreakableHelm;
@@ -41947,7 +41947,7 @@ Body:
       Costume_Head_Mid: true
       Costume_Head_Low: true
     ArmorLevel: 1
-    EquipLevelMin: 100
+    EquipLevelMin: 99
     View: 230
     Script: |
       bonus bUnbreakableHelm;

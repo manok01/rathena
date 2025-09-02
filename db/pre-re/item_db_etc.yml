@@ -21072,7 +21072,7 @@ Body:
       Third_Baby: true
     Locations:
       Ammo: true
-    EquipLevelMin: 100
+    EquipLevelMin: 99
     Script: |
       bonus bAtkEle,Ele_Neutral;
   - Id: 18000
