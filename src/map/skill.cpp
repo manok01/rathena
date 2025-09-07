@@ -5378,6 +5378,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case NW_HASTY_FIRE_IN_THE_HOLE:
 	case NW_BASIC_GRENADE:
 	case NW_WILD_FIRE:
+	case NW_MIDNIGHT_FALLEN:
 	case SKE_MIDNIGHT_KICK:
 	case SKE_DAWN_BREAK:
 	case SKE_RISING_MOON:
@@ -6152,6 +6153,19 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 			map_foreachinrange(skill_area_sub, bl, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				status_change_end(src, SC_INTENSIVE_AIM_COUNT);
+		}
+		break;
+	case NW_WILD_SHOT:
+		if (flag & 1) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		} else {
+			int32 splash = skill_get_splash(skill_id, skill_lv);
+
+			if (sd != nullptr && sd->weapontype1 == W_RIFLE)
+				splash += 1;
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
+			map_foreachinrange(skill_area_sub, bl, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+
 		}
 		break;
 
@@ -8686,14 +8700,14 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			return 1;
 		}
 		// Official chance is 70% + 3%*skill_lv + srcBaseLevel% - tarBaseLevel%
-		if(!(i = sc_start(src, bl, type, skill_id == SM_SELFPROVOKE ? 100 : (70 + 3 * skill_lv + status_get_lv(src) - status_get_lv(bl)), skill_lv, skill_get_time(skill_id, skill_lv))))
+		if(!(i = sc_start(src, bl, type, 70 + 3 * skill_lv + status_get_lv(src) - status_get_lv(bl), skill_lv, skill_get_time(skill_id, skill_lv))))
 		{
 			if( sd )
 				clif_skill_fail( *sd, skill_id );
 			map_freeblock_unlock();
 			return 0;
 		}
-		clif_skill_nodamage(src, *bl, skill_id == SM_SELFPROVOKE ? SM_PROVOKE : skill_id, skill_lv, i != 0);
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv, i != 0);
 		unit_skillcastcancel(bl, 2);
 
 		if( dstmd )
@@ -15527,6 +15541,16 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 		}
 		break;
+	case NW_MIDNIGHT_FALLEN: {
+		int32 splash = skill_get_splash(skill_id, skill_lv);
+		if (sd != nullptr) {
+			if (sd->status.weapon == W_GATLING)
+				splash += 1;
+			else if (sd->status.weapon == W_GRENADE)
+				splash += 2;
+		}
+		map_foreachinallarea(skill_area_sub, src->m, x - splash, y - splash, x + splash, y + splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
+		} break;
 
 	case SOA_TALISMAN_OF_BLACK_TORTOISE:
 		if (sc != nullptr && sc->getSCE(SC_T_THIRD_GOD) != nullptr){
@@ -19824,6 +19848,7 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 		switch( skill_id ) {
 			case CG_TAROTCARD: // TarotCard will consume sp in skill_cast_nodamage_id [Inkfish]
 			case MC_IDENTIFY:
+			case SM_AUTOBERSERK:
 			case BD_ADAPTATION:
 			case BD_ENCORE:
 				require.sp = 0;

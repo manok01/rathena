@@ -349,6 +349,7 @@ Body:
         Rate: 1000
       - Item: Club
         Rate: 200
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Fabre_Card
         Rate: 1
         StealProtected: true
@@ -5229,6 +5230,7 @@ Body:
         Rate: 1
       - Item: Club
         Rate: 300
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Hammer_Of_Blacksmith
         Rate: 5
       - Item: Dokebi_Card
@@ -8753,6 +8755,7 @@ Body:
         Rate: 500
       - Item: Club
         Rate: 200
+        RandomOptionGroup: AS_WEAPON_3
   - Id: 1185
     AegisName: WHISPER_
     Name: Whisper
@@ -22239,6 +22242,7 @@ Body:
         Rate: 400
       - Item: Club
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Spike
         Rate: 1
         RandomOptionGroup: AS_WEAPON_3
