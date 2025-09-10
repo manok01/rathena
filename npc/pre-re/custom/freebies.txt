@@ -1,0 +1,54 @@
+new_1-1,57,114,3	script	Freebies	811,{
+	
+	mes "[  ^ff0000AleaRO Assistance^000000  ]";
+	mes "---------------------------------";
+	if(#Startcard == 1) {
+		mes "You have already Received the Starting Items.";
+		close;
+	}
+		cutin "3rd_ab_valkyrie",2;
+	mes "[  ^ff0000AleaRO Assistance^000000  ]";
+	mes "---------------------------------";		
+	mes "Hey, You seems to be new...";
+	mes "I got some special Items for you.";
+	mes "Hope you will like them!";
+	next;
+	set #Startcard, 1;
+	mes "[Start Items]";
+		getitem	19548,1;	//Costume Frog Cap
+		getitem	12324,25;	//Novice Butterfly Wing 
+		getitem	12323,100;	//Novice Fly Wing
+	    getitem 12411,10;	//HE Battle Manual 100% 15menit
+		getitem 12412,10;	//HE Bubble Gum 100% 15menit
+		getitem 7059,25;	//Free Ticket for Kafra Storage
+		getitem	7060,25;	//Free Ticket for Kafra Transportation
+		getitem	14002,10;	//Elite Siege Supply Box UT					
+
+	mes "Here, you go!";
+            close2;
+cutin "", 255;
+Oninit:
+questinfo QTYPE_EVENT2;
+end;		
+    }
+	
+	
+//====================NEWBIE ANNOUNCE=====================
+-	script	WelcomeNewbie	-1,{
+
+OnPCLoginEvent:
+if(Class == Job_Novice && !BaseExp) {
+announce strcharinfo(0)+ " has joined AleaRO! Welcome to the server!",0,0x00ff00;
+set BaseExp,1;
+}
+end;
+}
+
+//====================SLOW GRACE=====================
+
+-	script	RemoveDancerStatus	-1,{
+OnPCDieEvent:
+	sc_end_class getcharid(0),20;
+end;
+}	
+	
