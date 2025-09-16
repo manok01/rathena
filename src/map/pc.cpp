@@ -832,12 +832,21 @@ static TIMER_FUNC(pc_invincible_timer){
 	return 0;
 }
 
-void pc_setinvincibletimer(map_session_data* sd, int32 val) {
-	nullpo_retv(sd);
+void pc_setinvincibletimer(map_session_data& sd) {
+	t_tick val;
+	map_data* mapdata = map_getmapdata(sd.m);
 
-	if( sd->invincible_timer != INVALID_TIMER )
-		delete_timer(sd->invincible_timer,pc_invincible_timer);
-	sd->invincible_timer = add_timer(gettick()+val,pc_invincible_timer,sd->id,0);
+	if (mapdata != nullptr && mapdata->getMapFlag(MF_INVINCIBLE_TIME) > 0)
+		val = mapdata->getMapFlag(MF_INVINCIBLE_TIME);
+	else
+		val = battle_config.pc_invincible_time;
+
+	if (val <= 0)
+		return;
+
+	if( sd.invincible_timer != INVALID_TIMER )
+		delete_timer(sd.invincible_timer,pc_invincible_timer);
+	sd.invincible_timer = add_timer(gettick()+val,pc_invincible_timer,sd.id,0);
 }
 
 void pc_delinvincibletimer(map_session_data* sd)
@@ -6839,7 +6848,7 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	t_itemid itemid;
 	double rate;
 	unsigned char flag = 0;
-	struct mob_data *md;
+	mob_data *md;
 
 	if(!sd || !bl || bl->type!=BL_MOB)
 		return false;
@@ -6947,7 +6956,7 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 int32 pc_steal_coin(map_session_data *sd,struct block_list *target)
 {
 	int32 rate, target_lv;
-	struct mob_data *md;
+	mob_data *md;
 
 	if(!sd || !target || target->type != BL_MOB)
 		return 0;
@@ -7391,7 +7400,7 @@ int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_l
 /*==========================================
  * Return player sd skill_lv learned for given skill
  *------------------------------------------*/
-uint8 pc_checkskill(map_session_data *sd, uint16 skill_id)
+uint8 pc_checkskill(const map_session_data *sd, uint16 skill_id)
 {
 	uint16 idx = 0;
 	if (sd == nullptr)
@@ -9855,8 +9864,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 			pc_setrestartvalue(sd,1);
 			status_percent_heal(sd, 100, 100);
 			clif_resurrection( *sd );
-			if(battle_config.pc_invincible_time)
-				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+			pc_setinvincibletimer( *sd );
 			sc_start(sd,sd,SC_STEELBODY,100,5,skill_get_time(MO_STEELBODY,5));
 			if(mapdata_flag_gvg2(mapdata))
 				pc_respawn_timer(INVALID_TIMER, gettick(), sd->id, 0);
@@ -9981,7 +9989,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 	switch (src->type) {
 		case BL_MOB:
 		{
-			struct mob_data *md=(struct mob_data *)src;
+			mob_data *md=(mob_data *)src;
 			if(md->target_id==sd->id)
 				mob_unlocktarget(md,tick);
 			if(battle_config.mobs_level_up && md->status.hp &&
@@ -10217,8 +10225,7 @@ void pc_revive(map_session_data *sd,uint32 hp, uint32 sp, uint32 ap) {
 	if(ap) clif_updatestatus(*sd,SP_AP);
 
 	pc_setstand(sd, true);
-	if(battle_config.pc_invincible_time > 0)
-		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+	pc_setinvincibletimer( *sd );
 
 	if (sd->state.gmaster_flag && sd->guild) {
 		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild->guild,GD_LEADERSHIP));
@@ -10906,9 +10913,9 @@ int32 pc_percentheal(map_session_data *sd,int32 hp,int32 sp)
 
 static int32 jobchange_killclone(struct block_list *bl, va_list ap)
 {
-	struct mob_data *md;
+	mob_data *md;
 		int32 flag;
-	md = (struct mob_data *)bl;
+	md = (mob_data *)bl;
 	nullpo_ret(md);
 	flag = va_arg(ap, int32);
 

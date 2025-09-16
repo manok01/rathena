@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cstdarg>
 #include <string>
+#include <type_traits>
 #include <unordered_map>
 #include <vector>
 
@@ -41,8 +42,11 @@ class MapServer : public Core{
 };
 }
 
+struct mob_data;
 struct npc_data;
+struct skill_unit;
 struct item_data;
+struct s_mercenary_data;
 struct Channel;
 
 struct map_data *map_getmapdata(int16 m);
@@ -686,7 +690,11 @@ enum e_mapflag : int16 {
 	MF_NOBANK,
 	MF_SPECIALPOPUP,
 	MF_NOMACROCHECKER,
+<<<<<<< HEAD
 	MF_NOITEM,
+=======
+	MF_INVINCIBLE_TIME,
+>>>>>>> 076e25e2294f50c04d0fa81c13981f343343c4f5
 	MF_MAX
 };
 
@@ -1154,7 +1162,7 @@ int32 map_foreachindir(int32 (*func)(struct block_list*,va_list), int16 m, int16
 int32 map_foreachinmap(int32 (*func)(struct block_list*,va_list), int16 m, int32 type, ...);
 //blocklist nb in one cell
 int32 map_count_oncell(int16 m,int16 x,int16 y,int32 type,int32 flag);
-struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int16 x,int16 y,uint16 skill_id,struct skill_unit *, int32 flag);
+skill_unit *map_find_skill_unit_oncell(struct block_list *,int16 x,int16 y,uint16 skill_id,skill_unit *, int32 flag);
 // search and creation
 int32 map_get_new_object_id(void);
 int32 map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int32 flag, int32 tries = 50);
@@ -1185,10 +1193,10 @@ const char* map_charid2nick(int32 charid);
 map_session_data* map_charid2sd(int32 charid);
 
 map_session_data * map_id2sd(int32 id);
-struct mob_data * map_id2md(int32 id);
+mob_data * map_id2md(int32 id);
 struct npc_data * map_id2nd(int32 id);
 struct homun_data* map_id2hd(int32 id);
-struct s_mercenary_data* map_id2mc(int32 id);
+s_mercenary_data* map_id2mc(int32 id);
 struct pet_data* map_id2pd(int32 id);
 struct s_elemental_data* map_id2ed(int32 id);
 struct chat_data* map_id2cd(int32 id);
@@ -1206,13 +1214,13 @@ int32 map_eraseallipport(void);
 void map_addiddb(struct block_list *);
 void map_deliddb(struct block_list *bl);
 void map_foreachpc(int32 (*func)(map_session_data* sd, va_list args), ...);
-void map_foreachmob(int32 (*func)(struct mob_data* md, va_list args), ...);
+void map_foreachmob(int32 (*func)(mob_data* md, va_list args), ...);
 void map_foreachnpc(int32 (*func)(struct npc_data* nd, va_list args), ...);
 void map_foreachregen(int32 (*func)(struct block_list* bl, va_list args), ...);
 void map_foreachiddb(int32 (*func)(struct block_list* bl, va_list args), ...);
 map_session_data * map_nick2sd(const char* nick, bool allow_partial);
-struct mob_data * map_getmob_boss(int16 m);
-struct mob_data * map_id2boss(int32 id);
+mob_data * map_getmob_boss(int16 m);
+mob_data * map_id2boss(int32 id);
 
 // reload config file looking only for npcs
 void map_reloadnpc(bool clear);
@@ -1289,17 +1297,23 @@ extern const char*MSG_CONF_NAME_THA;
 //Useful typedefs from jA [Skotlex]
 typedef map_session_data TBL_PC;
 typedef struct npc_data         TBL_NPC;
-typedef struct mob_data         TBL_MOB;
+typedef mob_data         TBL_MOB;
 typedef struct flooritem_data   TBL_ITEM;
 typedef struct chat_data        TBL_CHAT;
-typedef struct skill_unit       TBL_SKILL;
+typedef skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
-typedef struct s_mercenary_data   TBL_MER;
+typedef s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
-	( ((bl) == nullptr || (bl)->type != (type_)) ? static_cast<T ## type_ *>(nullptr) : static_cast<T ## type_ *>(bl) )
+	( ((bl) == nullptr || (bl)->type != (type_)) \
+	? nullptr \
+	: static_cast< typename std::conditional< \
+		std::is_const<std::remove_pointer_t<decltype(bl)>>::value, \
+		const T##type_*, \
+		T##type_* \
+	>::type >(bl) )
 
 extern int32 db_use_sqldbs;
 

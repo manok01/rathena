@@ -1992,7 +1992,7 @@ int32 npc_touch_area_allnpc(map_session_data* sd, int16 m, int16 x, int16 y)
 
 // OnTouch NPC or Warp for Mobs
 // Return 1 if Warped
-int32 npc_touch_areanpc2(struct mob_data *md)
+int32 npc_touch_areanpc2(mob_data *md)
 {
 	int32 i, x = md->x, y = md->y, id;
 	char eventname[EVENT_NAME_LENGTH];
@@ -5199,7 +5199,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 
 	for( i = mob->active; i < mob->num; ++i )
 	{
-		struct mob_data* md = mob_spawn_dataset(mob);
+		mob_data* md = mob_spawn_dataset(mob);
 		md->spawn = mob;
 		/* Index on mapreg $ + mob_id + mapindex
 		* 0 = state
@@ -5754,6 +5754,18 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			}
 			break;
 		}
+
+		case MF_INVINCIBLE_TIME: {
+				union u_mapflag_args args = {};
+
+				if (state && sscanf(w4, "%11d", &args.flag_val) != 1){
+					ShowError("npc_parse_mapflag: invincible_time: Invalid time '%s' for Invincible Time mapflag. Skipping (file '%s', line '%d')\n", w4, filepath, strline(buffer, start - buffer));
+					break;
+				}
+
+				map_setmapflag_sub(m, mapflag, state, &args);
+			}
+			break;
 
 		// All others do not need special treatment
 		default:

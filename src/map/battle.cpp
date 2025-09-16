@@ -60,7 +60,7 @@ uint16 battle_getcurrentskill(struct block_list *bl)
 	struct unit_data *ud;
 
 	if( bl->type == BL_SKILL ) {
-		struct skill_unit *su = (struct skill_unit*)bl;
+		skill_unit *su = (skill_unit*)bl;
 		return (su && su->group?su->group->skill_id:0);
 	}
 
@@ -137,7 +137,7 @@ int32 battle_gettarget(struct block_list* bl)
 
 	switch (bl->type) {
 		case BL_PC:  return ((map_session_data*)bl)->ud.target;
-		case BL_MOB: return ((struct mob_data*)bl)->target_id;
+		case BL_MOB: return ((mob_data*)bl)->target_id;
 		case BL_PET: return ((struct pet_data*)bl)->target_id;
 		case BL_HOM: return ((struct homun_data*)bl)->ud.target;
 		case BL_MER: return ((s_mercenary_data*)bl)->ud.target;
@@ -567,7 +567,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 
 	if( target && target->type == BL_SKILL ) {
 		if( atk_elem == ELE_FIRE && battle_getcurrentskill(target) == GN_WALLOFTHORN ) {
-			struct skill_unit *su = (struct skill_unit*)target;
+			skill_unit *su = (skill_unit*)target;
 			std::shared_ptr<s_skill_unit_group> sg;
 			struct block_list *src2;
 
@@ -2066,7 +2066,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
  */
 bool battle_can_hit_bg_target(struct block_list *src, struct block_list *bl, uint16 skill_id, int32 flag)
 {
-	struct mob_data* md = BL_CAST(BL_MOB, bl);
+	mob_data* md = BL_CAST(BL_MOB, bl);
 	struct unit_data *ud = unit_bl2ud(bl);
 
 	if (ud && ud->immune_attack)
@@ -2136,7 +2136,7 @@ int64 battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int64
  */
 bool battle_can_hit_gvg_target(struct block_list *src,struct block_list *bl,uint16 skill_id,int32 flag)
 {
-	struct mob_data* md = BL_CAST(BL_MOB, bl);
+	mob_data* md = BL_CAST(BL_MOB, bl);
 	struct unit_data *ud = unit_bl2ud(bl);
 	int32 class_ = status_get_class(bl);
 
@@ -2145,7 +2145,7 @@ bool battle_can_hit_gvg_target(struct block_list *src,struct block_list *bl,uint
 	if(md && (md->guardian_data || md->special_state.ai == AI_GUILD)) {
 		if ((status_bl_has_mode(bl,MD_SKILLIMMUNE) || (class_ == MOBID_EMPERIUM && !skill_get_inf2(skill_id, INF2_TARGETEMPERIUM))) && flag&BF_SKILL) //Skill immunity.
 			return false;
-		if( src->type != BL_MOB || mob_is_clone( ((struct mob_data*)src)->mob_id ) ){
+		if( src->type != BL_MOB || mob_is_clone( ((mob_data*)src)->mob_id ) ){
 			auto g = src->type == BL_PC ? ((TBL_PC *)src)->guild : guild_search(status_get_guild_id(src));
 
 			if (class_ == MOBID_EMPERIUM && (!g || guild_checkskill(g->guild, GD_APPROVAL) <= 0 ))
@@ -2694,6 +2694,7 @@ static int32 battle_range_type(struct block_list *src, struct block_list *target
 		case MT_RUSH_QUAKE: // 9 cell cast range.
 		case MT_RUSH_STRIKE: // 7 cell cast range.
 		case ABC_UNLUCKY_RUSH: // 7 cell cast range.
+		case ABC_CHASING_BREAK: // 7 cell cast range.
 		case MH_THE_ONE_FIGHTER_RISES: // 7 cell cast range.
 		//case ABC_DEFT_STAB: // 2 cell cast range???
 		case NPC_MAXPAIN_ATK:
@@ -3335,7 +3336,6 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 			case RK_SONICWAVE:
 				hitrate += hitrate * 3 * skill_lv / 100; // !TODO: Confirm the hitrate bonus
 				break;
-			case MC_CARTREVOLUTION:
 			case GN_CART_TORNADO:
 			case GN_CARTCANNON:
 				if (sd && pc_checkskill(sd, GN_REMODELING_CART))
@@ -3702,6 +3702,7 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 		case WM_REVERBERATION:
 		case TR_METALIC_FURY:
 		case TR_SOUNDBLEND:
+		case TR_RHYTHMICAL_WAVE:
 			if (sd)
 				element = sd->bonus.arrow_ele;
 			break;
@@ -4713,17 +4714,12 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			else
 				skillratio += 10 * skill_lv; //Outer 5x5 circle takes 100%+10%*level damage [Playtester]
 			break;
-		case MC_MAMMONITE:
-			skillratio += 50 * skill_lv;
-			break;
 		case HT_POWER:
 			skillratio += -50 + 8 * sstatus->str;
 			break;
-		case AC_DOUBLE:
 		case MA_DOUBLE:
 			skillratio += 10 * (skill_lv - 1);
 			break;
-		case AC_SHOWER:
 		case MA_SHOWER:
 #ifdef RENEWAL
 			skillratio += 50 + 10 * skill_lv;
@@ -4731,7 +4727,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += -25 + 5 * skill_lv;
 #endif
 			break;
-		case AC_CHARGEARROW:
 		case MA_CHARGEARROW:
 			skillratio += 50;
 			break;
@@ -4798,13 +4793,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 		case TF_SPRINKLESAND:
 			skillratio += 30;
-			break;
-		case MC_CARTREVOLUTION:
-			skillratio += 50;
-			if(sd && sd->cart_weight)
-				skillratio += 100 * sd->cart_weight / sd->cart_weight_max; // +1% every 1% weight
-			else if (!sd)
-				skillratio += 100; //Max damage for non players.
 			break;
 		case NPC_PIERCINGATT:
 			skillratio += -25; //75% base damage
@@ -6007,6 +5995,13 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += -100 + 700 * skill_lv + 10 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
+		case IQ_BLAZING_FLAME_BLAST:
+			skillratio += -100 + 2000 + 3800 * skill_lv;
+			skillratio += 10 * sstatus->pow;	// !TODO: unknown ratio
+			if( sc != nullptr && sc->hasSCE( SC_MASSIVE_F_BLASTER ) )
+				skillratio += 1500 + 400 * skill_lv;
+			RE_LVL_DMOD(100);
+			break;
 		case IG_GRAND_JUDGEMENT:
 			skillratio += -100 + 250 + 1500 * skill_lv + 10 * sstatus->pow;
 			if (tstatus->race == RC_PLANT || tstatus->race == RC_INSECT)
@@ -6180,6 +6175,8 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 		case ABC_UNLUCKY_RUSH:
 			skillratio += -100 + 100 + 300 * skill_lv + 5 * sstatus->pow;
+			if (sc != nullptr && sc->hasSCE(SC_CHASING))
+				skillratio += 2500 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_CHAIN_REACTION_SHOT:
@@ -6190,6 +6187,8 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 		case ABC_CHAIN_REACTION_SHOT_ATK:
 			skillratio += -100 + 800 + 2550 * skill_lv;
 			skillratio += 15 * sstatus->con;
+			if (sc != nullptr && sc->hasSCE(SC_CHASING))
+				skillratio += 700 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_DEFT_STAB:
@@ -6708,6 +6707,25 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += -100 + 400 + 200 * skill_lv;
 			skillratio += skill_lv * 5 * pc_checkskill( sd, SKE_SKY_MASTERY );
 			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case ABC_HIT_AND_SLIDING:
+			skillratio += -100 + 3500 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case ABC_CHASING_BREAK:
+			skillratio += -100 + 1550 + 450 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			if (sc != nullptr && sc->hasSCE(SC_CHASING))
+				skillratio += 200 + 50 * skill_lv;
+			RE_LVL_DMOD(100);
+			break;
+		case ABC_CHASING_SHOT:
+			skillratio += -100 + 1500 + 700 * skill_lv;
+			skillratio += 5 * sstatus->con;
+			if (sc != nullptr && sc->hasSCE(SC_CHASING))
+				skillratio += 250 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 	}
@@ -7683,6 +7701,18 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			case BO_MAYHEMIC_THORNS:
 				if (sc && sc->getSCE(SC_RESEARCHREPORT))
 					wd.div_ = 4;
+				break;
+			case ABC_CHASING_BREAK:
+				if (sc != nullptr && sc->hasSCE(SC_CHASING))
+					wd.div_ = 7;
+				break;
+			case ABC_CHASING_SHOT:
+				if (sc != nullptr && sc->hasSCE(SC_CHASING))
+					wd.div_ = 3;
+				break;
+			case ABC_HIT_AND_SLIDING:
+				if (sd != nullptr && sd->status.weapon == W_BOW)
+					wd.flag |= BF_LONG;
 				break;
 			case HN_DOUBLEBOWLINGBASH:
 				if (wd.miscflag > 1)
@@ -9038,6 +9068,18 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
+					case ABC_ABYSS_FLAME:
+						skillratio += -100 + 500 * skill_lv;
+						skillratio += 10 * sstatus->spl;
+						skillratio += 15 * skill_lv * pc_checkskill( sd, ABC_MAGIC_SWORD_M );
+						RE_LVL_DMOD(100);
+						break;
+					case ABC_ABYSS_FLAME_ATK:
+						skillratio += -100 + 820 * skill_lv;
+						skillratio += 10 * sstatus->spl;
+						skillratio += 30 * skill_lv * pc_checkskill( sd, ABC_MAGIC_SWORD_M );
+						RE_LVL_DMOD(100);
+						break;
 					case TR_METALIC_FURY:
 						skillratio += -100 + 3850 * skill_lv;
 						// !Todo: skill affected by SPL (without SC_SOUNDBLEND) as well?
@@ -9056,6 +9098,16 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
 								skillratio += skillratio * 50 / 100;
 						}
+						break;
+					case TR_RHYTHMICAL_WAVE:
+						skillratio += -100 + 250 + 3650 * skill_lv;
+						skillratio += pc_checkskill(sd, TR_STAGE_MANNER) * 25; // !TODO: check Stage Manner ratio
+						skillratio += 5 * sstatus->spl;	// !TODO: check SPL ratio
+
+						if (sc != nullptr && sc->hasSCE(SC_MYSTIC_SYMPHONY))
+							skillratio += 200 + 1000 * skill_lv;
+
+						RE_LVL_DMOD(100);
 						break;
 					case EM_DIAMOND_STORM:
 						skillratio += -100 + 500 + 2400 * skill_lv;
@@ -9149,6 +9201,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += -100 + 700;
 						if (ed)
 							skillratio += skillratio * status_get_lv(ed->master) / 100;
+						break;
+					case EM_PSYCHIC_STREAM:
+						skillratio += -100 + 1000 + 3500 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
 						break;
 					case NPC_RAINOFMETEOR:
 						skillratio += 350;	// unknown ratio
@@ -11312,7 +11369,7 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 			break;
 		case BL_MOB:
 		{
-			struct mob_data *md = ((TBL_MOB*)target);
+			mob_data *md = ((TBL_MOB*)target);
 
 			if (ud && ud->immune_attack)
 				return 0;
@@ -11412,7 +11469,7 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 		}
 		case BL_MOB:
 		{
-			struct mob_data *md = BL_CAST(BL_MOB, t_bl);
+			mob_data *md = BL_CAST(BL_MOB, t_bl);
 
 			if( md->guardian_data && md->guardian_data->guild_id && !mapdata_flag_gvg(mapdata) )
 				return 0; // Disable guardians/emperiums owned by Guilds on non-woe times.
@@ -11433,7 +11490,7 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 			}
 			break;
 		case BL_SKILL: {
-				struct skill_unit *su = (struct skill_unit *)src;
+				skill_unit *su = (skill_unit *)src;
 				status_change* sc = status_get_sc(target);
 				if (!su || !su->group)
 					return 0;
@@ -11487,7 +11544,7 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 		}
 		case BL_MOB:
 		{
-			struct mob_data *md = BL_CAST(BL_MOB, s_bl);
+			mob_data *md = BL_CAST(BL_MOB, s_bl);
 			if( md->guardian_data && md->guardian_data->guild_id && !mapdata_flag_gvg(mapdata) )
 				return 0; // Disable guardians/emperium owned by Guilds on non-woe times.
 
@@ -11739,7 +11796,7 @@ static const struct _battle_data {
 	{ "basic_skill_check",                  &battle_config.basic_skill_check,               1,      0,      1,              },
 	{ "guild_emperium_check",               &battle_config.guild_emperium_check,            1,      0,      1,              },
 	{ "guild_exp_limit",                    &battle_config.guild_exp_limit,                 50,     0,      99,             },
-	{ "player_invincible_time",             &battle_config.pc_invincible_time,              5000,   0,      INT_MAX,        },
+	{ "player_invincible_time",             &battle_config.pc_invincible_time,              3000,   0,      INT_MAX,        },
 	{ "pet_catch_rate",                     &battle_config.pet_catch_rate,                  100,    0,      INT_MAX,        },
 	{ "pet_rename",                         &battle_config.pet_rename,                      0,      0,      1,              },
 	{ "pet_friendly_rate",                  &battle_config.pet_friendly_rate,               100,    0,      INT_MAX,        },
