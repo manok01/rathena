@@ -138,8 +138,8 @@ int32 battle_gettarget(block_list* bl)
 	switch (bl->type) {
 		case BL_PC:  return ((map_session_data*)bl)->ud.target;
 		case BL_MOB: return ((mob_data*)bl)->target_id;
-		case BL_PET: return ((pet_data*)bl)->target_id;
-		case BL_HOM: return ((homun_data*)bl)->ud.target;
+		case BL_PET: return ((struct pet_data*)bl)->target_id;
+		case BL_HOM: return ((struct homun_data*)bl)->ud.target;
 		case BL_MER: return ((s_mercenary_data*)bl)->ud.target;
 		case BL_ELEM: return ((s_elemental_data*)bl)->ud.target;
 	}
@@ -4551,7 +4551,7 @@ static void battle_calc_multi_attack(struct Damage* wd, block_list *src,block_li
 				wd->div_ = wd->div_ * -1;// needs more info
 			break;
 		case MH_BLAZING_AND_FURIOUS: {
-			homun_data *hd = BL_CAST(BL_HOM, src);
+			struct homun_data *hd = BL_CAST(BL_HOM, src);
 			if (hd) {
 				wd->div_ = hd->homunculus.spiritball;
 				hom_delspiritball(hd, MAX_SPIRITBALL, 1);
@@ -4791,6 +4791,9 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += skillratio / 10;
 #endif
 			break;
+		case TF_SPRINKLESAND:
+			skillratio += 30;
+			break;
 		case NPC_PIERCINGATT:
 			skillratio += -25; //75% base damage
 			break;
@@ -4921,7 +4924,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 #ifdef RENEWAL
 			skillratio += 10 + 40 * skill_lv;
 #else
-			skillratio += -40 + 40 * skill_lv;
+			skillratio += 25 + 25 * skill_lv;
 #endif
 			break;
 		case CH_TIGERFIST:
@@ -12210,8 +12213,6 @@ static const struct _battle_data {
 	{ "feature.roulette",                   &battle_config.feature_roulette,                1,      0,      1,              },
 	{ "feature.roulette_bonus_reward",      &battle_config.feature_roulette_bonus_reward,   1,      0,      1,              },
 	{ "monster_hp_bars_info",               &battle_config.monster_hp_bars_info,            1,      0,      1,              },
-	{ "min_body_style",                     &battle_config.min_body_style,                  0,      0,      SHRT_MAX,       },
-	{ "max_body_style",                     &battle_config.max_body_style,                  1,      0,      SHRT_MAX,       },
 	{ "save_body_style",                    &battle_config.save_body_style,                 1,      0,      1,              },
 	{ "monster_eye_range_bonus",            &battle_config.mob_eye_range_bonus,             0,      0,      10,             },
 	{ "monster_stuck_warning",              &battle_config.mob_stuck_warning,               0,      0,      1,              },
