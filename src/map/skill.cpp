@@ -3940,7 +3940,7 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		case SP_SPA:
 		case SP_SHA:
 			if (dmg.div_ < 2)
-				type = DMG_SPLASH;
+				dmg_type = DMG_SPLASH;
 			if (!(flag&SD_ANIMATION))
 				clif_skill_nodamage(dsrc, *bl, skill_id, skill_lv);
 			[[fallthrough]];
@@ -8244,6 +8244,21 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			case 10: type = SC_IMMUNE_PROPERTY_UNDEAD; break;
 		}
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+		break;
+	case SS_FOUR_CHARM:
+		if (sd != nullptr) {
+			switch (sd->spiritcharm_type) {
+				case CHARM_TYPE_FIRE:  type = SC_FIRE_CHARM_POWER;    break;
+				case CHARM_TYPE_WATER: type = SC_WATER_CHARM_POWER;   break;
+				case CHARM_TYPE_LAND:  type = SC_GROUND_CHARM_POWER;  break;
+				case CHARM_TYPE_WIND:  type = SC_WIND_CHARM_POWER;    break;
+				default:  type = SC_NONE;    break;
+			}
+			if (type != SC_NONE) {
+				clif_skill_nodamage(src, *bl, skill_id, skill_lv,
+					sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+			}
+		}
 		break;
 
 	case PR_KYRIE:
@@ -19041,6 +19056,12 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			}
 			break;
+		case SS_FOUR_CHARM:
+			if (sd.spiritcharm_type == CHARM_TYPE_NONE || sd.spiritcharm < MAX_SPIRITCHARM) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_SUMMON_NONE );
+				return false;
+			}
+			break;
 		case SJ_FULLMOONKICK:
 			if (!(sc && sc->getSCE(SC_NEWMOON))) {
 				clif_skill_fail( sd, skill_id );
@@ -26446,7 +26467,7 @@ void skill_reload (void) {
 
 	for( map_session_data *sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) ) {
 		pc_validate_skill(sd);
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 	}
 	mapit_free(iter);
 }
