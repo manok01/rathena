@@ -10,4 +10,3 @@
 //============================================================
 
 gef_fild09	mapflag	noitem	4002, Sword, Cotton_Shirt
-prontera	mapflag	noitem	IT_WEAPON,IT_SHADOWGEAR,EQP_HELM,EQP_ACC,502
