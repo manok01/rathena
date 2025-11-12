@@ -1,0 +1,11 @@
+// Gold Room Monsters
+-	script	goldroom_spawn	-1,{
+
+OnInit:
+	monster "ordeal_1-1",0,0,"Gold Poring",1002,20,strnpcinfo(0)+"::OnMobKilled";
+	end;
+
+OnMobKilled:
+	// Drop atau efek tambahan bisa ditambah di sini
+	end;
+}

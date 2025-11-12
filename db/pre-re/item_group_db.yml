@@ -11078,3 +11078,571 @@ Body:
             Item: E_Giant_Fly_Wing
           - Index: 2
             Item: F_Giant_Fly_Wing
+  - Group: PET_EGG_SCROLL1
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: C_Angel_Mini_Silk_Hat_B
+            Rate: 180
+            Announced: true
+            UniqueId: true
+          - Index: 1
+            Item: C_Ghostring_Tall_Hat
+            Rate: 150
+            Announced: true
+            UniqueId: true
+          - Index: 2
+            Item: C_Star_Reading_Hat
+            Rate: 120
+            Announced: true
+            UniqueId: true
+          - Index: 3
+            Item: C_Evil_Druid_Hat
+            Rate: 130
+            Announced: true
+            UniqueId: true
+          - Index: 4
+            Item: C_Elder_Crown
+            Rate: 130
+            Announced: true
+            UniqueId: true
+          - Index: 5
+            Item: C_Seraph_Wing_Helm
+            Rate: 75
+            Announced: true
+            UniqueId: true
+          - Index: 6
+            Item: C_Pigeon_Hat
+            Rate: 85
+            Announced: true
+            UniqueId: true
+          - Index: 7
+            Item: C_Unicorn_Helm
+            Rate: 55
+            Announced: true
+            UniqueId: true
+          - Index: 8
+            Item: C_Sky_of_Memory
+            Rate: 78
+            Announced: true
+            UniqueId: true
+          - Index: 9
+            Item: C_Two_Tone_Beret
+            Rate: 187
+            Announced: true
+            UniqueId: true
+          - Index: 10
+            Item: C_Pope_Crown
+            Rate: 115
+            Announced: true
+            UniqueId: true
+  - Group: PET_EGG_SCROLL2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: C_Loyal_Servant_of_Devil_Morocc
+            Rate: 80
+            Announced: true
+            UniqueId: true
+          - Index: 1
+            Item: C_Pterios_Fins
+            Rate: 150
+            Announced: true
+            UniqueId: true
+          - Index: 2
+            Item: C_Crimson_Booster
+            Rate: 190
+            Announced: true
+            UniqueId: true
+          - Index: 3
+            Item: C_Vampire_Familiar
+            Rate: 180
+            Announced: true
+            UniqueId: true
+          - Index: 4
+            Item: C_Blessing_Of_Angels
+            Rate: 160
+            Announced: true
+            UniqueId: true
+          - Index: 5
+            Item: C_Bloody_Stop_Bandage
+            Rate: 140
+            Announced: true
+            UniqueId: true
+          - Index: 6
+            Item: C_Devoted_Eyes
+            Rate: 120
+            Announced: true
+            UniqueId: true
+          - Index: 7
+            Item: Fallen_Angel_Blessing
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 8
+            Item: C_Charleston_Antenna
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 9
+            Item: C_Happy_Lunatic_Ear
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 10
+            Item: C_Under_Rim_Glasses_Red
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 11
+            Item: C_Love_Cheek
+            Rate: 100
+            Announced: true
+            UniqueId: true
+  - Group: PET_EGG_SCROLL3
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: C_Analyze_Eye
+            Rate: 190
+            Announced: true
+            UniqueId: true
+          - Index: 1
+            Item: C_Stall_Of_Bat
+            Rate: 180
+            Announced: true
+            UniqueId: true
+          - Index: 2
+            Item: C_Eremes_Guiles_Scarf_Black
+            Rate: 90
+            Announced: true
+            UniqueId: true
+          - Index: 3
+            Item: C_Water_Spellcaster
+            Rate: 85
+            Announced: true
+            UniqueId: true
+          - Index: 4
+            Item: C_Poring_Soap_Pipe
+            Rate: 70
+            Announced: true
+            UniqueId: true
+          - Index: 5
+            Item: C_Frozen_Land_Rose
+            Rate: 170
+            Announced: true
+            UniqueId: true
+          - Index: 6
+            Item: C_Subject_Aura_Red
+            Rate: 60
+            Announced: true
+            UniqueId: true
+          - Index: 7
+            Item: C_Subject_Aura
+            Rate: 55
+            Announced: true
+            UniqueId: true
+          - Index: 8
+            Item: C_Warm_Cat_Muffler_BL
+            Rate: 55
+            Announced: true
+            UniqueId: true
+          - Index: 9
+            Item: C_Fallen_Angel_Valletta
+            Rate: 55
+            Announced: true
+            UniqueId: true
+          - Index: 10
+            Item: C_Love_Cheek
+            Rate: 55
+            Announced: true
+            UniqueId: true
+  - Group: PET_EGG_SCROLL4
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: T_Archangel_Wing
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 1
+            Item: C_Little_Devil_Wings
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 2
+            Item: C_Wings_of_Uriel
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 3
+            Item: C_SwordWing
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 4
+            Item: C_Thanatos_Sword
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 5
+            Item: Kirin_Wing
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 6
+            Item: C_Rudra_Wing
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 7
+            Item: C_Wing_Of_Happiness
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 8
+            Item: C_GreatDevilWing
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 9
+            Item: C_Fallen_Angel_Wing
+            Rate: 100
+            Announced: true
+            UniqueId: true
+  - Group: PET_EGG_SCROLL5
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: Banryu
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 1
+            Item: Bow_of_Betrayer
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 2
+            Item: Blazeguard
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 3
+            Item: Strike_Eagle
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 4
+            Item: Highness_Staff
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 5
+            Item: Dorcus
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 6
+            Item: Cat_Of_Pow_Boxing_Glove
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 7
+            Item: Sycho_Gun
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 8
+            Item: Devil_Guitar
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 9
+            Item: caos_staff
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 10
+            Item: Black_Halberd
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 11
+            Item: Quincy_Rosary
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 12
+            Item: sirenswhip
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 13
+            Item: bloody_lord_axe
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 14
+            Item: grandmaster_deadly_sword
+            Rate: 100
+            Announced: true
+            UniqueId: true
+  - Group: PET_EGG_SCROLL6
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: C_Captain_Hat
+            Rate: 140
+            Announced: true
+            UniqueId: true
+          - Index: 1
+            Item: C_Gryphon_Hairband
+            Rate: 80
+            Announced: true
+            UniqueId: true
+          - Index: 2
+            Item: C_Ladys_Feather_Hat
+            Rate: 90
+            Announced: true
+            UniqueId: true
+          - Index: 3
+            Item: C_Beelzebub_Crown
+            Rate: 70
+            Announced: true
+            UniqueId: true
+          - Index: 4
+            Item: C_Little_Angel_Doll
+            Rate: 150
+            Announced: true
+            UniqueId: true
+          - Index: 5
+            Item: C_Rabbit_Ear_Hat
+            Rate: 170
+            Announced: true
+            UniqueId: true
+          - Index: 6
+            Item: C_Hair_Of_The_Strong
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 7
+            Item: C_Mechanical_Feather_Hairband
+            Rate: 180
+            Announced: true
+            UniqueId: true
+          - Index: 8
+            Item: C_Sword_Master_Crown
+            Rate: 40
+            Announced: true
+            UniqueId: true
+          - Index: 9
+            Item: C_Cat_Ears_Hat
+            Rate: 80
+            Announced: true
+            UniqueId: true
+          - Index: 10
+            Item: Token_Of_Siegfried
+            Rate: 200
+            Amount: 5
+            UniqueId: true
+          - Index: 11
+            Item: Adv_Siege_Supply_Box
+            Rate: 210
+            Amount: 5
+            Announced: true
+            UniqueId: true
+          - Index: 12
+            Item: Bubble_Gum
+            Rate: 220
+            Amount: 3
+            Announced: true
+            UniqueId: true
+          - Index: 13
+            Item: Insurance
+            Rate: 230
+            Amount: 5
+            Announced: true
+            UniqueId: true
+  - Group: PET_EGG_SCROLL7
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: C_Wing_Form_Spectacle
+            Rate: 80
+            Announced: true
+            UniqueId: true
+          - Index: 1
+            Item: C_Mermaid_Headphone
+            Rate: 90
+            Announced: true
+            UniqueId: true
+          - Index: 2
+            Item: C_93_Style_Bloody_Wings
+            Rate: 70
+            Announced: true
+            UniqueId: true
+          - Index: 3
+            Item: C_GeminiS58_Eyes_Blue
+            Rate: 50
+            Announced: true
+            UniqueId: true
+          - Index: 4
+            Item: C_New_Wave_Sunglasses
+            Rate: 60
+            Announced: true
+            UniqueId: true
+          - Index: 5
+            Item: Token_Of_Siegfried
+            Rate: 200
+            Amount: 7
+            UniqueId: true
+          - Index: 6
+            Item: Adv_Siege_Supply_Box
+            Rate: 210
+            Amount: 7
+            Announced: true
+            UniqueId: true
+          - Index: 7
+            Item: Bubble_Gum
+            Rate: 220
+            Amount: 5
+            Announced: true
+            UniqueId: true
+          - Index: 8
+            Item: Insurance
+            Rate: 230
+            Amount: 7
+            Announced: true
+            UniqueId: true
+  - Group: PET_EGG_SCROLL8
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: C_Large_Ribbon_Muffler_Red
+            Rate: 89
+            Announced: true
+            UniqueId: true
+          - Index: 1
+            Item: C_Vajra
+            Rate: 90
+            Announced: true
+            UniqueId: true
+          - Index: 2
+            Item: C_Umbala_Spirit
+            Rate: 100
+            Announced: true
+            UniqueId: true
+          - Index: 3
+            Item: C_Pig_Nose
+            Rate: 120
+            Announced: true
+            UniqueId: true
+          - Index: 4
+            Item: C_Dwarf_Beard
+            Rate: 85
+            Announced: true
+            UniqueId: true
+          - Index: 5
+            Item: C_Cat_Ears_Cape_Red
+            Rate: 78
+            Announced: true
+            UniqueId: true
+          - Index: 6
+            Item: Seed_Of_Yggdrasil
+            Rate: 200
+            Announced: true
+            UniqueId: true
+          - Index: 7
+            Item: Token_Of_Siegfried_Box
+            Rate: 170
+            UniqueId: true
+          - Index: 8
+            Item: Adv_Siege_Supply_Box
+            Rate: 210
+            Announced: true
+            UniqueId: true
+          - Index: 9
+            Item: Bubble_Gum_Box
+            Rate: 150
+            Announced: true
+            UniqueId: true
+          - Index: 10
+            Item: Insurance_Package
+            Rate: 130
+            Announced: true
+            UniqueId: true
+  - Group: PET_EGG_SCROLL9
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: C_Cupids_Pink_Wings
+            Rate: 65
+            Announced: true
+            UniqueId: true
+          - Index: 1
+            Item: C_Poring_Bag
+            Rate: 90
+            Announced: true
+            UniqueId: true
+          - Index: 2
+            Item: Amistr_Bag
+            Rate: 80
+            Announced: true
+            UniqueId: true
+          - Index: 3
+            Item: Yggdrasilberry
+            Rate: 200
+            Announced: true
+            UniqueId: true
+          - Index: 4
+            Item: Token_Of_Siegfried_Box
+            Rate: 190
+            Amount: 2
+            UniqueId: true
+          - Index: 5
+            Item: Adv_Siege_Supply_Box
+            Rate: 210
+            Amount: 30
+            Announced: true
+            UniqueId: true
+          - Index: 6
+            Item: Bubble_Gum_Box
+            Rate: 170
+            Amount: 2
+            Announced: true
+            UniqueId: true
+          - Index: 7
+            Item: Insurance_Package
+            Rate: 185
+            Announced: true
+            UniqueId: true
+          - Index: 8
+            Item: Inc_Agi_10_Scroll_Box
+            Rate: 175
+            Announced: true
+            UniqueId: true
+          - Index: 9
+            Item: Blessing_10_Scroll_Box
+            Rate: 165
+            Announced: true
+            UniqueId: true
+          - Index: 10
+            Item: Boarding_Halter_Box
+            Rate: 155
+            Announced: true
+            UniqueId: true
+          - Index: 11
+            Item: Pr_Reset_Stone_Box
+            Rate: 100
+            Announced: true
+            UniqueId: true

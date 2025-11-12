@@ -29,6 +29,7 @@
 #include "log.hpp"
 #include "log.hpp"
 #include "map.hpp"
+#include "mapreg.hpp"
 #include "mob.hpp"
 #include "navi.hpp"
 #include "pc.hpp"
@@ -5203,12 +5204,70 @@ void npc_parse_mob2(struct spawn_data* mob)
 	{
 		mob_data* md = mob_spawn_dataset(mob);
 		md->spawn = mob;
-		// Determine center cell for each mob in the spawn line
-		if (battle_config.randomize_center_cell) {
-			if (mob->xs > 1)
-				md->centerX = rnd_value(mob->x - mob->xs + 1, mob->x + mob->xs - 1);
-			if (mob->ys > 1)
-				md->centerY = rnd_value(mob->y - mob->ys + 1, mob->y + mob->ys - 1);
+		/* Index on mapreg $ + mob_id + mapindex
+		* 0 = state
+		* 1 = pos_x
+		* 2 = pos_y
+		* 3 = timer
+		* 4 = killerid
+		*/
+		if(md->state.boss){
+			std::string mapregname = "$" + std::to_string(md->db->id) + "_" + std::to_string(md->m);
+
+			if(1 == mapreg_readreg(reference_uid( add_str( mapregname.c_str() ), 0 ))){ //1 = dead - 2 = alive
+				long int timer = static_cast<long int>(mapreg_readreg(reference_uid(add_str(mapregname.c_str()),3)));
+				long int now = static_cast<long int>(time(NULL));
+
+				long int difftime = mob->delay1; //Base respawn time
+				if (mob->delay2) //random variance
+					difftime+= rnd()%mob->delay2;
+
+				difftime = now - timer - (difftime/1000);
+
+			if(difftime < 0){ //mvp is still dead
+					if (battle_config.mvp_tomb_enabled && map_getmapflag(md->m, MF_NOTOMB) != 1){ //is tomb enabled ?
+						std::string mapregnamestr = mapregname + "$";
+						int old_pos_x = md->m;
+						int old_pos_y = md->m;
+						md->m = static_cast<int16>(mapreg_readreg(reference_uid(add_str(mapregname.c_str()),1)));
+						md->m = static_cast<int16>(mapreg_readreg(reference_uid(add_str(mapregname.c_str()),2)));
+						char* killerid = mapreg_readregstr(reference_uid(add_str(mapregnamestr.c_str()),4));
+						mvptomb_create(md, killerid, timer);
+						md->m= old_pos_x;
+						md->m= old_pos_y;
+					}
+
+					difftime = abs(difftime)*1000;
+
+					//Apply the spawn delay fix
+					std::shared_ptr<s_mob_db> db = mob_db.find(md->db->id);
+
+					if (status_has_mode(&db->status,MD_STATUSIMMUNE)) { // Status Immune
+						if (battle_config.boss_spawn_delay != 100) {
+							// Divide by 100 first to prevent overflows
+						//(precision loss is minimal as duration is in ms already)
+							difftime = difftime/100*battle_config.boss_spawn_delay;
+						}
+				} else if (status_has_mode(&db->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC)) { // Plant type
+						if (battle_config.plant_spawn_delay != 100) {
+							difftime = difftime/100*battle_config.plant_spawn_delay;
+						}
+					} else if (battle_config.mob_spawn_delay != 100) {	//Normal mobs
+						difftime = difftime/100*battle_config.mob_spawn_delay;
+					}
+
+					if (difftime < 5000) //Monsters should never respawn faster than within 5 seconds
+						difftime = 5000;
+
+					if( md->spawn_timer != INVALID_TIMER )
+						delete_timer(md->spawn_timer, mob_delayspawn);
+
+					md->spawn = mob;
+					md->spawn->active++;
+					md->spawn_timer = add_timer(gettick()+difftime,mob_delayspawn,md->m,0);
+					continue;
+				}
+			}
 		}
 		md->spawn->active++;
 		mob_spawn(md);
@@ -5441,6 +5500,89 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	mapflag = map_getmapflag_by_name(w3);
 
 	switch( mapflag ){
+		/***********************************/
+		/***********    Shakto      ********/
+		/**    https://ronovelty.com/     **/
+		/***********************************/
+
+		// mapflag noitem
+		case MF_NOITEM:
+		if (state) {
+			static const std::unordered_map<std::string, int> itemTypeMap = {
+				{"IT_HEALING", 0}, {"0", 0},
+				{"IT_USABLE", 2}, {"2", 2},
+				{"IT_WEAPON", 5}, {"5", 5},
+				{"IT_ARMOR", 4}, {"4", 4},
+				{"IT_CARD", 6}, {"6", 6},
+				{"IT_AMMO", 10}, {"10", 10},
+				{"IT_DELAYCONSUME", 11}, {"11", 11},
+				{"IT_SHADOWGEAR", 12}, {"12", 12},
+				{"IT_CASH", 18}, {"18", 18},
+				{"EQP_WEAPON", 50}, {"50", 50},
+				{"EQP_SHIELD", 51}, {"51", 51},
+				{"EQP_ARMS", 52}, {"52", 52},
+				{"EQP_HELM", 53}, {"53", 53},
+				{"EQP_ACC", 54}, {"54", 54},
+				{"EQP_COSTUME", 55}, {"55", 55},
+				{"EQP_COSTUME_HELM", 56}, {"56", 56},
+				{"EQP_SHADOW_GEAR", 57}, {"57", 57},
+				{"EQP_SHADOW_ACC", 58}, {"58", 58},
+				{"EQP_SHADOW_ARMS", 59}, {"59", 59}
+			};
+
+			map_data* mapdata = map_getmapdata(m);
+			mapdata->noitemlist.clear();
+
+			if (strlen(w4) == 0) {
+				ShowWarning("npc_parse_mapflag: no Item ID/type input.\n Mapflag noitem: At %s (file '%s', line '%d').\n", mapname, filepath, strline(buffer, start - buffer));
+				break;
+			}
+
+			std::vector<int> noItemList;
+			char* token = strtok(w4, ", ");
+			while (token) {
+				int id = -1;
+				auto it = itemTypeMap.find(token);
+				if (it != itemTypeMap.end()) {
+					id = it->second;
+				}
+				else {
+					char* endptr;
+					id = strtol(token, &endptr, 10);
+					if (*endptr != '\0') {
+						auto data = item_db.search_aegisname(token);
+						if (!data) {
+							ShowWarning("npc_parse_mapflag: Item name '%s' does not exist.\n Mapflag noitem: At %s (file '%s', line '%d').\n", token, mapname, filepath, strline(buffer, start - buffer));
+							token = strtok(nullptr, ", ");
+							continue;
+						}
+						id = data->nameid;
+					}
+					else if (!item_db.find(id)) {
+						ShowWarning("npc_parse_mapflag: Item ID '%d' does not exist.\n Mapflag noitem: At %s (file '%s', line '%d').\n", id, mapname, filepath, strline(buffer, start - buffer));
+						token = strtok(nullptr, ", ");
+						continue;
+					}
+				}
+
+				if (std::find(noItemList.begin(), noItemList.end(), id) != noItemList.end()) {
+					ShowWarning("npc_parse_mapflag: Item ID '%d' is being repeated.\n Mapflag noitem: At %s (file '%s', line '%d').\n", id, mapname, filepath, strline(buffer, start - buffer));
+				}
+				else {
+					noItemList.push_back(id);
+				}
+
+				token = strtok(nullptr, ", ");
+			}
+
+			mapdata->noitemlist = std::move(noItemList);
+			map_setmapflag(m, MF_NOITEM, true);
+		}
+		else {
+			map_setmapflag(m, MF_NOITEM, false);
+		}
+		break;
+
 		case MF_INVALID:
 			ShowError("npc_parse_mapflag: unrecognized mapflag '%s' (file '%s', line '%d').\n", w3, filepath, strline(buffer,start-buffer));
 			break;

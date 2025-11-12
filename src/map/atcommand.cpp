@@ -1131,7 +1131,7 @@ ACMD_FUNC(hide)
 		// increment the number of pvp players on the map
 		map_getmapdata(sd->m)->users_pvp++;
 
-		if( !battle_config.pk_mode && map_getmapflag(sd->m, MF_PVP) && !map_getmapflag(sd->m, MF_PVP_NOCALCRANK) )
+		if( !battle_config.pk_mode && !map_getmapflag(sd->m, MF_PK) && map_getmapflag(sd->m, MF_PVP) && !map_getmapflag(sd->m, MF_PVP_NOCALCRANK) )
 		{// register the player for ranking calculations
 			sd->pvp_timer = add_timer( gettick() + 200, pc_calc_pvprank_timer, sd->id, 0 );
 		}
@@ -2149,6 +2149,7 @@ ACMD_FUNC(go)
 		{ MAP_MALAYA,      242, 211 }, // 34=Malaya Port
 		{ MAP_ECLAGE,      110,  39 }, // 35=Eclage
 		{ MAP_LASAGNA,     193, 182 }, // 36=Lasagna
+		{ MAP_ASKALD,     148, 242 }, // 37=Askald
 	};
 
 	nullpo_retr(-1, sd);
@@ -2270,6 +2271,8 @@ ACMD_FUNC(go)
 		town = 35;
 	} else if (strncmp(map_name, "lasagna", 2) == 0) {
 		town = 36;
+	} else if (strncmp(map_name, "askald", 3) == 0) {
+		town = 37;
 	}
 
 	if (town >= 0 && town < ARRAYLENGTH(data))
@@ -11400,6 +11403,19 @@ ACMD_FUNC(macrochecker){
 	return 0;
 }
 
+ACMD_FUNC(ltp)
+{
+	if (sd->state.ltp) {
+		sd->state.ltp = 0;
+		clif_displaymessage(fd,"Last teleport position will not be shown.");
+		return 0;
+	}
+
+	sd->state.ltp = 1;
+	clif_displaymessage(fd, "Last teleport position is now shown.");
+	return 0;
+}
+
 #include <custom/atcommand.inc>
 
 /**
@@ -11729,6 +11745,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(roulette, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEF(setcard),
 		ACMD_DEF(macrochecker),
+		ACMD_DEF(ltp),
 	};
 	AtCommandInfo* atcommand;
 	int32 i;

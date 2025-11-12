@@ -1,0 +1,24 @@
+// NPC: Gold Room Warper
+// File: npc/custom/gold_room.txt
+
+prontera,150,180,5	script	Gold Room Warper	4_M_01,{
+	mes "[Gold Room Warper]";
+	mes "Hai, saya bisa mengirimkanmu ke Gold Room.";
+	mes "Biaya masuk: ^FF000010.000 Zeny^000000.";
+	mes "Lanjut?";
+	
+	next;
+	if (select("Ya, saya mau masuk:Tidak, terima kasih") == 2) close;
+	
+	if (Zeny < 10000) {
+		mes "[Gold Room Warper]";
+		mes "Zeny kamu tidak cukup.";
+		close;
+	}
+	
+	Zeny -= 10000;
+	mes "[Gold Room Warper]";
+	mes "Selamat bersenang-senang!";
+	warp "ordeal_1-1",50,50;
+	end;
+}

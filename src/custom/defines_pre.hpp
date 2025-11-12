@@ -13,6 +13,6 @@
  **/
  
 
-
+#define PACKETVER 20180620
 
 #endif /* CONFIG_CUSTOM_DEFINES_PRE_HPP */

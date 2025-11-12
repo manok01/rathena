@@ -6,6 +6,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <map>
+#include <unordered_set>
 
 #ifdef MAP_GENERATOR
 #include <fstream>
@@ -1966,6 +1967,72 @@ uint8 pc_isequip(map_session_data *sd,int32 n)
 
 	if (!pc_isItemClass(sd, item))
 		return ITEM_EQUIP_ACK_FAIL;
+	
+	/***********************************/
+	/***********    Shakto      ********/
+	/**    https://ronovelty.com/     **/
+	/***********************************/
+
+	map_data* mapdata = map_getmapdata(sd->m);
+
+	if (!mapdata->noitemlist.empty()) {
+		char output[CHAT_SIZE_MAX];
+		sprintf(output, "You can't equip this item in this map.");
+
+		// Creation d'un set pour optimiser la recherche
+		std::unordered_set<int> noItemSet(mapdata->noitemlist.begin(), mapdata->noitemlist.end());
+
+		// Mapping des positions d'equipement
+		static const std::unordered_map<int32, int> equipPosMap = {
+			{EQP_WEAPON, 50}, {EQP_SHIELD, 51}, {EQP_ARMS, 52},
+			{EQP_HELM, 53}, {EQP_ACC, 54}, {EQP_COSTUME, 55},
+			{EQP_COSTUME_HELM, 56}, {EQP_SHADOW_GEAR, 57},
+			{EQP_SHADOW_ACC, 58}, {EQP_SHADOW_ARMS, 59}
+		};
+
+		int calc_flag = 0;
+
+		auto& it = sd->inventory.u.items_inventory[n];
+
+		if (it.nameid == 0)
+			return ITEM_EQUIP_ACK_FAIL;
+
+		struct item_data* itd = itemdb_search(it.nameid);
+		int nameid = it.nameid;
+		int type = itd->type;
+
+		// Verification de la position d'equipement
+		int32 equipPos = pc_equippoint(sd, n);
+		int32 pos2 = -1;
+
+		// Verification bitwise des positions
+		for (const auto& pair : equipPosMap) {
+			if (equipPos & pair.first) { // Verification avec un ET bit-a-bit
+				pos2 = pair.second;
+				break; // On prend la premiere correspondance trouvee
+			}
+		}
+
+		// Verifications principales
+		if (noItemSet.find(nameid) != noItemSet.end() ||
+			noItemSet.find(type) != noItemSet.end() ||
+			(pos2 > 0 && noItemSet.find(pos2) != noItemSet.end()))
+		{
+			clif_displaymessage(sd->fd, output);
+			return ITEM_EQUIP_ACK_FAIL;
+		}
+
+		// Verification des cartes equipees
+		if (!itemdb_isspecial(it.card[0])) {
+			for (int slot = 0; slot < MAX_SLOTS; ++slot) {
+				int cardid = it.card[slot];
+				if (cardid && noItemSet.find(cardid) != noItemSet.end()) {
+					clif_displaymessage(sd->fd, output);
+					return ITEM_EQUIP_ACK_FAIL;
+				}
+			}
+		}
+	}
 
 	return ITEM_EQUIP_ACK_OK;
 }
@@ -6404,6 +6471,32 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 	if( item->flag.dead_branch )
 		log_branch(sd);
 
+	/***********************************/
+	/***********    Shakto      ********/
+	/**    https://ronovelty.com/     **/
+	/***********************************/
+	if(mapdata->noitemlist.size() > 0){
+		int nameid = item->nameid;
+		int type = item->type;
+
+		char output[CHAT_SIZE_MAX];
+		sprintf(output, "You can't equip this item in this map.");
+
+		auto itNoitemlist = std::find_if(mapdata->noitemlist.begin(), mapdata->noitemlist.end(), [nameid] ( int const &v) {return v == nameid;});
+		if (itNoitemlist != mapdata->noitemlist.end()){
+			clif_displaymessage(sd->fd, output);
+			return false;
+		}
+		else {
+			itNoitemlist = std::find_if(mapdata->noitemlist.begin(), mapdata->noitemlist.end(), [type] ( int const &v) {return v == type;});
+
+			if (itNoitemlist != mapdata->noitemlist.end()){
+				clif_displaymessage(sd->fd, output);
+				return false;
+			}
+		}
+	}
+
 	return true;
 }
 
@@ -6949,6 +7042,11 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 	struct map_data *mapdata = map_getmapdata(m);
 	status_change *sc = status_get_sc(sd);
 
+    if(sd->m == m && sd->state.ltp){
+        sd->ltp_x = sd->x;
+        sd->ltp_y = sd->y;
+    }
+
 	sd->state.changemap = (sd->mapindex != mapindex);
 	sd->state.warping = 1;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
@@ -7185,6 +7283,9 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 		vending_update(*sd);
 	if (sd->state.buyingstore)
 		buyingstore_update(*sd);
+
+	if(sd->state.ltp)
+        clif_viewpoint(*sd, 1, 1, sd->ltp_x, sd->ltp_y, 1, 0x00FF00);
 	
 	return SETPOS_OK;
 }
@@ -7222,6 +7323,9 @@ char pc_randomwarp(map_session_data *sd, clr_type type, bool ignore_mapflag)
 		x = rnd_value<int16>(edge, mapdata->xs - edge - 1);
 		y = rnd_value<int16>(edge, mapdata->ys - edge - 1);
 	} while((map_getcell(sd->m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,sd->m,x,y,1))) && (i++) < 1000);
+
+	sd->ltp_x = sd->x;
+	sd->ltp_y = sd->y;
 
 	if (i < 1000)
 		return pc_setpos(sd,mapdata->index,x,y,type);
@@ -8382,7 +8486,7 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, bl
 		if( sd->indexed_bonus.expaddclass[CLASS_ALL] )
 			bonus += sd->indexed_bonus.expaddclass[CLASS_ALL];
 
-		if (battle_config.pk_mode &&
+		if ((battle_config.pk_mode || map_getmapflag(sd->m, MF_PK)) &&
 			(int32)(status_get_lv(src) - sd->status.base_level) >= 20)
 			bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]
 
@@ -10017,7 +10121,7 @@ int32 pc_dead(map_session_data *sd,block_list *src)
 				case 2: base_penalty = (t_exp) ( sd->status.base_exp * ( base_penalty / 10000. ) ); break;
 			}
 			if (base_penalty){ //recheck after altering to speedup
-				if (battle_config.pk_mode && src && src->type==BL_PC)
+				if (src && src->type==BL_PC && (battle_config.pk_mode || map_getmapflag(src->m, MF_PK)))
 					base_penalty *= 2;
 				base_penalty = u64min(sd->status.base_exp, base_penalty);
 			}
@@ -10031,7 +10135,7 @@ int32 pc_dead(map_session_data *sd,block_list *src)
 				case 2: job_penalty = (uint32) ( sd->status.job_exp * ( job_penalty /10000. ) ); break;
 			}
 			if (job_penalty) {
-				if (battle_config.pk_mode && src && src->type==BL_PC)
+				if (src && src->type==BL_PC && (battle_config.pk_mode || map_getmapflag(src->m, MF_PK)))
 					job_penalty *= 2;
 				job_penalty = u64min(sd->status.job_exp, job_penalty);
 			}
@@ -10115,7 +10219,7 @@ int32 pc_dead(map_session_data *sd,block_list *src)
 			ssd->pvp_point++;
 			ssd->pvp_won++;
 		}
-		if( sd->pvp_point < 0 ) {
+		if( sd->pvp_point < 0 && !mapdata->getMapFlag(MF_PK) ) {
 			sd->respawn_tid = add_timer(tick+1000, pc_respawn_timer,sd->id,0);
 			return 1|8;
 		}
@@ -10171,6 +10275,23 @@ bool pc_revive_item(map_session_data *sd) {
 	uint8 hp = 100, sp = 100;
 
 	if (item_position < 0) {
+		/***********************************/
+		/***********    Shakto      ********/
+		/**    https://ronovelty.com/     **/
+		/***********************************/
+		map_data* mapdata = map_getmapdata(sd->m);
+		if(mapdata->noitemlist.size() > 0){
+			int nameid = sd->inventory_data[item_position]->nameid;
+
+			char output[CHAT_SIZE_MAX];
+			sprintf(output, "You can't ressurect here with token of siegfried in this map.");
+
+			auto itNoitemlist = std::find_if(mapdata->noitemlist.begin(), mapdata->noitemlist.end(), [nameid] ( int const &v) {return v == nameid;});
+			if (itNoitemlist != mapdata->noitemlist.end()){
+				clif_displaymessage(sd->fd, output);
+				return false;
+			}
+		}
 		if (sd->sc.getSCE(SC_LIGHT_OF_REGENE)) {
 			hp = sd->sc.getSCE(SC_LIGHT_OF_REGENE)->val2;
 			sp = 0;
@@ -12036,6 +12157,72 @@ bool pc_equipitem(map_session_data *sd,int16 n,int32 req_pos,bool equipswitch)
 	if (!(id = sd->inventory_data[n]))
 		return false;
 	pos = pc_equippoint(sd,n); //With a few exceptions, item should go in all specified slots.
+	
+	/***********************************/
+	/***********    Shakto      ********/
+	/**    https://ronovelty.com/     **/
+	/***********************************/
+
+	map_data* mapdata = map_getmapdata(sd->m);
+
+	if (!mapdata->noitemlist.empty()) {
+		char output[CHAT_SIZE_MAX];
+		sprintf(output, "You can't equip this item in this map.");
+
+		// Creation d'un set pour optimiser la recherche
+		std::unordered_set<int> noItemSet(mapdata->noitemlist.begin(), mapdata->noitemlist.end());
+
+		// Mapping des positions d'equipement
+		static const std::unordered_map<int32, int> equipPosMap = {
+			{EQP_WEAPON, 50}, {EQP_SHIELD, 51}, {EQP_ARMS, 52},
+			{EQP_HELM, 53}, {EQP_ACC, 54}, {EQP_COSTUME, 55},
+			{EQP_COSTUME_HELM, 56}, {EQP_SHADOW_GEAR, 57},
+			{EQP_SHADOW_ACC, 58}, {EQP_SHADOW_ARMS, 59}
+		};
+
+		int calc_flag = 0;
+
+		auto& it = sd->inventory.u.items_inventory[n];
+
+		if (it.nameid == 0)
+			return false;
+
+		struct item_data* itd = itemdb_search(it.nameid);
+		int nameid = it.nameid;
+		int type = itd->type;
+
+		// Verification de la position d'equipement
+		int32 equipPos = pc_equippoint(sd, n);
+		int32 pos2 = -1;
+
+		// Verification bitwise des positions
+		for (const auto& pair : equipPosMap) {
+			if (equipPos & pair.first) { // Verification avec un ET bit-a-bit
+				pos2 = pair.second;
+				break; // On prend la premiere correspondance trouvee
+			}
+		}
+
+		// Verifications principales
+		if (noItemSet.find(nameid) != noItemSet.end() ||
+			noItemSet.find(type) != noItemSet.end() ||
+			(pos2 > 0 && noItemSet.find(pos2) != noItemSet.end()))
+		{
+			clif_displaymessage(sd->fd, output);
+			return false;
+		}
+
+		// Verification des cartes equipees
+		if (!itemdb_isspecial(it.card[0])) {
+			for (int slot = 0; slot < MAX_SLOTS; ++slot) {
+				int cardid = it.card[slot];
+				if (cardid && noItemSet.find(cardid) != noItemSet.end()) {
+					clif_displaymessage(sd->fd, output);
+					return false;
+				}
+			}
+		}
+	}
 
 	if(battle_config.battle_log && !equipswitch)
 		ShowInfo("equip %u (%d) %x:%x\n",sd->inventory.u.items_inventory[n].nameid,n,id?id->equip:0,req_pos);
@@ -12600,6 +12787,7 @@ void pc_equipswitch_remove( map_session_data* sd, int32 index ){
 void pc_checkitem(map_session_data *sd) {
 	int32 i, calc_flag = 0;
 	struct item* it;
+	map_data* mapdata = map_getmapdata(sd->m);
 
 	nullpo_retv(sd);
 
@@ -12649,6 +12837,81 @@ void pc_checkitem(map_session_data *sd) {
 			continue;
 		}
 	}
+	
+	for (i = 0; i < MAX_INVENTORY; i++) {
+		/***********************************/
+		/***********    Shakto      ********/
+		/**    https://ronovelty.com/     **/
+		/***********************************/
+
+		if (!mapdata->noitemlist.empty()) {
+			char output[CHAT_SIZE_MAX];
+			sprintf(output, "You can't equip this item in this map.");
+
+			// Creation d'un set pour optimiser la recherche
+			std::unordered_set<int> noItemSet(mapdata->noitemlist.begin(), mapdata->noitemlist.end());
+
+			// Mapping des positions d'equipement
+			static const std::unordered_map<int32, int> equipPosMap = {
+				{EQP_WEAPON, 50}, {EQP_SHIELD, 51}, {EQP_ARMS, 52},
+				{EQP_HELM, 53}, {EQP_ACC, 54}, {EQP_COSTUME, 55},
+				{EQP_COSTUME_HELM, 56}, {EQP_SHADOW_GEAR, 57},
+				{EQP_SHADOW_ACC, 58}, {EQP_SHADOW_ARMS, 59}
+			};
+
+			int calc_flag = 0;
+
+			auto& it = sd->inventory.u.items_inventory[i];
+
+			if (it.nameid == 0) 
+				continue;
+
+			// Verification de si l objet est equipe
+			if (it.equip == 0)
+				continue;
+
+			struct item_data* itd = itemdb_search(it.nameid);
+			int nameid = it.nameid;
+			int type = itd->type;
+
+			// Verification de la position d'equipement
+			int32 equipPos = pc_equippoint(sd, i);
+			int32 pos2 = -1;
+
+			// Verification bitwise des positions
+			for (const auto& pair : equipPosMap) {
+				if (equipPos & pair.first) { // Verification avec un ET bit-a-bit
+					pos2 = pair.second;
+					break; // On prend la premiere correspondance trouvee
+				}
+			}
+
+			// Verifications principales
+			if (noItemSet.find(nameid) != noItemSet.end() ||
+				noItemSet.find(type) != noItemSet.end() ||
+				(pos2 > 0 && noItemSet.find(pos2) != noItemSet.end()))
+			{
+				//clif_displaymessage(sd->fd, output);
+				pc_unequipitem(sd, i, 2);
+				calc_flag = 1;
+				continue;
+			}
+
+			// Verification des cartes equipees
+			if (!itemdb_isspecial(it.card[0])) {
+				for (int slot = 0; slot < MAX_SLOTS; ++slot) {
+					int cardid = it.card[slot];
+					if (cardid && noItemSet.find(cardid) != noItemSet.end()) {
+						//clif_displaymessage(sd->fd, output);
+						pc_unequipitem(sd, i, 2);
+						calc_flag = 1;
+						continue;
+					}
+				}
+			}
+		}
+	}
+
 
 	if( calc_flag && sd->state.active ) {
 		pc_checkallowskill(sd);

@@ -162,6 +162,7 @@ Body:
         Rate: 7000
       - Item: Knife_
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Sticky_Mucus
         Rate: 400
       - Item: Apple
@@ -235,6 +236,7 @@ Body:
         Rate: 3500
       - Item: Main_Gauche_
         Rate: 15
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Green_Herb
         Rate: 350
       - Item: Honey
@@ -274,6 +276,7 @@ Body:
         Rate: 5500
       - Item: Falchion_
         Rate: 20
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Ribbon_
         Rate: 15
       - Item: Wing_Of_Fly
@@ -337,6 +340,7 @@ Body:
         Rate: 500
       - Item: Club_
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Azure_Jewel
         Rate: 5
       - Item: Green_Herb
@@ -345,6 +349,7 @@ Body:
         Rate: 1000
       - Item: Club
         Rate: 200
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Fabre_Card
         Rate: 1
         StealProtected: true
@@ -423,6 +428,7 @@ Body:
         Rate: 9000
       - Item: Bow_
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Yellow_Gemstone
         Rate: 80
       - Item: Arrow
@@ -522,6 +528,7 @@ Body:
         Rate: 1500
       - Item: Cutter_
         Rate: 55
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Wing_Of_Fly
         Rate: 100
       - Item: Chonchon_Doll
@@ -742,12 +749,14 @@ Body:
         Rate: 3
       - Item: Great_Bow_
         Rate: 35
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Fire_Arrow
         Rate: 1000
       - Item: Red_Herb
         Rate: 1800
       - Item: Bow
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Archer_Skeleton_Card
         Rate: 1
         StealProtected: true
@@ -888,6 +897,7 @@ Body:
         Rate: 900
       - Item: Wand
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Orange
         Rate: 1000
       - Item: Pecopeco_Card
@@ -928,6 +938,7 @@ Body:
         Rate: 9000
       - Item: Spear_
         Rate: 30
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Green_Herb
         Rate: 350
       - Item: Shoot
@@ -936,6 +947,7 @@ Body:
         Rate: 3
       - Item: Whip_Of_Earth
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Mandragora_Card
         Rate: 1
         StealProtected: true
@@ -1076,10 +1088,13 @@ Body:
         Rate: 3
       - Item: Battle_Axe_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Orcish_Axe
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Axe
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Orc_Warrior_Card
         Rate: 1
         StealProtected: true
@@ -1120,6 +1135,7 @@ Body:
         Rate: 5500
       - Item: Pike_
         Rate: 30
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Yellow_Herb
         Rate: 70
       - Item: Azure_Jewel
@@ -1162,6 +1178,7 @@ Body:
         Rate: 9000
       - Item: Katana_
         Rate: 15
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Red_Herb
         Rate: 900
       - Item: Emveretarcon
@@ -1217,6 +1234,7 @@ Body:
         Rate: 100
       - Item: Girl's_Diary
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Munak_Card
         Rate: 1
         StealProtected: true
@@ -1288,14 +1306,17 @@ Body:
         Rate: 60
       - Item: Dagger_
         Rate: 12
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Red_Herb
         Rate: 700
       - Item: Mementos
         Rate: 10
       - Item: Knife
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Stiletto
         Rate: 50
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Soldier_Skeleton_Card
         Rate: 1
         StealProtected: true
@@ -1383,6 +1404,7 @@ Body:
         Rate: 9000
       - Item: Glaive_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Scale_Of_Snakes
         Rate: 1500
       - Item: Scales_Shell
@@ -1435,6 +1457,8 @@ Body:
         Rate: 5
       - Item: Main_Gauche
         Rate: 5
+        Index: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Apple
         Rate: 250
       - Item: Poporing_Card
@@ -1624,6 +1648,7 @@ Body:
         Rate: 1
       - Item: Damascus_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Hunter_Fly_Card
         Rate: 1
         StealProtected: true
@@ -1713,6 +1738,7 @@ Body:
         Rate: 134
       - Item: Tsurugi_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Posionous_Canine
         Rate: 2500
       - Item: Scale_Of_Snakes
@@ -1767,10 +1793,12 @@ Body:
         Rate: 2000
       - Item: Assasin_Dagger
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Crown
         Rate: 200
       - Item: Jamadhar_
         Rate: 600
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Sacred_Marks
         Rate: 1000
       - Item: Spinx_Helm
@@ -1823,10 +1851,12 @@ Body:
     Drops:
       - Item: Crescent_Scythe
         Rate: 400
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Magestic_Goat
         Rate: 300
       - Item: Crescent_Scythe_
         Rate: 50
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Emperium
         Rate: 500
       - Item: Magestic_Goat_
@@ -2144,12 +2174,15 @@ Body:
         Rate: 250
       - Item: Broad_Sword_
         Rate: 220
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Zweihander
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Sharp_Gear
         Rate: 350
       - Item: Lance_
         Rate: 550
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Elunium
         Rate: 3686
       - Item: Oridecon
@@ -2279,6 +2312,7 @@ Body:
         Rate: 700
       - Item: Cotton_Shirt_
         Rate: 150
+        Index: 5
       - Item: Red_Herb
         Rate: 550
       - Item: Milk
@@ -2416,10 +2450,12 @@ Body:
         Rate: 9000
       - Item: Guitar_Of_Vast_Land
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Green_Feeler
         Rate: 4
       - Item: Javelin_
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_5        
       - Item: Leaflet_Of_Hinal
         Rate: 10
       - Item: Grasshopper_Doll
@@ -2467,6 +2503,7 @@ Body:
         Rate: 250
       - Item: Blade_
         Rate: 15
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Insect_Feeler
         Rate: 200
       - Item: Red_Herb
@@ -2518,12 +2555,14 @@ Body:
         Rate: 1500
       - Item: Slayer_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Yellow_Herb
         Rate: 90
       - Item: Bluish_Green_Jewel
         Rate: 5
       - Item: Katana
         Rate: 50
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Thief_Bug_Male_Card
         Rate: 1
         StealProtected: true
@@ -2570,6 +2609,7 @@ Body:
         Rate: 1000
       - Item: Guisarme
         Rate: 50
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Iron_Ore
         Rate: 250
       - Item: Muka_Card
@@ -2712,6 +2752,7 @@ Body:
         Rate: 3000
       - Item: Guitar_Of_Passion
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Metaller_Card
         Rate: 1
         StealProtected: true
@@ -2759,6 +2800,7 @@ Body:
     Drops:
       - Item: Gungnir
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Honey
         Rate: 10000
       - Item: Coronet
@@ -2863,6 +2905,7 @@ Body:
         Rate: 100
       - Item: Infiltrator
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Oridecon
         Rate: 60
       - Item: Nightmare_Card
@@ -3041,6 +3084,7 @@ Body:
         Rate: 2
       - Item: Trident_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Feather
         Rate: 3000
       - Item: Skyblue_Jewel
@@ -3228,6 +3272,7 @@ Body:
         Rate: 50
       - Item: Katana_
         Rate: 25
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Gill
         Rate: 600
       - Item: Sword_Fish_Card
@@ -3320,6 +3365,7 @@ Body:
         Rate: 250
       - Item: Falchion
         Rate: 250
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Oridecon_Stone
         Rate: 43
       - Item: Well_Dried_Bone
@@ -3519,6 +3565,7 @@ Body:
         Rate: 800
       - Item: Mace_
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Jellopy
         Rate: 3000
       - Item: Red_Herb
@@ -4017,6 +4064,7 @@ Body:
         Rate: 1000
       - Item: Golden_Mace
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Golden_Gear
         Rate: 250
       - Item: Golden_Bell
@@ -4077,14 +4125,17 @@ Body:
         Rate: 500
       - Item: Right_Epsilon
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Shield_
         Rate: 250
       - Item: Orcish_Sword
         Rate: 1000
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Elunium
         Rate: 4559
       - Item: Giant_Axe
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Orc_Hero_Card
         Rate: 1
         StealProtected: true
@@ -4135,6 +4186,7 @@ Body:
         Rate: 700
       - Item: Guitar_Of_Gentle_Breeze
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Vocal_Card
         Rate: 1
         StealProtected: true
@@ -4591,6 +4643,7 @@ Body:
         Rate: 3000
       - Item: Healing_Staff
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Mementos
         Rate: 550
       - Item: Oridecon
@@ -4601,6 +4654,7 @@ Body:
         Rate: 1
       - Item: Blessed_Wand
         Rate: 3
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Anubis_Card
         Rate: 1
         StealProtected: true
@@ -4735,6 +4789,7 @@ Body:
         Rate: 63
       - Item: Halberd_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Yggdrasilberry
         Rate: 50
       - Item: Leaf_Of_Yggdrasil
@@ -4783,6 +4838,7 @@ Body:
         Rate: 3
       - Item: Arc_Wand_
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Star_Crumb
         Rate: 30
       - Item: Old_Magic_Book
@@ -4831,10 +4887,13 @@ Body:
         Rate: 5500
       - Item: Glaive_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Spear_
         Rate: 15
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Pike_
         Rate: 20
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Caramel_Card
         Rate: 1
         StealProtected: true
@@ -4976,6 +5035,7 @@ Body:
         Rate: 53
       - Item: Stiletto_
         Rate: 140
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Desert_Wolf_Card
         Rate: 1
         StealProtected: true
@@ -5020,6 +5080,7 @@ Body:
         Rate: 200
       - Item: Asura_
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Orange
         Rate: 1000
       - Item: Desert_Wolf_Babe_Card
@@ -5067,6 +5128,7 @@ Body:
         Rate: 200
       - Item: Katar_Of_Cold_Icicle
         Rate: 3
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Oridecon_Stone
         Rate: 161
       - Item: Deviace_Card
@@ -5112,6 +5174,7 @@ Body:
         Rate: 2
       - Item: Partizan_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Sacred_Marks
         Rate: 5
       - Item: Zargon
@@ -5159,12 +5222,15 @@ Body:
         Rate: 150
       - Item: Sword_Mace_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Mighty_Staff
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Gold
         Rate: 1
       - Item: Club
         Rate: 300
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Hammer_Of_Blacksmith
         Rate: 5
       - Item: Dokebi_Card
@@ -5257,18 +5323,23 @@ Body:
     Drops:
       - Item: Saber_
         Rate: 600
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Ring_Pommel_Saber_
         Rate: 950
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Cutlas
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Hae_Dong_Gum_
         Rate: 400
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Corsair
         Rate: 350
       - Item: Elunium
         Rate: 3200
       - Item: Krasnaya
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Drake_Card
         Rate: 1
         StealProtected: true
@@ -5407,18 +5478,21 @@ Body:
     Drops:
       - Item: Fire_Brand
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Smoking_Pipe
         Rate: 250
       - Item: Honey
         Rate: 10000
       - Item: Katar_Of_Raging_Blaze
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Tiger_Footskin
         Rate: 250
       - Item: Elunium
         Rate: 2300
       - Item: Krieg
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Eddga_Card
         Rate: 1
         StealProtected: true
@@ -5503,10 +5577,12 @@ Body:
         Rate: 10
       - Item: Bone_Wand
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Ragamuffin_Cape
         Rate: 2
       - Item: Bible
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Leaf_Of_Yggdrasil
         Rate: 200
       - Item: Cookbook07
@@ -5748,6 +5824,7 @@ Body:
         Rate: 3
       - Item: Dirk_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Buckler_
         Rate: 5
       - Item: Red_Herb
@@ -5795,6 +5872,7 @@ Body:
         Rate: 3
       - Item: Flail_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Buckler_
         Rate: 1
       - Item: Red_Herb
@@ -5895,6 +5973,7 @@ Body:
         Rate: 3
       - Item: Smasher_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Buckler_
         Rate: 1
       - Item: Red_Herb
@@ -5940,6 +6019,7 @@ Body:
         Rate: 9000
       - Item: Wand_
         Rate: 15
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Buckler_
         Rate: 1
       - Item: Goblin_Mask_03
@@ -5990,6 +6070,7 @@ Body:
         Rate: 3000
       - Item: Town_Sword_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Foolishness_Of_Blind
         Rate: 1
       - Item: Fatty_Chubby_Earthworm
@@ -6037,6 +6118,7 @@ Body:
         Rate: 5500
       - Item: Guisarme_
         Rate: 15
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Shell
         Rate: 5500
       - Item: Solid_Shell
@@ -6176,6 +6258,7 @@ Body:
         Rate: 1000
       - Item: Katar_Of_Piercing_Wind
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Oridecon
         Rate: 100
       - Item: Ghost_Scroll_1_5
@@ -6273,6 +6356,7 @@ Body:
         Rate: 25
       - Item: Gladius_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Buckler_
         Rate: 5
       - Item: Kobold_Card
@@ -6367,6 +6451,7 @@ Body:
         Rate: 200
       - Item: Hammer_
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Buckler_
         Rate: 3
       - Item: Yellow_Herb
@@ -6602,10 +6687,12 @@ Body:
         Rate: 4365
       - Item: Staff_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Mitten_Of_Presbyter
         Rate: 1
       - Item: Blessed_Wand
         Rate: 3
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Fire_Scroll_1_5
         Rate: 100
       - Item: Book_Of_Devil
@@ -6691,6 +6778,7 @@ Body:
         Rate: 2500
       - Item: Chain_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Skyblue_Jewel
         Rate: 10
       - Item: Blue_Gemstone
@@ -6741,6 +6829,7 @@ Body:
         Rate: 100
       - Item: Chain_
         Rate: 15
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Chrystal_Pumps
         Rate: 1
       - Item: Marionette_Doll
@@ -6830,6 +6919,7 @@ Body:
         Rate: 500
       - Item: Jur_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Goggle_
         Rate: 5
       - Item: Safety_Helmet
@@ -7029,12 +7119,14 @@ Body:
         Rate: 196
       - Item: Two_Handed_Axe_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Hammer_Of_Blacksmith
         Rate: 10
       - Item: Sweet_Potato
         Rate: 1500
       - Item: Axe
         Rate: 200
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Lemon
         Rate: 300
       - Item: Minorous_Card
@@ -7084,10 +7176,13 @@ Body:
     Drops:
       - Item: Spectral_Spear
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Moonlight_Sword
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Long_Mace
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Punisher
         Rate: 500
       - Item: Silver_Knife_Of_Chaste
@@ -7096,6 +7191,7 @@ Body:
         Rate: 2600
       - Item: Staff_Of_Bordeaux
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Moonlight_Flower_Card
         Rate: 1
         StealProtected: true
@@ -7187,6 +7283,7 @@ Body:
         Rate: 2
       - Item: Buster_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Green_Herb
         Rate: 50
       - Item: Orc_Skeleton_Card
@@ -7271,8 +7368,10 @@ Body:
         Rate: 20
       - Item: Falchion_
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Stiletto_
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Undershirt
         Rate: 100
       - Item: Pasana_Card
@@ -7365,6 +7464,7 @@ Body:
         Rate: 1000
       - Item: Khukri
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Zargon
         Rate: 1500
       - Item: Aloebera
@@ -7419,14 +7519,17 @@ Body:
         Rate: 2500
       - Item: Solar_Sword
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Holy_Robe
         Rate: 150
       - Item: Gemmed_Crown
         Rate: 500
       - Item: Tablet
         Rate: 300
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Bazerald
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Pharaoh_Card
         Rate: 1
         StealProtected: true
@@ -7519,8 +7622,10 @@ Body:
         Rate: 9700
       - Item: Forturn_Sword
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Sucsamad
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Jaws_Of_Ant
         Rate: 5000
       - Item: Mr_Scream
@@ -7710,7 +7815,8 @@ Body:
       - Item: Chain_Mail_
         Rate: 2
       - Item: Two_Hand_Sword_
-        Rate: 2
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Katana
         Rate: 100
       - Item: Patriotism_Marks
@@ -7809,8 +7915,10 @@ Body:
         Rate: 200
       - Item: Katar_Of_Thornbush
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Hypnotist's_Staff_
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Sand_Man_Card
         Rate: 1
         StealProtected: true
@@ -7893,6 +8001,7 @@ Body:
         Rate: 9000
       - Item: Axe_
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Meat
         Rate: 500
       - Item: Arrow
@@ -8038,6 +8147,7 @@ Body:
         Rate: 5
       - Item: Stiletto_
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Red_Herb
         Rate: 1000
       - Item: Inspector_Certificate
@@ -8595,6 +8705,7 @@ Body:
         Rate: 1500
       - Item: Cutter_
         Rate: 55
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Wing_Of_Fly
         Rate: 100
       - Item: Chonchon_Doll
@@ -8635,6 +8746,7 @@ Body:
         Rate: 250
       - Item: Club_
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Azure_Jewel
         Rate: 2
       - Item: Green_Herb
@@ -8643,6 +8755,7 @@ Body:
         Rate: 500
       - Item: Club
         Rate: 200
+        RandomOptionGroup: AS_WEAPON_3
   - Id: 1185
     AegisName: WHISPER_
     Name: Whisper
@@ -8830,6 +8943,7 @@ Body:
         Rate: 2500
       - Item: Orc_Archer_Bow
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Red_Herb
         Rate: 1400
       - Item: White_Herb
@@ -8879,18 +8993,21 @@ Body:
     Drops:
       - Item: Brood_Axe
         Rate: 400
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Ring_
         Rate: 400
       - Item: Loard_Circlet
         Rate: 400
       - Item: Doom_Slayer_
         Rate: 400
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Old_Violet_Box
         Rate: 1000
       - Item: Elunium
         Rate: 4268
       - Item: Erde
         Rate: 3100
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Orc_Load_Card
         Rate: 1
         StealProtected: true
@@ -9121,12 +9238,16 @@ Body:
         Rate: 4850
       - Item: Book_Of_Billows
         Rate: 4
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Book_Of_Mother_Earth
         Rate: 4
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Book_Of_Blazing_Sun
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Book_Of_Gust_Of_Wind
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Bookclip_In_Memory
         Rate: 300
       - Item: Old_Magic_Book
@@ -9263,6 +9384,7 @@ Body:
     Drops:
       - Item: Book_Of_The_Apocalypse
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Rosary
         Rate: 30
       - Item: Blue_Potion
@@ -9275,6 +9397,7 @@ Body:
         Rate: 5
       - Item: Cursed_Dagger
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Dark_Priest_Card
         Rate: 1
         StealProtected: true
@@ -9503,10 +9626,13 @@ Body:
         Rate: 1500
       - Item: Slayer_
         Rate: 70
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Bastard_Sword_
         Rate: 40
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Claymore
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Steel
         Rate: 120
       - Item: Oridecon
@@ -9555,8 +9681,10 @@ Body:
         Rate: 1500
       - Item: Dagger_
         Rate: 70
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Stiletto_
         Rate: 40
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Steel
         Rate: 120
       - Item: Oridecon
@@ -9602,10 +9730,13 @@ Body:
         Rate: 1500
       - Item: Lapier_
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Scimiter_
         Rate: 60
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Ring_Pommel_Saber_
         Rate: 40
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Steel
         Rate: 120
       - Item: Oridecon
@@ -9747,6 +9878,7 @@ Body:
         Rate: 1
       - Item: Hakujin_
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Centimental_Leaf
         Rate: 5
       - Item: Leaf_Of_Yggdrasil
@@ -9755,6 +9887,7 @@ Body:
         Rate: 217
       - Item: Muramasa
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Wander_Man_Card
         Rate: 1
         StealProtected: true
@@ -9983,6 +10116,7 @@ Body:
         Rate: 2500
       - Item: Orcish_Axe
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Steel
         Rate: 90
       - Item: Orcish_Voucher
@@ -10080,12 +10214,14 @@ Body:
         Rate: 1800
       - Item: Jump_Rope
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Oridecon_Stone
         Rate: 115
       - Item: Great_Nature
         Rate: 5
       - Item: Glaive
         Rate: 20
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Seed_Of_Yggdrasil
         Rate: 45
       - Item: Stem_Worm_Card
@@ -10133,6 +10269,7 @@ Body:
         Rate: 15
       - Item: Katar_Of_Raging_Blaze
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Red_Gemstone
         Rate: 550
       - Item: Penomena_Card
@@ -10180,6 +10317,7 @@ Body:
         Rate: 25
       - Item: Broad_Sword_
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Elunium
         Rate: 369
       - Item: Oridecon
@@ -10620,6 +10758,7 @@ Body:
         Rate: 600
       - Item: Club_
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Azure_Jewel
         Rate: 8
       - Item: Green_Herb
@@ -10628,6 +10767,7 @@ Body:
         Rate: 1500
       - Item: Club
         Rate: 200
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Fabre_Card
         Rate: 1
         StealProtected: true
@@ -10890,10 +11030,13 @@ Body:
         Rate: 3
       - Item: Battle_Axe_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Orcish_Axe
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Axe
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Orc_Warrior_Card
         Rate: 1
         StealProtected: true
@@ -11492,6 +11635,7 @@ Body:
         Rate: 3500
       - Item: Branch
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Oridecon_Stone
         Rate: 87
       - Item: Cruiser_Card
@@ -11698,10 +11842,13 @@ Body:
         Rate: 5500
       - Item: Ice_Falchon
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Katar_Of_Cold_Icicle
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Claw_Of_Garm
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Elunium
         Rate: 3977
       - Item: Oridecon
@@ -11840,6 +11987,7 @@ Body:
         Rate: 230
       - Item: Whip_Of_Ice_Piece
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Grape
         Rate: 250
       - Item: Elunium_Stone
@@ -11936,6 +12084,7 @@ Body:
         Rate: 2
       - Item: Jamadhar_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Injustice_Card
         Rate: 1
         StealProtected: true
@@ -11982,6 +12131,7 @@ Body:
         Rate: 600
       - Item: Composite_Bow_
         Rate: 25
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Grape
         Rate: 300
       - Item: Goblin_Archer_Card
@@ -12027,8 +12177,10 @@ Body:
         Rate: 120
       - Item: Guisarme_
         Rate: 1500
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Pole_Axe
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Oridecon
         Rate: 185
       - Item: Rough_Wind
@@ -12171,6 +12323,7 @@ Body:
         Rate: 500
       - Item: Legacy_Of_Dragon
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Pyroxene
         Rate: 1500
       - Item: Dragon_Breath
@@ -12219,10 +12372,12 @@ Body:
         Rate: 100
       - Item: Arc_Wand_
         Rate: 8
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Rough_Wind
         Rate: 100
       - Item: Bone_Wand
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Wind_Ghost_Card
         Rate: 1
         StealProtected: true
@@ -12269,6 +12424,7 @@ Body:
         Rate: 35
       - Item: Trident
         Rate: 3
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Oridecon_Stone
         Rate: 203
       - Item: Merman_Card
@@ -12449,8 +12605,10 @@ Body:
         Rate: 62
       - Item: Katzbalger
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Pole_Axe
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Elunium
         Rate: 433
       - Item: Bloody_Knight_Card
@@ -12636,10 +12794,13 @@ Body:
     Drops:
       - Item: Bone_Wand
         Rate: 800
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Kronos
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Grimtooth_
         Rate: 300
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Mage_Coat
         Rate: 300
       - Item: Cape_Of_Ancient_Lord
@@ -12832,10 +12993,12 @@ Body:
         Rate: 2
       - Item: Bow
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Incisive_Arrow
         Rate: 2000
       - Item: Arbalest_
         Rate: 3
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Elunium
         Rate: 106
       - Item: Raydric_Archer_Card
@@ -12877,6 +13040,7 @@ Body:
         Rate: 2000
       - Item: Club
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Inspector_Certificate
         Rate: 300
       - Item: Stop_Post
@@ -13027,6 +13191,7 @@ Body:
         Rate: 320
       - Item: The_Garrison
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Elunium_Stone
         Rate: 124
       - Item: Steam_Goblin_Card
@@ -13123,6 +13288,7 @@ Body:
         Rate: 2000
       - Item: CrossBow_
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Oridecon_Stone
         Rate: 79
       - Item: Kobold_Archer_Card
@@ -13167,10 +13333,12 @@ Body:
         Rate: 1000
       - Item: War_Axe
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Citrine
         Rate: 1500
       - Item: Great_Axe
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Oridecon
         Rate: 160
       - Item: Chimera_Card
@@ -13422,10 +13590,13 @@ Body:
         Rate: 800
       - Item: Gladius_
         Rate: 35
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Gladius
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Sandstorm
         Rate: 15
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Ghost_Bandana
         Rate: 1
       - Item: Skeleton_General_Card
@@ -13667,8 +13838,10 @@ Body:
         Rate: 2500
       - Item: Kakkung_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Staff_Of_Soul
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Walking_Stick
         Rate: 2
       - Item: Wind_Scroll_1_5
@@ -13719,8 +13892,10 @@ Body:
         Rate: 1200
       - Item: Flail_
         Rate: 6
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Mighty_Staff
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Panacea
         Rate: 150
       - Item: Royal_Jelly
@@ -13913,6 +14088,7 @@ Body:
         Rate: 5335
       - Item: Twilight_Desert
         Rate: 20
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Star_Crumb
         Rate: 100
       - Item: Great_Nature
@@ -13963,6 +14139,7 @@ Body:
         Rate: 250
       - Item: Sword_Mace_
         Rate: 3
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Gold
         Rate: 5
       - Item: Spirit_Chain
@@ -14008,6 +14185,7 @@ Body:
     Drops:
       - Item: Bone_Wand
         Rate: 3
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Bone_Helm
         Rate: 2
       - Item: Ragamuffin_Cape
@@ -14020,6 +14198,7 @@ Body:
         Rate: 1550
       - Item: Broad_Sword_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Dark_Illusion_Card
         Rate: 1
         StealProtected: true
@@ -14066,10 +14245,12 @@ Body:
         Rate: 15
       - Item: Staff_
         Rate: 3
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Scarlet_Jewel
         Rate: 20
       - Item: Double_Bound
         Rate: 15
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Giant_Honet_Card
         Rate: 1
         StealProtected: true
@@ -14401,6 +14582,7 @@ Body:
         Rate: 4413
       - Item: Two_Handed_Axe_
         Rate: 4
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Lemon
         Rate: 300
       - Item: Oridecon
@@ -14508,14 +14690,17 @@ Body:
         Rate: 8
       - Item: War_Axe
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Cookbook09
         Rate: 200
       - Item: Pole_Axe
         Rate: 9
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Broken_Shell
         Rate: 5335
       - Item: Immaterial_Sword
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Union_Of_Tribe
         Rate: 1
       - Item: Turtle_General_Card
@@ -14662,6 +14847,7 @@ Body:
         Rate: 1240
       - Item: Huuma_Bird_Wing
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Old_Blue_Box
         Rate: 1
       - Item: Assulter_Card
@@ -14712,6 +14898,7 @@ Body:
         Rate: 850
       - Item: Chain
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Solider_Card
         Rate: 1
         StealProtected: true
@@ -14757,6 +14944,7 @@ Body:
         Rate: 1200
       - Item: Guisarme_
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Panacea
         Rate: 200
       - Item: Glass_Bead
@@ -14902,6 +15090,7 @@ Body:
         Rate: 1
       - Item: Guisarme
         Rate: 3
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Morning_Star
         Rate: 2
       - Item: Magician_Hat
@@ -15192,6 +15381,7 @@ Body:
         Rate: 1000
       - Item: War_Axe
         Rate: 75
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Helm_Of_Sun
         Rate: 2
         StealProtected: true
@@ -15472,6 +15662,7 @@ Body:
         Rate: 500
       - Item: Kakkung_
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Magestic_Goat
         Rate: 10
         StealProtected: true
@@ -15540,8 +15731,10 @@ Body:
         Rate: 7275
       - Item: Zeny_Knife
         Rate: 375
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Spanner
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Clothes_Of_The_Lord
         Rate: 10
         StealProtected: true
@@ -15612,6 +15805,7 @@ Body:
         Rate: 300
       - Item: Staff_Of_Soul
         Rate: 167
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Holy_Robe
         Rate: 10
         StealProtected: true
@@ -15680,8 +15874,10 @@ Body:
         Rate: 7275
       - Item: Gaia_Sword
         Rate: 250
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Grimtooth_
         Rate: 188
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Crown
         Rate: 12
         StealProtected: true
@@ -15892,6 +16088,7 @@ Body:
         Rate: 1000
       - Item: Muramasa
         Rate: 50
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Helm_Of_Angel
         Rate: 24
         StealProtected: true
@@ -16310,6 +16507,7 @@ Body:
         Rate: 7275
       - Item: Jewel_Sword
         Rate: 215
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Satanic_Chain
         Rate: 60
       - Item: Bone_Helm
@@ -16380,6 +16578,7 @@ Body:
         Rate: 7275
       - Item: Pole_Axe
         Rate: 50
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Spinx_Helm
         Rate: 50
       - Item: Helm_
@@ -16530,6 +16729,7 @@ Body:
         Rate: 5
       - Item: Destroyer_
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Manteau_
         Rate: 20
       - Item: Steel
@@ -16755,6 +16955,7 @@ Body:
         Rate: 1
       - Item: Staff_Of_Soul
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Blue_Potion
         Rate: 1000
       - Item: Succubus_Card
@@ -16897,14 +17098,17 @@ Body:
         Rate: 5335
       - Item: Pole_Axe
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_5
       - Item: House_Auger
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Ring_
         Rate: 2
       - Item: Shine_Spear_Blade
         Rate: 10
       - Item: War_Axe
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Iron_Driver
         Rate: 2
       - Item: Lord_Of_Death_Card
@@ -16999,6 +17203,7 @@ Body:
         Rate: 2000
       - Item: Kamaitachi
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: The_Paper_Card
         Rate: 1
         StealProtected: true
@@ -17046,6 +17251,7 @@ Body:
         Rate: 20
       - Item: Electric_Fist
         Rate: 20
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Harpy_Card
         Rate: 1
         StealProtected: true
@@ -17089,6 +17295,7 @@ Body:
         Rate: 10
       - Item: Wizardy_Staff
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Old_Card_Album
         Rate: 1
       - Item: Underground_Key
@@ -17185,6 +17392,7 @@ Body:
         Rate: 100
       - Item: Infiltrator
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Nightmare_Terror_Card
         Rate: 1
         StealProtected: true
@@ -17476,8 +17684,10 @@ Body:
         Rate: 300
       - Item: Damascus_
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Hypnotist's_Staff_
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Fine_Sand
         Rate: 1200
       - Item: Sleeper_Card
@@ -17620,14 +17830,17 @@ Body:
         Rate: 4700
       - Item: Wizardy_Staff
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Balistar
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Cape_Of_Ancient_Lord
         Rate: 15
       - Item: Ring_
         Rate: 4
       - Item: Book_Of_The_Apocalypse
         Rate: 4
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Dracula_Card
         Rate: 1
         StealProtected: true
@@ -17669,12 +17882,14 @@ Body:
         Rate: 1200
       - Item: Base_Guitar
         Rate: 50
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Royal_Jelly
         Rate: 1400
       - Item: Water_Of_Darkness
         Rate: 1000
       - Item: Violin_
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Violy_Card
         Rate: 1
         StealProtected: true
@@ -18024,8 +18239,10 @@ Body:
     Drops:
       - Item: Pole_Axe
         Rate: 550
+        RandomOptionGroup: AS_WEAPON_5
       - Item: War_Axe
         Rate: 680
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Holy_Avenger
         Rate: 480
       - Item: Holy_Guard
@@ -18083,6 +18300,7 @@ Body:
         Rate: 30
       - Item: Murasame
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Karakasa_Card
         Rate: 1
         StealProtected: true
@@ -18133,6 +18351,7 @@ Body:
         Rate: 2000
       - Item: Murasame_
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Shinobi_Card
         Rate: 1
         StealProtected: true
@@ -18278,8 +18497,10 @@ Body:
         Rate: 10
       - Item: Hakujin
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Mandolin_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Miyabi_Ningyo_Card
         Rate: 1
         StealProtected: true
@@ -18322,10 +18543,12 @@ Body:
         Rate: 5500
       - Item: Huuma_Giant_Wheel
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Fruit_Of_Mastela
         Rate: 150
       - Item: Huuma_Giant_Wheel_
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Imperial_Cooking_Kits
         Rate: 20
       - Item: Earth_Scroll_1_5
@@ -18375,6 +18598,7 @@ Body:
         Rate: 2
       - Item: Guitar_Of_Blue_Solo
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Jitte_
         Rate: 5
       - Item: Kapha_Card
@@ -18430,8 +18654,10 @@ Body:
         Rate: 5500
       - Item: Waghnakh_
         Rate: 3
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Lariat
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Blood_Butterfly_Card
         Rate: 1
         StealProtected: true
@@ -18575,6 +18801,7 @@ Body:
         Rate: 6800
       - Item: Guitar_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Elunium_Stone
         Rate: 150
       - Item: Wind_Scroll_1_5
@@ -18626,6 +18853,7 @@ Body:
         Rate: 4800
       - Item: Rope_
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Strawberry
         Rate: 1000
       - Item: Wild_Ginseng_Card
@@ -18679,6 +18907,7 @@ Body:
         Rate: 2000
       - Item: Dagger_
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Pet_Food
         Rate: 500
       - Item: Baby_Leopard_Card
@@ -18725,8 +18954,10 @@ Body:
         Rate: 10
       - Item: Mandolin_
         Rate: 4
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Lute_
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Holy_Scroll_1_5
         Rate: 100
       - Item: Oriental_Lute
@@ -18826,10 +19057,12 @@ Body:
         Rate: 5100
       - Item: Hell_Fire
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Ph.D_Hat
         Rate: 80
       - Item: Gae_Bolg
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Pill
         Rate: 900
       - Item: Sway_Apron
@@ -20943,6 +21176,7 @@ Body:
         Rate: 3000
       - Item: Rope_
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Chemeti
         Rate: 1
       - Item: Centimental_Leaf
@@ -22008,8 +22242,10 @@ Body:
         Rate: 400
       - Item: Club
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Spike
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Li_Me_Mang_Ryang_Card
         Rate: 1
         StealProtected: true
@@ -23977,6 +24213,7 @@ Body:
         Rate: 3000
       - Item: Katana_
         Rate: 40
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Bastard_Sword_
         Rate: 8
       - Item: Chain_Mail_
@@ -24018,6 +24255,7 @@ Body:
         Rate: 7000
       - Item: Knife_
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Sticky_Mucus
         Rate: 400
       - Item: Apple
@@ -24163,6 +24401,7 @@ Body:
         Rate: 1600
       - Item: Battle_Axe_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Gift_Box
         Rate: 15
       - Item: Packing_Ribbon
@@ -24289,6 +24528,7 @@ Body:
         Rate: 2000
       - Item: Cutter__
         Rate: 3000
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Empty_Bottle
         Rate: 1000
       - Item: Popped_Rice
@@ -25228,6 +25468,7 @@ Body:
         Rate: 5000
       - Item: Main_Gauche_
         Rate: 25
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Insect_Feeler
         Rate: 1000
       - Item: Single_Cell
@@ -25419,8 +25660,10 @@ Body:
         Rate: 6000
       - Item: House_Auger
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_4
       - Item: House_Auger_
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Old_Violet_Box
         Rate: 1000
       - Item: Headlamp
@@ -25429,6 +25672,7 @@ Body:
         Rate: 50
       - Item: Spanner
         Rate: 20
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Rsx_0806_Card
         Rate: 1
         StealProtected: true
@@ -25992,8 +26236,10 @@ Body:
         Rate: 1
       - Item: Vecer_Axe
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Two_Handed_Axe_
         Rate: 110
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Buckler_
         Rate: 10
       - Item: Clothes_Of_The_Lord
@@ -26090,6 +26336,7 @@ Body:
         Rate: 10
       - Item: CrossBow_
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Ori_Arrow_Container
         Rate: 150
       - Item: Old_Blue_Box
@@ -26463,12 +26710,14 @@ Body:
         Rate: 1500
       - Item: House_Auger
         Rate: 1500
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Glittering_Clothes
         Rate: 9000
       - Item: Exercise
         Rate: 3500
       - Item: Assasin_Dagger
         Rate: 3500
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Bloody_Roar
         Rate: 3500
       - Item: Ginnungagap
@@ -26529,6 +26778,7 @@ Body:
         Rate: 3500
       - Item: Great_Axe
         Rate: 3500
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Guillotine
         Rate: 2500
       - Item: Tomahawk
@@ -26586,6 +26836,7 @@ Body:
         Rate: 9000
       - Item: Book_Of_The_Apocalypse
         Rate: 3500
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Quadrille
         Rate: 3500
       - Item: Grand_Cross
@@ -26636,6 +26887,7 @@ Body:
         Rate: 5000
       - Item: Luna_Bow
         Rate: 2000
+        RandomOptionGroup: AS_WEAPON_2
     Drops:
       - Item: Combat_Knife
         Rate: 3500
@@ -26647,8 +26899,10 @@ Body:
         Rate: 1500
       - Item: Grimtooth_
         Rate: 3500
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Bow_Of_Rudra
         Rate: 1500
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Dragon_Wing
         Rate: 2500
       - Item: B_Shecil_Card
@@ -26749,6 +27003,7 @@ Body:
         Rate: 1000
       - Item: Katzbalger
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Two_Hand_Sword_
         Rate: 20
       - Item: Saber_
@@ -26757,6 +27012,7 @@ Body:
         Rate: 10
       - Item: Slayer_
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Plate_Armor_
         Rate: 1
       - Item: Ygnizem_Card
@@ -26850,10 +27106,12 @@ Body:
         Rate: 50
       - Item: Battle_Axe_
         Rate: 40
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Mink_Coat
         Rate: 10
       - Item: Axe_
         Rate: 80
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Windhawk
         Rate: 10
       - Item: Armaia_Card
@@ -26898,12 +27156,14 @@ Body:
         Rate: 50
       - Item: Sword_Mace_
         Rate: 20
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Saint_Robe_
         Rate: 5
       - Item: Scapulare_
         Rate: 10
       - Item: Spike
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Erend_Card
         Rate: 1
         StealProtected: true
@@ -26943,10 +27203,12 @@ Body:
         Rate: 2000
       - Item: Kakkung_
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Steel_Arrow_Container
         Rate: 100
       - Item: Great_Bow_
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Mantle_
         Rate: 5
       - Item: Sandals_
@@ -26991,10 +27253,12 @@ Body:
         Rate: 1000
       - Item: Staff_Of_Wing
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Guard_
         Rate: 5
       - Item: Staff_
         Rate: 50
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Silk_Robe_
         Rate: 10
       - Item: Silver_Robe_
@@ -27049,6 +27313,7 @@ Body:
     Drops:
       - Item: Broad_Sword_
         Rate: 1000
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Gift_Box
         Rate: 5000
       - Item: Old_Blue_Box
@@ -28295,6 +28560,7 @@ Body:
         Rate: 2000
       - Item: Kakkung_
         Rate: 6000
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Lady_Tanee_Card
         Rate: 1
         StealProtected: true
@@ -28444,6 +28710,7 @@ Body:
         Rate: 10
       - Item: Gust_Bow
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Branch_Of_Dead_Tree
         Rate: 10
       - Item: Centimental_Flower
@@ -29685,6 +29952,7 @@ Body:
         Rate: 1000
       - Item: Pole_Axe
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Gemmed_Crown
         Rate: 500
       - Item: Detale_Card
@@ -31398,6 +31666,7 @@ Body:
         Rate: 1000
       - Item: Hurricane_Fury
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Gloom_Under_Night_Card
         Rate: 1
         StealProtected: true
@@ -31857,6 +32126,7 @@ Body:
         Rate: 20
       - Item: Frozen_Bow
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Gazeti_Card
         Rate: 1
         StealProtected: true
@@ -32505,6 +32775,7 @@ Body:
     Drops:
       - Item: Pole_Axe
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Grave_
         Rate: 100
       - Item: Pauldron
@@ -33145,6 +33416,7 @@ Body:
         Rate: 500
       - Item: Pole_Axe
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Int_Dish10
         Rate: 1500
       - Item: Treasure_Box
@@ -33674,6 +33946,7 @@ Body:
         Rate: 50
       - Item: Zweihander
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Platinum_Shield
         Rate: 10
       - Item: Muscle_Cutter
@@ -33717,8 +33990,10 @@ Body:
         Rate: 3000
       - Item: Luna_Bow
         Rate: 30
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Bow
         Rate: 50
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Sniping_Suit
         Rate: 20
       - Item: Orleans_Glove
@@ -33768,6 +34043,7 @@ Body:
         Rate: 1
       - Item: Berserk_Guitar
         Rate: 50
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Ring_
         Rate: 1
       - Item: Meteo_Plate_Armor
@@ -33827,8 +34103,10 @@ Body:
         Rate: 200
       - Item: Hell_Fire
         Rate: 2000
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Fire_Brand
         Rate: 2000
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Flame_Sprits_Armor_
         Rate: 100
       - Item: Ifrit_Card
@@ -33878,6 +34156,7 @@ Body:
         Rate: 10
       - Item: Burning_Bow
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Piercing_Staff
         Rate: 10
       - Item: Kasa_Card
@@ -34075,6 +34354,7 @@ Body:
         Rate: 3
       - Item: Earth_Bow
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Knocker_Card
         Rate: 1
         StealProtected: true
@@ -34883,6 +35163,7 @@ Body:
         Rate: 9000
       - Item: Spear_
         Rate: 30
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Langka
         Rate: 350
       - Item: Shoot
@@ -34891,6 +35172,7 @@ Body:
         Rate: 3
       - Item: Whip_Of_Earth
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Mandragora_Card
         Rate: 1
         StealProtected: true
@@ -35358,6 +35640,7 @@ Body:
         Rate: 3000
       - Item: Lich_Bone_Wand
         Rate: 20
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Skel_Bone
         Rate: 4500
       - Item: Mithril_Magic_Cape
@@ -35420,10 +35703,12 @@ Body:
         Rate: 500
       - Item: Hunting_Spear
         Rate: 1000
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Elunium
         Rate: 5432
       - Item: Blessed_Wand
         Rate: 2000
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Fallen_Bishop_Card
         Rate: 1
         StealProtected: true
@@ -35980,6 +36265,7 @@ Body:
         Rate: 100
       - Item: Pole_Axe
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Treasure_Box
         Rate: 5000
       - Item: Loard_Circlet
@@ -37329,6 +37615,7 @@ Body:
         Rate: 7000
       - Item: Crescent_Scythe
         Rate: 9000
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Baphomet_Card
         Rate: 1
         StealProtected: true
@@ -37692,6 +37979,7 @@ Body:
         Rate: 150
       - Item: Burning_Bow
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Divine_Cross
         Rate: 50
         StealProtected: true
@@ -37727,6 +38015,7 @@ Body:
         Rate: 150
       - Item: Orc_Archer_Bow
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Icicle_Fist
         Rate: 150
         StealProtected: true
@@ -37762,6 +38051,7 @@ Body:
         Rate: 150
       - Item: Frozen_Bow
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Combo_Battle_Glove
         Rate: 150
         StealProtected: true
@@ -37797,6 +38087,7 @@ Body:
         Rate: 150
       - Item: Earth_Bow
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Ulfhedinn
         Rate: 50
         StealProtected: true
@@ -37830,8 +38121,10 @@ Body:
         Rate: 7275
       - Item: Lich_Bone_Wand
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Gust_Bow
         Rate: 150
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Seismic_Fist
         Rate: 150
         StealProtected: true
@@ -38234,6 +38527,7 @@ Body:
         Rate: 9000
       - Item: Lich_Bone_Wand
         Rate: 9000
+        RandomOptionGroup: AS_WEAPON_1
       - Item: Old_Card_Album
         Rate: 9000
       - Item: Survival_Rod_
@@ -38561,6 +38855,7 @@ Body:
         Rate: 4
       - Item: Trident_
         Rate: 4
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Feather
         Rate: 3000
       - Item: Skyblue_Jewel
@@ -38916,6 +39211,7 @@ Body:
         Rate: 500
       - Item: Elemental_Sword
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Oridecon
         Rate: 80
       - Item: Emveretarcon
@@ -38970,6 +39266,7 @@ Body:
         Rate: 200
       - Item: Dagger_Of_Hunter
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Jubilee
         Rate: 5000
   - Id: 1978
@@ -39019,6 +39316,7 @@ Body:
         Rate: 1
       - Item: Cardo
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_5
         StealProtected: true
   - Id: 1979
     AegisName: ZAKUDAM
@@ -39294,8 +39592,10 @@ Body:
     Drops:
       - Item: Lunakaligo
         Rate: 20
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Cello
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Fur
         Rate: 4000
       - Item: Peaked_Hat
@@ -39348,6 +39648,7 @@ Body:
         Rate: 2
       - Item: Cursed_Lyre
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Short_Leg
         Rate: 5335
       - Item: Zargon
@@ -39396,10 +39697,13 @@ Body:
         Rate: 1
       - Item: Stem_Of_Nepenthes
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Harp_Of_Nepenthes
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Nepenthes_Bow
         Rate: 1
+        RandomOptionGroup: AS_WEAPON_2
       - Item: Strong_Bine
         Rate: 3000
       - Item: Yellow_Live
@@ -39648,6 +39952,7 @@ Body:
         Rate: 2000
       - Item: Pike_
         Rate: 20
+        RandomOptionGroup: AS_WEAPON_5
   - Id: 1994
     AegisName: LUCIOLA_VESPA
     Name: Luciola Vespa
@@ -40569,6 +40874,7 @@ Body:
         Rate: 10
       - Item: Veteran_Axe
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_3
   - Id: 2019
     AegisName: ANCIENT_TREE
     Name: Ancient Tree
@@ -40730,10 +41036,13 @@ Body:
         Rate: 5000
       - Item: Cardo
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Katzbalger
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Pole_Axe
         Rate: 500
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Piece_Of_Angent_Skin
         Rate: 2000
   - Id: 2023
@@ -40774,12 +41083,14 @@ Body:
         Rate: 1000
       - Item: Dagger_Of_Hunter
         Rate: 5
+        RandomOptionGroup: AS_WEAPON_4
       - Item: Piece_Of_Darkness
         Rate: 1000
       - Item: Eyes_Stone_Ring
         Rate: 5
       - Item: Bradium_Stonehammer
         Rate: 10
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Dark_Shadow_Card
         Rate: 1
         StealProtected: true
@@ -42052,8 +42363,10 @@ Body:
         Rate: 5000
       - Item: Hurricane_Fury
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_3
       - Item: Hunting_Spear
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_5
       - Item: Yggdrasilberry
         Rate: 500
       - Item: Elunium
@@ -42062,6 +42375,7 @@ Body:
         Rate: 1000
       - Item: Hell_Fire
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_5
   - Id: 2069
     AegisName: IARA
     Name: Iara
@@ -42198,6 +42512,7 @@ Body:
         Rate: 1
       - Item: Jamadhar_
         Rate: 2
+        RandomOptionGroup: AS_WEAPON_5
   - Id: 2072
     AegisName: JAGUAR
     Name: Jaguar
@@ -42321,6 +42636,7 @@ Body:
         Rate: 500
       - Item: Mace_
         Rate: 100
+        RandomOptionGroup: AS_WEAPON_3
 #  - Id: 2075
 #    AegisName: E_VADON_X
 #    Name: Vadon

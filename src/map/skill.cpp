@@ -974,7 +974,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case WM_LULLABY_DEEPSLEEP:
 		case WM_GLOOMYDAY:
 		case WM_SATURDAY_NIGHT_FEVER:
-			if( !mapdata_flag_vs(mapdata) ) {
+			if( !mapdata_flag_vs(mapdata) && !mapdata->getMapFlag(MF_PK) ) {
 				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_USE_SKILL );	// This skill cannot be used in this area
 				return true;
 			}
@@ -9698,7 +9698,11 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			if( sd->state.autocast || ( (sd->skillitem == AL_TELEPORT || battle_config.skip_teleport_lv1_menu) && skill_lv == 1 ) || skill_lv == 3 )
 			{
 				if( skill_lv == 1 )
-					pc_randomwarp(sd,CLR_TELEPORT);
+				{
+ 					pc_randomwarp(sd,CLR_TELEPORT);
+					if(sd->state.ltp)
+						clif_viewpoint(*sd, 1, 1, sd->ltp_x, sd->ltp_y, 1, 0x00FF00);
+				}
 				else
 					pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ), sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 				break;
@@ -11565,7 +11569,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		else {
 			struct map_data *mapdata = map_getmapdata(src->m);
 
-			map_foreachinallrange(skill_area_sub,src,skill_get_splash(skill_id, skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,(mapdata_flag_vs(mapdata)?BCT_ALL:BCT_ENEMY|BCT_SELF)|flag|1,skill_castend_nodamage_id);
+			map_foreachinallrange(skill_area_sub,src,skill_get_splash(skill_id, skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,((mapdata_flag_vs(mapdata)||mapdata->getMapFlag(MF_PK))?BCT_ALL:BCT_ENEMY|BCT_SELF)|flag|1,skill_castend_nodamage_id);
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		}
 		break;
@@ -15620,7 +15624,11 @@ int32 skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapn
 		//any kind of map change, so we need to restore it automatically
 		//bugreport:8027
 		if(strcmp(mapname,"Random") == 0)
-			pc_randomwarp(sd,CLR_TELEPORT);
+		{
+ 			pc_randomwarp(sd,CLR_TELEPORT);
+			if (sd->state.ltp)
+				clif_viewpoint(*sd, 1, 1, sd->ltp_x, sd->ltp_y, 1, 0x00FF00);
+		}
 		else if (sd->menuskill_val > 1 || skill_id == ALL_ODINS_RECALL) //Need lv2 to be able to warp here.
 			pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ),sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
 
@@ -16525,7 +16533,7 @@ static int32 skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick)
 				const struct TimerData* td;
 				struct map_data *mapdata = map_getmapdata(bl->m);
 
-				if (mapdata_flag_vs(mapdata))
+				if (mapdata_flag_vs(mapdata) || mapdata->getMapFlag(MF_PK))
 					sec /= 2;
 				if (sc->getSCE(type)) {
 					if (sc->getSCE(type)->val2 && sc->getSCE(type)->val3 && sc->getSCE(type)->val4) {
@@ -16534,9 +16542,9 @@ static int32 skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick)
 						break;
 					}
 					//Don't increase val1 here, we need a higher val in status_change_start so it overwrites the old one
-					if (mapdata_flag_vs(mapdata) && sc->getSCE(type)->val1 < 3)
+					if ((mapdata_flag_vs(mapdata) || mapdata->getMapFlag(MF_PK)) && sc->getSCE(type)->val1 < 3)
 						sec *= (sc->getSCE(type)->val1 + 1);
-					else if(!mapdata_flag_vs(mapdata) && sc->getSCE(type)->val1 < 2)
+					else if((!mapdata_flag_vs(mapdata) && !mapdata->getMapFlag(MF_PK)) && sc->getSCE(type)->val1 < 2)
 						sec *= (sc->getSCE(type)->val1 + 1);
 					//Add group id to status change
 					if (sc->getSCE(type)->val2 == 0)
@@ -17480,9 +17488,13 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 			break;
 
 		case UNT_DIMENSIONDOOR:
-			if( tsd && !map_getmapflag(bl->m, MF_NOTELEPORT) )
-				pc_randomwarp(tsd,CLR_TELEPORT);
-			else if( bl->type == BL_MOB && battle_config.mob_warp&8 )
+			if (tsd && !map_getmapflag(bl->m, MF_NOTELEPORT))
+			{
+				pc_randomwarp(tsd, CLR_TELEPORT);
+				if(tsd->state.ltp)
+					clif_viewpoint(*tsd, 1, 1, tsd->ltp_x, tsd->ltp_y, 1, 0x00FF00);
+			}
+			else if (bl->type == BL_MOB && battle_config.mob_warp & 8)
 				unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 			break;
 

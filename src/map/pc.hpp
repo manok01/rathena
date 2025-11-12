@@ -405,6 +405,7 @@ public:
 		uint32 showdelay :1;
 		uint32 showexp :1;
 		uint32 showzeny :1;
+		uint32 ltp :1;
 		uint32 noask :1; // [LuzZza]
 		uint32 trading :1; //[Skotlex] is 1 only after a trade has started.
 		uint32 deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
@@ -736,6 +737,8 @@ public:
 	int32 clanspy;
 
 	struct clan *clan;
+
+	short ltp_x, ltp_y; // For last tp position display
 
 	int32 vended_id;
 	int32 vender_id;

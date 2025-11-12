@@ -75,7 +75,7 @@ void map_msg_reload(void);
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
-#define MAX_LEVEL 275
+#define MAX_LEVEL 99
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
@@ -690,10 +690,15 @@ enum e_mapflag : int16 {
 	MF_NOPETCAPTURE,
 	MF_NOBUYINGSTORE,
 	MF_NODYNAMICNPC,
+	MF_PK,
 	MF_NOBANK,
 	MF_SPECIALPOPUP,
 	MF_NOMACROCHECKER,
+//<<<<<<< HEAD
+	MF_NOITEM,
+//=======
 	MF_INVINCIBLE_TIME,
+//>>>>>>> 076e25e2294f50c04d0fa81c13981f343343c4f5
 	MF_MAX
 };
 
@@ -843,6 +848,8 @@ struct map_data {
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
 	int32 mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
 	t_tick last_macrocheck;
+
+	std::vector<int> noitemlist;
 
 	// Instance Variables
 	int32 instance_id;

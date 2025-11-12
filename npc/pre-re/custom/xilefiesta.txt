@@ -1,0 +1,700 @@
+//==By Adhitya gilang Ramadhan - AleaFiesta - botcheck - Dye - counteragen===//
+//==================================================
+// pvp_n_7-1 - MixFantasy
+//==================================================
+pvp_n_7-1,0,0,0,0	monster	Evil Exorcist	1117,40,180000,0,0
+pvp_n_7-1,0,0,0,0	monster	Epocalypse	1675,200,30000,0,0
+pvp_n_7-1,0,0,0,0	monster	Galium Eye	1700,24,90000,0,0
+pvp_n_7-1,0,0,0,0	monster	Solacium	1703,24,30000,0,0
+pvp_n_7-1,0,0,0,0	monster	Evolved Hydro	1720,8,600000,0,0
+//==================================================
+// pvp_n_7-2 - MixFantasy
+//==================================================
+pvp_n_7-2,0,0,0,0	monster	Evil Exorcist	1117,20,180000,0,0
+pvp_n_7-2,0,0,0,0	monster	Epocalypse	1675,140,30000,0,0
+pvp_n_7-2,0,0,0,0	monster	Galium Eye	1700,16,90000,0,0
+pvp_n_7-2,0,0,0,0	monster	Solacium	1703,16,30000,0,0
+pvp_n_7-2,0,0,0,0	monster	Evolved Hydro	1720,4,600000,0,0
+//==================================================
+// pvp_n_7-3 - MixFantasy
+//==================================================
+pvp_n_7-3,0,0,0,0	monster	Evil Exorcist	1117,20,180000,0,0
+pvp_n_7-3,0,0,0,0	monster	Epocalypse	1675,140,30000,0,0
+pvp_n_7-3,0,0,0,0	monster	Galium Eye	1700,16,90000,0,0
+pvp_n_7-3,0,0,0,0	monster	Solacium	1703,16,30000,0,0
+pvp_n_7-3,0,0,0,0	monster	Evolved Hydro	1720,4,600000,0,0
+//==================================================
+// pvp_n_7-5 - MixFantasy
+//==================================================
+pvp_n_7-5,0,0,0,0	monster	Evil Exorcist	1117,20,180000,0,0
+pvp_n_7-5,0,0,0,0	monster	Epocalypse	1675,140,30000,0,0
+pvp_n_7-5,0,0,0,0	monster	Galium Eye	1700,16,90000,0,0
+pvp_n_7-5,0,0,0,0	monster	Solacium	1703,16,30000,0,0
+pvp_n_7-5,0,0,0,0	monster	Evolved Hydro	1720,4,600000,0,0
+
+//=========================================
+// Shop Setting BY MELVANT
+//==================================================
+
+-	pointshop	sets	667,xcr,5373:20000,5374:20000,5375:20000,5376:20000,5378:20000,5384:25000
+//===== Script: ===============================================================
+//= 2010 XileRO's XcR System (XileRO-Credits).
+//= By Honor/Lover Romeo
+//==============================================================================
+askald,127,241,4	script	AleaFiesta	403,{ 
+set .npcname$,"[^672d43AleaFiesta^000000]";
+cutin "wish_maiden22",2;
+	mes .npcname$;
+	mes "Hey "+strcharinfo(0)+", How can I Help You?";
+	mes "Credits: ^2d6761"+xcr+" Alea Points";
+	mes "Check the points using ^0000ff@checkpoints^000000";	
+	mes " ";
+	mes "^0000ffMonsters will be Updated weekly or Monthly, Add / Remove^000000.";
+	menu "^0000ff>^000000 Play AleaFiesta",L_AleaFiesta,
+	"^0000ff>^000000 Alea Store",L_xfstore2;
+
+L_AleaFiesta:
+	next;
+	mes .npcname$;
+	mes "Arena [Bridge] (^0000ff"+getmapusers("pvp_n_7-1")+"^000000)"; //pvp_n_7-1
+	mes "Arena [Epilogue] (^0000ff"+getmapusers("pvp_n_7-2")+"^000000)"; //pvp_n_7-2
+	mes "Arena [Nightfall] (^0000ff"+getmapusers("pvp_n_7-3")+"^000000)"; //pvp_n_7-3
+	mes "Arena [Eclipse] (^0000ff"+getmapusers("pvp_n_7-5")+"^000000)"; //pvp_n_7-5
+	menu "^0000ff>^000000 Arena [Bridge]",L_bridge,
+	"^0000ff>^000000 Arena [Epilogue]",L_epilogue,
+	"^0000ff>^000000 Arena [Nightfall]",L_nightfall,
+	"^0000ff>^000000 Arena [Eclipse]",L_eclipse,
+	"^0000ff>^000000 Cancel",LCancel;
+
+L_bridge:
+	if($@fiestaevent==1) { goto L_here1; }
+	if(getgmlevel() >= 60) { goto L_here1; }
+	if(#MRpart != 0) {
+		next;
+		mes .npcname$;
+		mes "You have to complete ^0000ffMythic Rally^000000 Quest to be able to access this feat.";
+close2;
+cutin "", 255;
+	}
+L_here1:
+	if (BaseLevel < 99 || Class==Job_Novice || Class==Job_Baby || Class==Job_Novice_High){
+		goto L_Level;
+	}else{
+			if($@antibot_active==0) {//Honor, activate with @quest
+				if(callfunc("botcheck")==0){//Jason
+					close;
+				}
+			}
+		}
+	switch(rand(1,4)) {
+			case 1:
+				warp "pvp_n_7-1",86,71;
+				end;
+			case 2:
+				warp "pvp_n_7-1",60,149;
+				end;
+			case 3:
+				warp "pvp_n_7-1",123,17;
+				end;
+			case 4:
+				warp "pvp_n_7-1",157,115;
+				end;
+	}
+	end;		
+L_epilogue:
+	if($@fiestaevent==1) { goto L_here2; }
+	if(getgmlevel() >= 99) { goto L_here2; }
+	if(#MRpart != 0) {
+		next;
+		mes .npcname$;
+		mes "You have to complete ^0000ffMythic Rally^000000 Quest to be able to access this feat.";
+		close2;
+cutin "", 255;
+	}
+L_here2:
+	if (BaseLevel < 99 || Class==Job_Novice || Class==Job_Baby || Class==Job_Novice_High){
+		goto L_Level;
+	}else{
+			if($@antibot_active==0) {//Honor, activate with @quest
+				if(callfunc("botcheck")==0){//Jason
+					close;
+				}
+			}
+		}
+	switch(rand(1,4)) {
+			case 1:
+				warp "pvp_n_7-2",100,63;
+				end;
+			case 2:
+				warp "pvp_n_7-2",100,135;
+				end;
+			case 3:
+				warp "pvp_n_7-2",136,99;
+				end;
+			case 4:
+				warp "pvp_n_7-2",64,101;
+				end;
+	}
+	end;	
+L_nightfall:
+	if($@fiestaevent==1) { goto L_here3; }
+	if(getgmlevel() >= 99) { goto L_here3; }
+	if(#MRpart != 0) {
+		next;
+		mes .npcname$;
+		mes "You have to complete ^0000ffMythic Rally^000000 Quest to be able to access this feat.";
+		close2;
+cutin "", 255;
+	}
+L_here3:
+	if (BaseLevel < 99 || Class==Job_Novice || Class==Job_Baby || Class==Job_Novice_High){
+		goto L_Level;
+	}else{
+			if($@antibot_active==0) {//Honor, activate with @quest
+				if(callfunc("botcheck")==0){//Jason
+					close;
+				}
+			}
+		}
+	switch(rand(1,4)) {
+			case 1:
+				warp "pvp_n_7-3",59,99;
+				end;
+			case 2:
+				warp "pvp_n_7-3",100,59;
+				end;
+			case 3:
+				warp "pvp_n_7-3",140,98;
+				end;
+			case 4:
+				warp "pvp_n_7-3",100,139;
+				end;
+	}
+	end;	
+L_eclipse:
+	if($@fiestaevent==1) { goto L_here4; }
+	if(getgmlevel() >= 99) { goto L_here4; }
+	if(#MRpart != 0) {
+		next;
+		mes .npcname$;
+		mes "You have to complete ^0000ffMythic Rally^000000 Quest to be able to access this feat.";
+		close2;
+cutin "", 255;
+	}
+L_here4:
+	if (BaseLevel < 99 || Class==Job_Novice || Class==Job_Baby || Class==Job_Novice_High){
+		goto L_Level;
+	}else{
+			if($@antibot_active==0) {//Honor, activate with @quest
+				if(callfunc("botcheck")==0){//Jason
+					close;
+				}
+			}
+		}
+	switch(rand(1,4)) {
+			case 1:
+				warp "pvp_n_7-5",81,118;
+				end;
+			case 2:
+				warp "pvp_n_7-5",81,81;
+				end;
+			case 3:
+				warp "pvp_n_7-5",118,81;
+				end;
+			case 4:
+				warp "pvp_n_7-5",118,118;
+				end;
+	}
+	end;
+
+L_xfstore:
+	next;
+	mes .npcname$;
+	mes "Anything interesting for you?";
+	mes "Credits: ^2d6761"+xcr+" Alea Point";
+	menu "^0000ff>^000000 Mythic Weapons",L_mythicweps,
+	"^0000ff>^000000 Sets",L_sets,
+	"^0000ff>^000000 Armory",L_armory,
+	"^0000ff>^000000 Useable Items",L_useable,
+	"^0000ff>^000000 Homunculus ^0000ff/^000000 Pets",L_hompets,
+	"^0000ff>^000000 Tokens",L_hompets2,
+	"^0000ff>^000000 Seals",L_effects,
+	"^0000ff>^000000 Cancel",-;
+	close2;
+cutin "", 255;
+End;
+
+L_mythicweps:
+	next;
+	mes .npcname$;
+	mes "Which of the following weapons would you like to take?";
+	mes "^0000ff>^000000 Note: These Weapons cost ^0000ff15,000^000000 Alea Points Each.";
+	menu "^0000ff>^000000 Mythic Staff of Judgement",w1,
+	"^0000ff>^000000 Mythic Echo Tracer",w2,
+	"^0000ff>^000000 Mythic Path Finder",w3,
+	"^0000ff>^000000 Mythic Sacred Blade",w4,
+	"^0000ff>^000000 Mythic Supreme Fist",w5,
+	"^0000ff>^000000 Mythic Katarmageddon",w6,
+	"^0000ff>^000000 Mythic Terminator",w7,
+	"^0000ff>^000000 Mythic Reality Weaver",w8,
+	"^0000ff>^000000 Mythic Impaler Lance",w9,
+	"^0000ff>^000000 Mythic Stealth Wing",w10,
+	"^0000ff>^000000 Mythic Bandos Godsword",w11,
+	"^0000ff>^000000 Mythic Mega Mic",w12,
+	"^0000ff>^000000 Mythic Gyro Shuriken",w13,
+	"^0000ff>^000000 Mythic Deagle",w14,
+	"^0000ff>^000000 Mythic Maverick",w15,
+	"^0000ff>^000000 Mythic Krieg",w16,
+	"^0000ff>^000000 Mythic Lunar Launcher",w17,
+	"^0000ff>^000000 Mythic Dragon Legacy",w18,
+	"^0000ff>^000000 Mythic Barrager",w19,
+	"^0000ff>^000000 Cancel",-;
+	close2;
+cutin "", 255;
+End;
+
+	w1: if(!checkweight(3500,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3500; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w2: if(!checkweight(3501,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3501; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w3: if(!checkweight(3502,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3502; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w4: if(!checkweight(3503,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3503; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w5: if(!checkweight(3504,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3504; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w6: if(!checkweight(3505,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3505; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w7: if(!checkweight(3506,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3506; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w8: if(!checkweight(3507,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3507; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w9: if(!checkweight(3508,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3508; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w10: if(!checkweight(3509,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3509; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w11: if(!checkweight(3510,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3510; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w12: if(!checkweight(3511,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3511; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w13: if(!checkweight(3512,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3512; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w14: if(!checkweight(3513,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3513; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w15: if(!checkweight(3514,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3514; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w16: if(!checkweight(3515,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3515; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w17: if(!checkweight(3516,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3516; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w18: if(!checkweight(3517,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3517; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+	w19: if(!checkweight(3518,1)) goto overweight; if(xcr >= 15000) { set xcr,xcr-15000; set .@mwid,3518; goto L_givewep; } else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(15000-xcr)+"^000000 Alea Point to afford it."; close2;
+cutin "", 255;
+end; }
+
+L_givewep:
+		getitem2 .@mwid,1,1,0,0,0,0,0,0;
+		close2;
+cutin "", 255;
+End;
+L_sets:
+	next;
+	mes .npcname$;
+	mes "Which of the following set parts would you like to take?";
+	menu "^0000ff>^000000 Imperial Set",s_imperial,
+	"^0000ff>^000000 Infinity Set",s_infinity,
+	"^0000ff>^000000 Cancel",-;
+	close2;
+cutin "", 255;
+End;
+
+	s_imperial:
+			next;
+			mes .npcname$;
+			mes "Which of the following set parts would you like to take?";
+			mes "Note";
+			mes	"^0000ff>^000000 Imperial Crown ^0000ff20,000^000000 Alea Points.";
+			mes	"^0000ff>^000000 Imperial Wings ^0000ff25,000^000000 Alea Points.";
+			mes	"^0000ff>^000000 Imperial Tiara ^0000ff17,000^000000 Alea Points.";
+			menu "^0000ff>^000000 Imperial Crown",imp_c,
+			"^0000ff>^000000 Imperial Wings",imp_w,
+			"^0000ff>^000000 Imperial Tiara",imp_t,
+			"^0000ff>^000000 Cancel",-;
+					close2;
+cutin "", 255;
+End;
+				
+				imp_c: if(!checkweight(3200,1)) goto overweight; if(xcr >= 20000) { set xcr,xcr-20000; getitem 3200,1; close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(20000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+				imp_w: if(!checkweight(3201,1)) goto overweight; if(xcr >= 25000) { set xcr,xcr-25000; getitem 3201,1; close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(25000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+				imp_t: if(!checkweight(3202,1)) goto overweight; if(xcr >= 17000) { set xcr,xcr-17000; getitem 3202,1; close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(17000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+
+	s_infinity:
+			next;
+			mes .npcname$;
+			mes "Which of the following set parts would you like to take?";
+			mes "Note";
+			mes	"^0000ff>^000000 Infinity Helm ^0000ff50,000^000000 AleaPoint.";
+			mes	"^0000ff>^000000 Infinity Wings ^0000ff70,000^000000 AleaPoint.";
+			mes	"^0000ff>^000000 Infinity Shoulder ^0000ff45,000^000000 AleaPoint.";		
+			menu "^0000ff>^000000 Infinity Helm",inf_h,
+			"^0000ff>^000000 Infinity Wings",inf_w,
+			"^0000ff>^000000 Infinity Shoulder",inf_s,
+			"^0000ff>^000000 Cancel",-;
+					close2;
+cutin "", 255;
+End;
+				
+				inf_h: if(!checkweight(3286,1)) goto overweight; if(xcr >= 50000) { set xcr,xcr-50000; getitem 3286,1; close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(50000-xcr)+"^000000 Alea Point to afford it."; cutin "", 255;
+End; }
+				inf_w: if(!checkweight(3287,1)) goto overweight; if(xcr >= 70000) { set xcr,xcr-70000; getitem 3287,1; close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(70000-xcr)+"^000000 Alea Point to afford it."; cutin "", 255;
+End; }
+				inf_s: if(!checkweight(3288,1)) goto overweight; if(xcr >= 45000) { set xcr,xcr-45000; getitem 3288,1; close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(45000-xcr)+"^000000 Alea Point to afford it."; cutin "", 255;
+End; }		
+
+L_armory:
+	next;
+	mes .npcname$;
+	mes "Not available at the moment!";
+	close2;
+cutin "", 255;
+End;
+L_useable:
+	next;
+	mes .npcname$;
+	mes "Which of the following useable items would you like to take?";
+			mes "Note";
+			mes	"^0000ff>^000000 Yggdrasil Berry ^0000ff500^000000 Alea Points.";
+			mes	"^0000ff>^000000 Poison Drug Bottle ^0000ff500^000000 Alea Points.";
+			mes	"^0000ff>^000000 Box of Thunder ^0000ff500^000000 Alea Points.";
+			mes	"^0000ff>^000000 Box of Panting ^0000ff500^000000 Alea Points.";
+			mes	"^0000ff>^000000 Box of Sunlight ^0000ff500^000000 Alea Points.";			
+	menu "^0000ff>^000000 100 Yggdrasil Berry",u_ygg,
+	"^0000ff>^000000 100x Poison Drug Bottle",u_pdb,
+	"^0000ff>^000000 100x Giggling Box",u_gig,
+	"^0000ff>^000000 100x Box of Thunder",u_bot,
+	"^0000ff>^000000 100x Box of Panting",u_bop,
+	"^0000ff>^000000 100x Box of Sunlight",u_bos,
+	"^0000ff>^000000 Cancel",-;
+	close2;
+cutin "", 255;
+End;
+
+			u_ygg: 	if(!checkweight(13517,1)) goto overweight; if(xcr >= 500) { set xcr,xcr-500; getitem 13517,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(500-xcr)+"^000000 Alea Point to afford it."; cutin "", 255;
+End; }
+			u_pdb: 	if(!checkweight(13973,1)) goto overweight; if(xcr >= 500) { set xcr,xcr-500; getitem 13973,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(500-xcr)+"^000000 Alea Point to afford it."; cutin "", 255;
+End; }
+			u_gig: 	if(!checkweight(12027,100)) goto overweight; if(xcr >= 500) { set xcr,xcr-500; getitem 12027,100; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(500-xcr)+"^000000 Alea Point to afford it."; cutin "", 255;
+End; }
+			u_bot: 	if(!checkweight(12028,100)) goto overweight; if(xcr >= 500) { set xcr,xcr-500; getitem 12028,100; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(500-xcr)+"^000000 Alea Point to afford it."; cutin "", 255;
+End; }
+			u_bop: 	if(!checkweight(12034,100)) goto overweight; if(xcr >= 500) { set xcr,xcr-500; getitem 12034,100; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(500-xcr)+"^000000 Alea Point to afford it."; cutin "", 255;
+End; }
+			u_bos: 	if(!checkweight(12033,100)) goto overweight; if(xcr >= 500) { set xcr,xcr-500; getitem 12033,100; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(500-xcr)+"^000000 Alea Point to afford it."; cutin "", 255;
+End; }
+
+L_hompets:
+	next;
+	mes .npcname$;
+	mes "Which of the following homunculus/pets items would you like to take?";
+	mes	"^0000ff>^000000 Stone of Sage ^0000ff3000^000000 Alea Points.";		
+	mes " ";
+	mes "More coming soon...";
+	menu "^0000ff>^000000 Stone of Sage ^0000ff(^000000HomunEvolve^0000ff)^000000",hp_stone,
+	"^0000ff>^000000 Cancel",-;
+	close2;
+cutin "", 255;
+End;
+
+			hp_stone: if(!checkweight(12040,1)) goto overweight; if(xcr >= 3000) { set xcr,xcr-3000; getitem 12040,1; close; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(3000-xcr)+"^000000 Alea Point to afford it."; cutin "", 255;
+End; }
+
+
+L_hompets2:
+	next;
+	mes .npcname$;
+	mes "Which of the following Token items would you like to take?";
+	mes " ";
+	mes "^0000ff>^000000 Note: These Tokens cost ^0000ff1,000^000000 Alea Points Each.";
+	menu "^0000ff>^000000 Creamhilt Token",cream,
+	"^0000ff>^000000 Sbanhealt Token",sban,
+	"^0000ff>^000000 Lazrigees Token",laz,
+	"^0000ff>^000000 Squagul Token",squa,
+	"^0000ff>^000000 Guindull Token",guin,
+	"^0000ff>^000000 Cancel",-;
+close2;
+cutin "", 255;
+End;
+
+			cream: if(!checkweight(3115,1)) goto overweight; if(xcr >= 1000) { set xcr,xcr-1000; getitem 3115,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(1000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+			sban: if(!checkweight(3116,1)) goto overweight; if(xcr >= 1000) { set xcr,xcr-1000; getitem 3116,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(1000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+			laz: if(!checkweight(3117,1)) goto overweight; if(xcr >= 1000) { set xcr,xcr-1000; getitem 3117,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(1000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+			squa: if(!checkweight(3118,1)) goto overweight; if(xcr >= 1000) { set xcr,xcr-1000; getitem 3118,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(1000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+			guin: if(!checkweight(3119,1)) goto overweight; if(xcr >= 1000) { set xcr,xcr-1000; getitem 3119,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(1000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+L_effects:
+	next;
+	mes .npcname$;
+	mes "Which of the following Seal items would you like to take?";
+	mes " ";
+	mes "^0000ff>^000000 Note: These Seals cost ^0000ff1,000^000000 Alea Points Each.";
+	menu "^0000ff>^000000 Seal Of Death",death,
+	"^0000ff>^000000 Seal Of Power",power,
+	"^0000ff>^000000 Seal Of Wisdom",wisdom,
+	"^0000ff>^000000 Seal Of Spirit",spirit,
+	"^0000ff>^000000 Seal Of Hate",hate,
+	"^0000ff>^000000 Cancel",-;
+close2;
+cutin "", 255;
+End;
+
+			death: if(!checkweight(3134,1)) goto overweight; if(xcr >= 1000) { set xcr,xcr-1000; getitem 3134,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(1000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+			power: if(!checkweight(3130,1)) goto overweight; if(xcr >= 1000) { set xcr,xcr-1000; getitem 3130,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(1000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+			wisdom: if(!checkweight(3131,1)) goto overweight; if(xcr >= 1000) { set xcr,xcr-1000; getitem 3131,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(1000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+			spirit: if(!checkweight(3132,1)) goto overweight; if(xcr >= 1000) { set xcr,xcr-1000; getitem 3132,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(1000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+			hate: if(!checkweight(3133,1)) goto overweight; if(xcr >= 1000) { set xcr,xcr-1000; getitem 3133,1; 	close2;
+cutin "", 255;
+End; }  else { next; mes .npcname$; mes "You don't have enough credits to buy this! You need ^0000ff"+(1000-xcr)+"^000000 Alea Point to afford it."; 	close2;
+cutin "", 255;
+End; }
+
+L_xfstore2:
+		next;
+	mes .npcname$;
+	mes (gettime(3)>= 6&&gettime(3)<= 12?"Good Morning":(gettime(3)>=13&&gettime(3)<=18?"Good afternoon":"Good evening"))+", ^FFA500"+strcharinfo(0)+"^000000 !";
+	set .@xcrs, xcr; // returns how many Event points you have
+	mes sprintf("^000000You Have:^000000 ^FF0000%d^000000 Alea Points", .@xcrs );
+	mes "would like to exchange your Alea Points?";
+	switch(select("^3CB371[»]^000000 Store")){
+		case1:
+			clear;
+			mes .npcname$;
+			mes "[Opening shop...";
+			close2;
+			callshop "sets";
+		end;
+		case2:
+			clear;
+			mes .npcname$;
+			mes "[Opening shop...";
+			close2;
+			callshop "mythic";
+		end;
+		case3:
+			clear;
+			mes .npcname$;
+			mes "[Opening shop...";
+			close2;
+			callshop "especial";
+		end;
+		case4:
+			clear;
+			mes .npcname$;
+			mes "ok come back later when you need my services.";
+	close2;
+cutin "", 255;
+	}
+
+End;
+
+overweight:
+	next;
+	mes .npcname$;
+	mes "Sorry but you can't carry this";
+	dispbottom "[AleaFiesta] You should Storage some items.";
+	
+	close2;
+cutin "", 255;
+End;
+
+
+L_Level:
+	mes "[AleaFiesta]";
+	mes "Sorry, you need to be at least level 99. No Novices allowed either.";
+	close2;
+cutin "", 255;
+End;
+
+LCancel:
+close2;
+cutin "", 255;
+End;
+}
+
+pvp_n_7-1,1,1,1	script	xilecredits	-1,{
+
+end;
+
+OnNPCKillEvent:
+	getmapxy(@mapname$,.@x,.@y);
+	if(@mapname$ == "pvp_n_7-1" || @mapname$ == "pvp_n_7-2" || @mapname$ == "pvp_n_7-3" || @mapname$ == "pvp_n_7-4" || @mapname$ == "pvp_n_7-5") {
+
+if(killedrid == 1117) { set .@active,@active+1; set xcr,xcr+5; cutin "5xcr",2; goto L_xcr_cutin; }
+if(killedrid == 1675) { set .@active,@active+1; set xcr,xcr+2; cutin "2xcr",2; goto L_xcr_cutin; }
+if(killedrid == 1700) { set .@active,@active+1; set xcr,xcr+18; cutin "18xcr",2; goto L_xcr_cutin; }
+if(killedrid == 1703) { set .@active,@active+1; set xcr,xcr+12; cutin "12xcr",2; goto L_xcr_cutin; }
+if(killedrid == 1720) { set .@active,@active+1; set xcr,xcr+68; cutin "68xcr",2; goto L_xcr_cutin; }
+end;
+L_xcr_cutin:
+	specialeffect2 456;
+	sleep2 5000;
+	if(@active > 9) { cutin "",255; Announce "~ "+xcr+"XcR",bc_self|bc_blue; set .@active,0; }
+	end;
+}
+
+//set @credits,rand(0,10);
+//if(@credits==0) { set .@active,@active+1; cutin "5xcr",2; }
+//if(@credits==1) { set .@active,@active+1; cutin "12xcr",2; }
+//if(@credits==2) { set .@active,@active+1; cutin "18xcr",2; }
+//if(@credits==3) { set .@active,@active+1; cutin "25xcr",2; }
+//if(@credits==4) { set .@active,@active+1;; cutin "44xcr",2; }
+//if(@credits==5) { set .@active,@active+1; cutin "68xcr",2; }
+//if(@credits==6) { set .@active,@active+1; cutin "77xcr",2; }
+//if(@credits==7) { set .@active,@active+1; cutin "100xcr",2; }
+//if(@credits==8) { set .@active,@active+1; cutin "1000xcr",2; }
+//if(@credits==9) { set .@active,@active+1; cutin "10000xcr",2; }
+//if(@credits==10) { set .@active,@active+1; cutin "350kxcr",2; }
+}
+
+-	script	Checkpoint	-1,{
+OnInit:
+bindatcmd("checkpoints","Checkpoint::OnAtcommand");
+end;
+OnAtcommand:
+dispbottom "Hourly Point : "+#KAFRAPOINTS+" Points.";
+dispbottom "Alea Point : "+Xcr+" Points.";
+dispbottom "MVP Point:"+ #MVPPoint + " Points";
+end;
+}
+
+pvp_n_7-1	mapflag	nowarpto
+pvp_n_7-2	mapflag	nowarpto
+pvp_n_7-3	mapflag	nowarpto
+pvp_n_7-4	mapflag	nowarpto
+pvp_n_7-5	mapflag	nowarpto
+pvp_n_7-1	mapflag	nowarp
+pvp_n_7-2	mapflag	nowarp
+pvp_n_7-3	mapflag	nowarp
+pvp_n_7-4	mapflag	nowarp
+pvp_n_7-5	mapflag	nowarp
+pvp_n_7-1	mapflag	noteleport
+pvp_n_7-2	mapflag	noteleport
+pvp_n_7-3	mapflag	noteleport
+pvp_n_7-4	mapflag	noteleport
+pvp_n_7-5	mapflag	noteleport
+pvp_n_7-1	mapflag	noloot
+pvp_n_7-2	mapflag	noloot
+pvp_n_7-3	mapflag	noloot
+pvp_n_7-4	mapflag	noloot
+pvp_n_7-5	mapflag	noloot
+pvp_n_7-1	mapflag	noexp
+pvp_n_7-2	mapflag	noexp
+pvp_n_7-3	mapflag	noexp
+pvp_n_7-4	mapflag	noexp
+pvp_n_7-5	mapflag	noexp
+pvp_n_7-1	mapflag	nomemo
+pvp_n_7-2	mapflag	nomemo
+pvp_n_7-3	mapflag	nomemo
+pvp_n_7-4	mapflag	nomemo
+pvp_n_7-5	mapflag	nomemo
+pvp_n_7-1	mapflag	nobranch
+pvp_n_7-2	mapflag	nobranch
+pvp_n_7-3	mapflag	nobranch
+pvp_n_7-4	mapflag	nobranch
+pvp_n_7-5	mapflag	nobranch
+pvp_n_7-1	mapflag	pvp	off
+pvp_n_7-2	mapflag	pvp	off
+pvp_n_7-3	mapflag	pvp	off
+pvp_n_7-5	mapflag	pvp	off
+pvp_n_7-1	mapflag	noicewall
+pvp_n_7-2	mapflag	noicewall
+pvp_n_7-3	mapflag	noicewall
+pvp_n_7-5	mapflag	noicewall
+pvp_n_7-1	mapflag	nodrop
+pvp_n_7-2	mapflag	nodrop
+pvp_n_7-3	mapflag	nodrop
+pvp_n_7-5	mapflag	nodrop
+//prontera	mapflag	nodrop

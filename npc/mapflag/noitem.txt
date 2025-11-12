@@ -1,0 +1,12 @@
+//===== Shakto Script ========================================
+//===== https://ronovelty.com/ ===============================
+//= Mapflag: noitem
+//===== Description: =========================================
+//= Remove items drops on specific maps
+//= itemid or itemname or item type
+//= one line per map
+//===== Additional Comments: =================================
+//= 1.0 Create file
+//============================================================
+
+gef_fild09	mapflag	noitem	4002, Sword, Cotton_Shirt

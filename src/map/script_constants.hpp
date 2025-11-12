@@ -533,10 +533,15 @@
 	export_constant(MF_NOPETCAPTURE);
 	export_constant(MF_NOBUYINGSTORE);
 	export_constant(MF_NODYNAMICNPC);
+	export_constant(MF_PK);
 	export_constant(MF_NOBANK);
 	export_constant(MF_SPECIALPOPUP);
 	export_constant(MF_NOMACROCHECKER);
+//<<<<<<< HEAD
+	export_constant(MF_NOITEM);
+//=======
 	export_constant(MF_INVINCIBLE_TIME);
+//>>>>>>> 076e25e2294f50c04d0fa81c13981f343343c4f5
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);

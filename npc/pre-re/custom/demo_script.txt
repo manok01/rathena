@@ -1,0 +1,5 @@
+-	script	HourlyRewardUI	-1,{
+OnHourlyRewardClick:
+    mes "You have clicked UI Rewards";
+end;
+}
