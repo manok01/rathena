@@ -1,0 +1,111 @@
+//ADD DATE/TIME
+-	script	FloatingRates1	-1,{
+OnMon0400: 
+OnMon0800:
+OnMon1200:
+OnMon1600:
+OnMon2000:
+OnMon0000:
+
+OnTue0400: 
+OnTue0800:
+OnTue1200:
+OnTue1600:
+OnTue2000:
+OnTue0000:
+
+OnWed0400: 
+OnWed0800:
+OnWed1200:
+OnWed1600:
+OnWed2000:
+OnWed0000:
+
+OnThu0400: 
+OnThu0800:
+OnThu1200:
+OnThu1600:
+OnThu2000:
+OnThu0000:
+
+OnFri0400: 
+OnFri0800:
+OnFri1200:
+OnFri1600:
+OnFri2000:
+OnFri0000:
+
+OnSat0400: 
+OnSat0800:
+OnSat1200:
+OnSat1600:
+OnSat2000:
+OnSat0000:
+
+OnSun0400: 
+OnSun0800:
+OnSun1200:
+OnSun1600:
+OnSun2000:
+OnSun0000:
+
+
+	$@brate = 300;	// new base rate
+	$@jrate = 300;	// new job rate
+	$@drate = 200;	// new drob rate
+//	$@crate = 200;	// new card rate
+
+	//Base exp
+	setbattleflag("base_exp_rate", $@brate);
+
+	//Job exp
+	setbattleflag("job_exp_rate", $@jrate);
+
+	//card rate
+//	setbattleflag("item_rate_card", $@crate);
+
+
+	//Drops
+	setbattleflag("item_rate_common", $@drate);
+	setbattleflag("item_rate_heal", $@drate);
+	setbattleflag("item_rate_use", $@drate);
+	setbattleflag("item_rate_equip", $@drate);
+	//we don't change card drops rate, because these values won't change them anyway
+	atcommand "@reloadmobdb";
+	initnpctimer();	// start the timer
+	announce "Floating Rates has started!",bc_all,0xFFFF00;
+	announce "Current rates: Base Rate 3x | Job Rate 3x | Normal Drop Rates 2x | use @rates for more information.",bc_all,0xFFFF00;
+	end;
+// ===================================================== //
+OnTimer3600000:		// once timer reaches 7200000 milliseconds (2 hour)
+//OnTimer60000: //test one minutes
+	$@brate = 1500;	//reset the rates
+	$@jrate = 1500;
+	$@drate = 500;
+//	$@crate = 500;
+
+	//Base exp
+	setbattleflag("base_exp_rate", $@brate);
+
+	//Job exp
+	setbattleflag("job_exp_rate", $@jrate);
+	
+	//card rate
+//	setbattleflag("item_rate_card", $@crate);
+
+
+	//Drops
+	setbattleflag("item_rate_common", $@drate);
+	setbattleflag("item_rate_heal", $@drate);
+	setbattleflag("item_rate_use", $@drate);
+	setbattleflag("item_rate_equip", $@drate);
+//	setbattleflag("item_rate_card", $@crate);
+	
+	//we don't change card drops rate, because these values won't change them anyway
+	atcommand "@reloadmobdb";
+	atcommand "@reloadbattleconf";
+	stopnpctimer();	// stop the timer
+	announce "Bonus EXP & JOB Rates has ended, rates are back to normal.",bc_all,0xFFFF00;
+	end;
+}
+// ===================================================== //

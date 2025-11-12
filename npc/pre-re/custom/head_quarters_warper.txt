@@ -1,0 +1,45 @@
+//===== Head Quarters Warper Script ==================================
+//===== By: ==========================================================
+//= Wankie
+//===== Current Version: =============================================
+//= 1.0
+//===== Compatible With: =============================================
+//= Any Version
+//====================================================================
+askald,123,224,5	script	Head Quarters	861,{
+	cutin "kafra_09",2;
+	mes "[ ^008000Head Quarters^000000 ]";
+	mes "Good Day ^0000FF"+strcharinfo(0)+"^000000 ";
+	mes "I can warp you to your";
+	mes	"head quarters?";
+	mes	"Would you like to inside?";
+	next;
+	menu "Yes",L_B2, "No",L_Cancel;
+
+L_B2:
+	mes "[ ^008000Head Quarters^000000 ]";
+	mes "Warping....";
+	next;
+	warp "ma_in01",25,81;
+	cutin "",255;
+	end;
+	
+L_Cancel:
+	mes "[ ^008000Head Quarters^000000 ]";
+	mes "Oh, You may talk to me anytime.";
+	cutin "",255;
+	close;
+	
+OnInit:
+	waitingroom "[ Head Quarter's ]",0,0;
+	end;
+}
+
+// Map Flag On Inside Of Malaya
+ma_in01	mapflag	nomemo
+ma_in01	mapflag	nobranch
+ma_in01	mapflag	novending
+
+
+// Warp Go Back To Prontera City
+ma_in01,24,77,0	warp	askald	1,1,askald,148,243

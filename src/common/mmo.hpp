@@ -111,6 +111,9 @@ typedef uint32 t_itemid;
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
+#define FIRST_RAND_OPT_CHANCE 100	 /// Chance of getting first random option [winn]
+#define SECOND_RAND_OPT_CHANCE 50	 /// Chance of getting second random option [winn]
+#define THIRD_RAND_OPT_CHANCE 50	 /// Chance of getting third random option [winn]
 #define DB_NAME_LEN 256 //max len of dbs
 #define MAX_CLAN 500
 #define MAX_CLANALLIANCE 6

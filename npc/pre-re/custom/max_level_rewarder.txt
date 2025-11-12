@@ -1,0 +1,52 @@
+//==================== Name ========================
+// Race Level Up.
+//=================== Version ======================
+// 1.0
+//==================================================
+// Author: Deadly
+//==================================================
+askald,136,229,5	script	Max Level Rewarder	875,{
+	if( $level_freebie < .max_freebie ){
+	if( #level_freebie == 0 ){
+	if ( BaseLevel < .max_base_level || Joblevel < .max_job_level ) {
+	mes "[ ^000088Mr.Race^000000 ]";
+	mes "We're Sorry You Are Not Qualified Yet On This Race, Please Come Back When You Are Base Level "+.max_base_level+" And Job Level Is "+.max_job_level+".";
+	mes	"Thank You...";
+	emotion ET_BEST;
+	close;
+	}
+	$level_freebie++;
+	getitem	5210,1; //Flapping Angel Wing
+	getitem	5377,1; //Gentleman Pipes
+	mes "Thank You Very Much To Claim Your Reward Enjoy And Rok On!.";
+	announce "Congratulations! " + strcharinfo(0) + " For Receiving The Race Level Up 99/50 Reward So Lucky!",bc_all;
+	#level_freebie++;
+	}
+	else{
+	mes "[ ^000088Mr.Race^000000 ]";
+	mes "Sorry You Are Already Take It This Reward.";
+	emotion ET_HNG;
+	}
+	delwaitingroom;
+	.@available = ( .max_freebie - $level_freebie );
+	if( .@available )
+	waitingroom "Race Countdown Left: "+.@available,0;
+ 
+	}
+	else{
+	mes "[ ^000088Mr.Race^000000 ]";
+	mes "Sorry You Are Already Take It This Reward.";
+	emotion ET_HNG;
+	}
+	close;
+ 
+OnInit:
+.max_freebie = 100;
+.max_base_level = 99; // change this for Minimum Level
+.max_job_level = 50; // change this for Minimum Level
+
+	.@available = ( .max_freebie - $level_freebie );
+	if( .@available )
+	waitingroom "Race Countdown Left: "+.@available,0;
+	end;
+	}

@@ -22101,3 +22101,91 @@ Body:
       Third_Upper: true
       Third_Baby: true
     EquipLevelMin: 1
+  - Id: 60001
+    AegisName: Costume_Enchantment_Stone_Box1
+    Name: Costume Enchantment Upper Stone Box 1
+    Type: Usable
+    Weight: 10
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+    Script: |
+      getitem callfunc("F_Rand",40000,40001,40002,40003,40004,40005,40006,40007,40008,40009,40010,40011,40012,40013),1;
+  - Id: 60002
+    AegisName: Enchant_Stone_Box4
+    Name: Costume Enchantment Middle Stone Box 2
+    Type: Usable
+    Weight: 10
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+    Script: |
+      getitem callfunc("F_Rand",40014,40015,40016,40017,40018,40019,40020,40021,40022,40023,40024,40025),1;
+  - Id: 60003
+    AegisName: Enchant_Stone_Box5
+    Name: Costume Enchantment Lower Stone Box 3
+    Type: Usable
+    Weight: 10
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+    Script: |
+      getitem callfunc("F_Rand",40026,40027,40028,40029,40030),1;
+  - Id: 60004
+    AegisName: Enchant_Stone_Box6
+    Name: Costume Enchantment Garment Stone Box 4
+    Type: Usable
+    Weight: 10
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+    Script: |
+      getitem callfunc("F_Rand",40031,40032,40033),1;
+  - Id: 60010
+    AegisName: MVP_Scroll_Tier1
+    Name: MVP Scroll Tier 1
+    Type: Usable
+    Weight: 10
+    Script: |
+      getgroupitem(IG_Pet_Egg_Scroll6),1;
+  - Id: 60011
+    AegisName: MVP_Scroll_Tier2
+    Name: MVP Scroll Tier 2
+    Type: Usable
+    Weight: 10
+    Script: |
+      getgroupitem(IG_Pet_Egg_Scroll7),1;
+  - Id: 60012
+    AegisName: MVP_Scroll_Tier3
+    Name: MVP Scroll Tier 3
+    Type: Usable
+    Weight: 10
+    Script: |
+      getgroupitem(IG_Pet_Egg_Scroll8),1;
+  - Id: 60013
+    AegisName: MVP_Scroll_Tier4
+    Name: MVP Scroll Tier 4
+    Type: Usable
+    Weight: 10
+    Script: |
+      getgroupitem(IG_Pet_Egg_Scroll9),1;
+  - Id: 16682
+    AegisName: Boarding_Halter_Box
+    Name: Boarding Halter Box
+    Type: Cash
+    Weight: 10
+    Classes:
+      All_Third: true
+      Normal: true
+      Upper: true
+      Baby: true
+    Script: |
+      getgroupitem(IG_Boarding_Halter_Box); rentitem 12622,604800;
