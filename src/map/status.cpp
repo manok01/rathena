@@ -3054,7 +3054,7 @@ int32 status_calc_mob_(mob_data* md, uint8 opt)
  * @return 1
  * @author [Skotlex]
  */
-void status_calc_pet_(struct pet_data *pd, uint8 opt)
+void status_calc_pet_(pet_data *pd, uint8 opt)
 {
 	nullpo_retv(pd);
 
@@ -4191,7 +4191,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	pc_bonus_script(sd);
 
 	if( sd->pd ) { // Pet Bonus
-		struct pet_data *pd = sd->pd;
+		pet_data *pd = sd->pd;
 		std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 
 		if (pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script)
@@ -4967,7 +4967,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				clif_deleteskill(*sd, b_skill[i].id, true);
 		}
 #endif
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 	}
 
 	// If the skill is learned, the status is infinite.
@@ -5034,7 +5034,7 @@ int32 status_calc_mercenary_(s_mercenary_data *md, uint8 opt)
  * @param opt: Whether it is first calc or not (0 on level up or status)
  * @return 1
  */
-int32 status_calc_homunculus_(struct homun_data *hd, uint8 opt)
+int32 status_calc_homunculus_(homun_data *hd, uint8 opt)
 {
 	struct status_data *status = &hd->base_status;
 	struct s_homunculus &hom = hd->homunculus;
@@ -5206,7 +5206,7 @@ int32 status_calc_elemental_(s_elemental_data *ed, uint8 opt)
  * @param opt: Whether it is first calc or not (what?)
  * @return 0
  */
-int32 status_calc_npc_(struct npc_data *nd, uint8 opt)
+int32 status_calc_npc_(npc_data *nd, uint8 opt)
 {
 	struct status_data *status = &nd->status;
 
@@ -5332,7 +5332,7 @@ void status_calc_regen(block_list *bl, struct status_data *status, struct regen_
 	}
 
 	if( bl->type == BL_HOM ) {
-		struct homun_data *hd = (TBL_HOM*)bl;
+		homun_data *hd = (TBL_HOM*)bl;
 		if( (skill = hom_checkskill(hd,HAMI_SKIN)) > 0 ) {
 			val = regen->hp*(100+5*skill)/100;
 			regen->hp = cap_value(val, 1, SHRT_MAX);
@@ -5707,15 +5707,9 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 			// Check the specific conditions
 			switch( type ){
 				case SC_DANCING:
-					if( sce.val4 != 0 ){
-#ifndef RENEWAL
-						// In Pre-Renewal you can attack when SC_LONGING is active
-						if( sc.getSCE( SC_LONGING ) != nullptr ){
-							break;
-						}
-#endif
+					// Normal songs prevent attacks; Ensembles prevent attacks as long Longing is not active
+					if (sce.val4 == 0 || !sc.hasSCE(SC_LONGING))
 						restriction = true;
-					}
 					break;
 
 				case SC_LONGING:
@@ -9087,7 +9081,7 @@ uint16 status_get_speed(block_list *bl)
 {
 	// TODO: is the statement of Skotlex still true? And would it not be better to check for dummy_status instead? [Lemongrass]
 	if(bl->type==BL_NPC)// Only BL with speed data but no status_data [Skotlex]
-		return ((struct npc_data *)bl)->speed;
+		return ((npc_data *)bl)->speed;
 	return status_get_status_data(*bl)->speed;
 }
 
@@ -9245,7 +9239,7 @@ std::vector<e_race2> status_get_race2(block_list *bl)
 	if (bl->type == BL_MOB)
 		return ((mob_data *)bl)->db->race2;
 	if (bl->type == BL_PET)
-		return ((struct pet_data *)bl)->db->race2;
+		return ((pet_data *)bl)->db->race2;
 	return std::vector<e_race2>();
 }
 
@@ -9406,7 +9400,7 @@ void status_set_viewdata(block_list *bl, int32 class_)
 				sd->vd.look[LOOK_HAIR] = cap_value(sd->status.hair, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
 				sd->vd.look[LOOK_HAIR_COLOR] = cap_value(sd->status.hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
 				sd->vd.look[LOOK_CLOTHES_COLOR] = cap_value(sd->status.clothes_color, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
-				sd->vd.look[LOOK_BODY2] = cap_value(sd->status.body, MIN_BODY_STYLE, MAX_BODY_STYLE);
+				sd->vd.look[LOOK_BODY2] = sd->status.body;
 				sd->vd.sex = sd->status.sex;
 				sd->vd.look[LOOK_ROBE] = sd->status.robe;
 
@@ -9422,8 +9416,9 @@ void status_set_viewdata(block_list *bl, int32 class_)
 					if(sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
 						sd->vd.look[LOOK_CLOTHES_COLOR] = 0;
 				}
-				if ( sd->vd.look[LOOK_BODY2] && sd->sc.option&OPTION_COSTUME)
- 					sd->vd.look[LOOK_BODY2] = 0;
+				if( sd->sc.option&OPTION_COSTUME ){
+ 					sd->vd.look[LOOK_BODY2] = class_;
+				}
 			} else if (vd)
 				memcpy(&sd->vd, vd, sizeof(struct view_data));
 			else
@@ -9441,6 +9436,7 @@ void status_set_viewdata(block_list *bl, int32 class_)
 				mob_set_dynamic_viewdata( md );
 
 				md->vd->look[LOOK_BASE] = class_;
+				md->vd->look[LOOK_BODY2] = class_;
 				md->vd->look[LOOK_HAIR] = cap_value(md->vd->look[LOOK_HAIR], MIN_HAIR_STYLE, MAX_HAIR_STYLE);
 				md->vd->look[LOOK_HAIR_COLOR] = cap_value(md->vd->look[LOOK_HAIR_COLOR], MIN_HAIR_COLOR, MAX_HAIR_COLOR);
 			}else
@@ -9472,6 +9468,7 @@ void status_set_viewdata(block_list *bl, int32 class_)
 			else if (pcdb_checkid(class_)) {
 				memset(&nd->vd, 0, sizeof(struct view_data));
 				nd->vd.look[LOOK_BASE] = class_;
+				nd->vd.look[LOOK_BODY2] = class_;
 				nd->vd.look[LOOK_HAIR] = cap_value(nd->vd.look[LOOK_HAIR], MIN_HAIR_STYLE, MAX_HAIR_STYLE);
 			} else {
 				ShowError("status_set_viewdata (NPC): Invalid view data %d\n", class_);
@@ -9486,7 +9483,7 @@ void status_set_viewdata(block_list *bl, int32 class_)
 	break;
 	case BL_HOM:
 		{
-			struct homun_data *hd = (struct homun_data*)bl;
+			homun_data *hd = (homun_data*)bl;
 			if (vd)
 				hd->vd = vd;
 			else
@@ -9969,7 +9966,7 @@ void status_display_add(block_list *bl, enum sc_type type, int32 dval1, int32 dv
 			}
 			break;
 		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
+			npc_data* nd = (npc_data*)bl;
 
 			sc_display_ptr = &nd->sc_display;
 			sc_display_count_ptr = &nd->sc_display_count;
@@ -10031,7 +10028,7 @@ void status_display_remove(block_list *bl, enum sc_type type) {
 			}
 			break;
 		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
+			npc_data* nd = (npc_data*)bl;
 
 			sc_display_ptr = &nd->sc_display;
 			sc_display_count_ptr = &nd->sc_display_count;
@@ -13005,9 +13002,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				clif_changelook(bl,LOOK_WEAPON,0);
 				clif_changelook(bl,LOOK_SHIELD,0);
 				clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->look[LOOK_CLOTHES_COLOR]);
-#if PACKETVER < 20231220
-				clif_changelook(bl,LOOK_BODY2,0);
-#endif
+				clif_changelook(bl,LOOK_BODY2,vd->look[LOOK_BODY2]);
 				break;
 			case SC_STONE:
 			case SC_STONEWAIT:
@@ -13881,7 +13876,7 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 		case SC_OVERED_BOOST:
 			switch (bl->type) {
 				case BL_HOM: {
-						struct homun_data *hd = BL_CAST(BL_HOM,bl);
+						homun_data *hd = BL_CAST(BL_HOM,bl);
 
 						if( hd )
 							hd->homunculus.hunger = max(1,hd->homunculus.hunger - 50);
@@ -14063,7 +14058,7 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 			clif_changelook(bl,LOOK_WEAPON,sd->vd.look[LOOK_WEAPON]);
 			clif_changelook(bl,LOOK_SHIELD,sd->vd.look[LOOK_SHIELD]);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,cap_value(sd->status.clothes_color,0,battle_config.max_cloth_color));
-			clif_changelook(bl,LOOK_BODY2,cap_value(sd->status.body,0,MAX_BODY_STYLE));
+			clif_changelook( bl, LOOK_BODY2, sd->status.body );
 		}
 	}
 	if (calc_flag.any()) {
